@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import KakaoMap from './components/KakaoMap';
 import AddressSearch from './components/AddressSearch';
-import './App.css';
+import './style.css';
 
 function App() {
   const [address, setAddress] = useState('');
