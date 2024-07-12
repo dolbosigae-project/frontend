@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import './style.css';
 
 const KakaoMap = ({ address }) => {
   const mapRef = useRef(null);
@@ -34,13 +35,13 @@ const KakaoMap = ({ address }) => {
       createMap();
     } else {
       const script = document.createElement('script');
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=발급받은 API KEY를 사용하세요&libraries=services`;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=발급받은 API KEY를 사용하세요`;
       script.onload = createMap;
       document.head.appendChild(script);
     }
   }, [address]);
 
-  return <div ref={mapRef} style={{ width: '800px', height: '800px', border: '1px solid black', margin: '0 auto', marginLeft: '100px' }}></div>;
+  return <div ref={mapRef} className="map"></div>;
 };
 
 export default KakaoMap;
