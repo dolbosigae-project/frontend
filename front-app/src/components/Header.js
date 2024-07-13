@@ -2,18 +2,26 @@ import { Link } from "react-router-dom";
 import styles from '../css/header.module.css';
 import logo from '../img/logo.png'; // 로고 경로 설정
 
-export default function Header() {
+export default function Header({ isLoggedIn, onLogout }) {
   return (
     <div className={styles.headerContainer}>
       <header className={styles.header}>
         <div className={styles.auth}>
-          <ul>
-            <li>
-              <Link to="/register" className={styles.authItem}>회원가입</Link>
-            </li>
-            <li>
-              <Link to="/login" className={styles.authItem}>로그인</Link>
-            </li>
+        <ul>
+            {isLoggedIn ? (
+              <li>
+                <button onClick={onLogout} className={styles.authItem}>로그아웃</button>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <Link to="/login" className={styles.authItem}>로그인</Link>
+                </li>
+                <li>
+                  <Link to="/register" className={styles.authItem}>회원가입</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
         <nav className={styles.nav}>

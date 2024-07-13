@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function Login() {
+export default function Login({ onLoginSuccess }) {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ export default function Login() {
       const response = await axios.post('http://localhost:9999/login', { id, pass: password }, { withCredentials: true });
       if (response.data === 'success') {
         console.log('로그인 요청 성공');
+        onLoginSuccess(); // 로그인 성공 시 상위 컴포넌트의 상태 업데이트
         navigate('/');
       } else {
         alert('로그인 실패: ' + response.data);
