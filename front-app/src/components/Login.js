@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import kakaoIcon from '../img/kakaotalk_icon.png';
+import kakaoLogin from '../img/kakao_login_large_wide.png';
 
 export default function Login({ onLoginSuccess }) {
   const [id, setId] = useState('');
@@ -13,16 +15,20 @@ export default function Login({ onLoginSuccess }) {
     try {
       const response = await axios.post('http://localhost:9999/login', { id, pass: password }, { withCredentials: true });
       if (response.data === 'success') {
-        console.log('로그인 요청 성공');
+        alert('로그인하였습니다.');
         onLoginSuccess(); // 로그인 성공 시 상위 컴포넌트의 상태 업데이트
         navigate('/');
       } else {
-        alert('로그인 실패: ' + response.data);
+        alert('로그인에 실패하였습니다.');
       }
     } catch (error) {
-      alert('로그인 실패: ' + error.message);
+      alert('로그인에 실패하였습니다.');
       console.error(error);
     }
+  }
+
+  const handleKakaoLogin = () => {
+    window.location.href = 'http://localhost:9999/kakao';
   }
 
   return (
@@ -48,6 +54,16 @@ export default function Login({ onLoginSuccess }) {
           <a onClick={() => navigate('/register')}>회원가입</a>
         </div>
       </form>
+      <div>
+        <h2>카카오/네이버 로그인</h2>
+        <p>회원가입된 회원은 카카오/네이버를 통해 로그인 하실 수 있습니다.</p>
+        <img src={kakaoIcon} alt="kakaoIcon" /><br/>
+        <img
+          src={kakaoLogin}
+          alt="kakaoLogin"
+          onClick={handleKakaoLogin} 
+        />
+      </div>
     </div>
   );
 }
