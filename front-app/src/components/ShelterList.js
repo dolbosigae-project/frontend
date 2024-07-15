@@ -46,7 +46,11 @@ const ShelterList = () => {
                     {shelters.map((shelter, index) => (
                         <tr key={shelter.shID}>
                             <td>{shelter.shRegion}</td>
-                            <td>{shelter.shName}</td>
+                            <td>
+                                <Link to={`/shelter/${shelter.shID}`}>
+                                {shelter.shName}
+                                </Link>
+                            </td>
                             <td>{shelter.shTel}</td>
                             <td>{shelter.shAddress}</td>
                         </tr>
