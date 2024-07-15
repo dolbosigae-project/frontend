@@ -1,0 +1,26 @@
+.select_gu{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 180px;
+    height: 40px;
+    border-radius: 7px;
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+.select_su_dong{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 180px;
+    height: 40px;
+    border-radius: 7px;
+    padding-left: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-left: 30px;
+}
+.Search_mainContainer{
+    display: flex;
+    flex-flow: row nowrap;
+    width: 600px;
+}
