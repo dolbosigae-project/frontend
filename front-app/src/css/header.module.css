@@ -41,7 +41,7 @@
   margin-right: 8px;
 }
 
-.login, .register {
+.login, .register, .memberView {
   width: 30px;
   height: auto;
 }
