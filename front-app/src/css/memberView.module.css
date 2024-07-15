@@ -26,6 +26,48 @@
   margin-left: auto; /* 오른쪽으로 배치 */
 }
 
+.searchBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  box-sizing: border-box;
+}
+
+.searchBox select{
+  width: 150px;
+  height: 57px;
+  border-radius: 10px;
+  border: 1px solid #BEB4B4;
+  font-size: 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  padding-left: 10px;
+}
+
+.searchBox input{
+  width: 500px;
+  height: 57px;
+  margin-right: 10px;
+  box-sizing: border-box;
+  padding-left: 20px;
+}
+
+.searchBox button{
+  width: 100px;
+  height: 57px;
+  background-color: #00823E;
+  color: white;
+  font-size: 20px;
+  box-sizing: border-box;
+}
+
+.searchBox button:hover {
+  background-color: #00A44B; /* 약간 더 밝은 초록색 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+}
+
 .manage_table_container {
   display: flex;
   justify-content: center; /* 가운데 정렬 */
@@ -56,6 +98,10 @@
 
 .manage_table td:nth-child(4), .manage_table td:nth-child(5) {
   border-left: none;
+}
+
+.manage_table td{
+  height: 200px;
 }
 
 /* 라벨과 인풋을 정렬하는 컨테이너 */
@@ -144,7 +190,6 @@ button.delete:hover {
 /* 페이지 번호 스타일링 */
 .pagination button {
   background: none;
-  border: none;
   color: black;
   font-size: 20px;
   cursor: pointer;
