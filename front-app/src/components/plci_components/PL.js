@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 const ITEMS_PER_PAGE = 5;
 
 const PL = () => {
+    const [plId, setPlId] = useState('');
     const [plName, setPlName] = useState('');
     const [plHour, setPlHour] = useState('');
     const [plTel, setPlTel] = useState('');
@@ -14,44 +15,39 @@ const PL = () => {
     const [selectPlCity, setSelectPlCity] = useState('');
     const [searchResult, setSearchResult] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
+    const [totalPages, setTotalPages] = useState(1);
+    const [pagination, setPagination] = useState(null);
 
     useEffect(() => {
         fetchData();
-    }, [plName, plHour, plTel, plAddress, currentPage]);
+    }, [plId, plName, plHour, plTel, plAddress, currentPage]);
 
     const fetchData = async () => {
         try {
             const response = await axios.get('http://localhost:9999/select/city', {
                 params: {
+                    plId: plId,
                     plName: plName,
                     plHour: plHour,
                     plTel: plTel,
                     plAddress: plAddress,
-                    currentPage: currentPage,
-                    limit: ITEMS_PER_PAGE
+                    page: currentPage,
+                    limit : ITEMS_PER_PAGE
                 }
             });
             if (response.status === 200) {
-                const { contents, pagination } = response.data; // 백엔드에서 반환하는 ResponseVo 구조에 맞게 수정
+                const { contents, pagination } = response.data;
                 setSearchResult(contents);
                 setTotalPages(pagination.totalPages);
-            }
+                setPagination(pagination);
+                }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
 
-    const handlePrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-
-    const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
+    const handlePageChange = (pageNo) => {
+        setCurrentPage(pageNo);
     };
 
     return (
@@ -60,19 +56,21 @@ const PL = () => {
                 <Link to="/">놀이</Link>
             </header>
             <div className={styles.main_Image}>
-                <img className={styles.main_img} />
-            <div className={styles.search_container}>
+                <h2 className={styles.sub_title}>놀이시설 찾기</h2>
+                <img className={styles.logo_white} />
+                <div className={styles.search_container}>
                     <PlSelectDong selectPlCity={selectPlCity} setSelectPlCity={setSelectPlCity} />
-                    <button className={styles.search_btn} onClick={fetchData}>
+                    <button className={styles.search_btn}>
                         조회
                     </button>
-            </div>
+                </div>
             </div>
             <div className={styles.info_container}>
                 <table>
                     <thead>
                         <tr>
                             <th></th>
+                            <th>번호</th>
                             <th>공원명</th>
                             <th>출입 허용 시간</th>
                             <th>전화번호</th>
@@ -82,8 +80,13 @@ const PL = () => {
                     <tbody>
                         {searchResult.map((item, idx) => (
                             <tr key={idx}>
-                                <td><button className={styles.DeleteBtn}>삭제</button></td>
-                                <td>{item.plName}</td>
+                                <td>
+                                    <button className={styles.DeleteBtn}>삭제</button>
+                                </td>
+                                <td>{item.plId}</td>
+                                <td>
+                                    <Link to={`/${item.plId}`}>{item.plName}</Link>
+                                </td>
                                 <td>{item.plHour}</td>
                                 <td>{item.plTel}</td>
                                 <td>{item.plAddress}</td>
@@ -92,14 +95,22 @@ const PL = () => {
                     </tbody>
                 </table>
             </div>
-            <div>
-                <button onClick={handlePrevPage} disabled={currentPage === 1}>
-                    ◀ 이전
-                </button>
-                <span>{currentPage} / {totalPages}</span>
-                <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-                    다음 ▶
-                </button>
+            <div className="pagination">
+            {pagination && pagination.previousPageGroup && (
+                    <button onClick={() => handlePageChange(pagination.startPageOfPageGroup - 1)}>◀</button>
+                  )}
+                  {pagination && Array.from({ length: pagination.endPageOfPageGroup - pagination.startPageOfPageGroup + 1 }, (_, i) => (
+                    <button
+                      key={i + pagination.startPageOfPageGroup}
+                      onClick={() => handlePageChange(i + pagination.startPageOfPageGroup)}
+                      className={pagination.currentPage === i + pagination.startPageOfPageGroup ? styles.activePage : ''}
+                    >
+                      {i + pagination.startPageOfPageGroup}
+                    </button>
+                  ))}
+                  {pagination && pagination.nextPageGroup && (
+                    <button onClick={() => handlePageChange(pagination.endPageOfPageGroup + 1)}>▶</button>
+                  )}
             </div>
             <footer className={styles.footer}>하단바</footer>
         </div>
