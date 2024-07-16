@@ -218,7 +218,8 @@ export default function MemberView() {
           <tfoot>
             <tr>
               <td colSpan="6" className={styles.pagination}>
-                {pagination && pagination.isPriviousPageGroup && (
+                {console.log('Pagination:', pagination)}
+                {pagination && pagination.priviousPageGroup && (
                   <button onClick={() => handlePageChange(pagination.startPageOfPageGroup - 1)}>◀</button>
                 )}
                 {pagination && Array.from({ length: pagination.endPageOfPageGroup - pagination.startPageOfPageGroup + 1 }, (_, i) => (
@@ -230,7 +231,7 @@ export default function MemberView() {
                     {i + pagination.startPageOfPageGroup}
                   </button>
                 ))}
-                {pagination && pagination.isNextPageGroup && (
+                {pagination && pagination.nextPageGroup && (
                   <button onClick={() => handlePageChange(pagination.endPageOfPageGroup + 1)}>▶</button>
                 )}
               </td>
