@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Login from './components/Login';
 import MemberView from './components/MemberView';
+import MemberRegister from './components/MemberRegister';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={<Home/>} />
           <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/member/view" element={<MemberView/>} />
+          <Route path="/member/register" element={<MemberRegister/>} />
         </Routes>
       </div>
     </Router>

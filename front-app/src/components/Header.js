@@ -43,7 +43,7 @@ export default function Header({ isLoggedIn, onLogout }) {
                   </Link>
                 </li>
                 <li className={styles.top_button}>
-                  <Link to="/memebr/register" className={styles.authItem}>
+                  <Link to="/member/register" className={styles.authItem}>
                     <img src={register} alt="Register" className={styles.register} />회원가입
                   </Link>
                 </li>
