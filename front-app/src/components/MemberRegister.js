@@ -2,13 +2,18 @@ import React, { useRef, useState } from 'react';
 import SubTitleMemberRegister from "./SubTitleMemberRegister";
 import styles from '../css/memberRegister.module.css';
 import logo_small from '../img/logo_small.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function MemberRegister() {
   const [hasPet, setHasPet] = useState(false);
   const [address, setAddress] = useState('');
+  const [isIdDuplicate, setIsIdDuplicate] = useState(false);
+  const [isIdChecked, setIsIdChecked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const txtId = useRef();
+  const formRef = useRef();
+  const navigate = useNavigate();
 
   const handlePetChange = (e) => {
     setHasPet(e.target.value === 'yes');
@@ -29,10 +34,45 @@ export default function MemberRegister() {
         params: { idValue: idValue }
       });
       const isDuplicate = response.data > 0;
-      alert(isDuplicate ? "아이디가 중복됩니다." : "아이디를 사용할 수 있습니다.");
+      setIsIdDuplicate(isDuplicate);
+      setIsIdChecked(true);
+      setErrorMessage(isDuplicate ? "중복된 아이디입니다." : "아이디를 사용할 수 있습니다.");
     } catch (error) {
       console.error("중복 확인 에러 발생", error);
-      alert("회원정보 중복 조회 중 오류가 발생했습니다.");
+      setErrorMessage("회원정보 중복 조회 중 오류가 발생했습니다.");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!isIdChecked) {
+      alert("아이디 중복 확인 후 회원가입이 가능합니다.");
+      return;
+    }
+
+    if (isIdDuplicate) {
+      alert("중복된 아이디입니다.");
+      return;
+    }
+
+    const formData = new FormData(formRef.current);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await axios.post('http://localhost:9999/member/register', data, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        alert('회원가입 성공');
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('회원가입 에러 발생', error);
+      alert('회원가입 중 오류가 발생했습니다.');
     }
   };
 
@@ -46,7 +86,7 @@ export default function MemberRegister() {
         </div>
       </div>
       <div className={styles.form_container}>
-        <form>
+        <form ref={formRef} onSubmit={handleSubmit}>
           <table className={styles.form_table}>
             <tbody>
               <tr>
@@ -56,13 +96,18 @@ export default function MemberRegister() {
               <tr>
                 <td><label>아이디 *</label></td>
                 <td>
-                  <input type="text" name="id" ref={txtId} required />
+                  <input type="text" name="username" ref={txtId} required />
                   <button type="button" onClick={isDuplicate}>중복확인</button>
+                  {isIdChecked && <span>{errorMessage}</span>}
                 </td>
               </tr>
               <tr>
                 <td><label>비밀번호 *</label></td>
                 <td><input type="password" name="password" required /></td>
+              </tr>
+              <tr>
+                <td><label>이메일 *</label></td>
+                <td><input type="email" name="email" required /></td>
               </tr>
               <tr>
                 <td><label>사는지역 *</label></td>
@@ -72,13 +117,9 @@ export default function MemberRegister() {
                 </td>
               </tr>
               <tr>
-                <td><label>등급 *</label></td>
+                <td><label>등급</label></td>
                 <td>
-                  <select name="grade" required>
-                    <option value="애견인">애견인</option>
-                    <option value="관리자">관리자</option>
-                    <option value="관련기업">관련기업</option>
-                  </select>
+                  <span>애견인 *변경 요청은 관리자 문의*</span>
                 </td>
               </tr>
               <tr>
@@ -153,7 +194,7 @@ export default function MemberRegister() {
             <label htmlFor='check'>개인정보 제공에 동의합니다.</label>
           </div>
           <div className={styles.form_buttons}>
-            <button type="submit">등록</button>
+            <button type="submit">회원가입</button>
             <Link to="/">
               <button type="button">취소</button>
             </Link>

@@ -89,6 +89,10 @@
   margin-right: 10px;
 }
 
+.form_table span{
+  padding-left: 10px;
+}
+
 .form_table div {
   display: flex;
   align-items: center;
