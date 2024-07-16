@@ -6,6 +6,7 @@
     border-radius: 7px;
     padding-left: 10px;
     font-size: 16px;
+    margin-left: 50px;
 }
 
 .select_su_dong{
@@ -17,10 +18,10 @@
     padding-left: 10px;
     font-size: 16px;
     box-sizing: border-box;
-    margin-left: 30px;
+    margin-left: 50px;
 }
 .Search_mainContainer{
     display: flex;
     flex-flow: row nowrap;
-    width: 600px;
+    width: 80%;
 }

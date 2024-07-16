@@ -4,7 +4,8 @@ import PlSelectDong from './PlSelectDong';
 import styles from '../../css/poci_css/pl.module.css';
 import { Link } from 'react-router-dom';
 
-const ITEMS_PER_PAGE = 5;
+const PAGE_GROUP_SIZE = 5;
+
 
 const PL = () => {
     const [plId, setPlId] = useState('');
@@ -16,7 +17,7 @@ const PL = () => {
     const [searchResult, setSearchResult] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [pagination, setPagination] = useState(null);
+    const [pagination, setPagination] = useState();
 
     useEffect(() => {
         fetchData();
@@ -24,7 +25,7 @@ const PL = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('http://localhost:9999/select/city', {
+            const response = await axios.get('http://localhost:9999/city/list', {
                 params: {
                     plId: plId,
                     plName: plName,
@@ -32,7 +33,7 @@ const PL = () => {
                     plTel: plTel,
                     plAddress: plAddress,
                     page: currentPage,
-                    limit : ITEMS_PER_PAGE
+                    limit : 5 // 한페이지에 뜨는 데이터 정보 개수
                 }
             });
             if (response.status === 200) {
@@ -47,7 +48,36 @@ const PL = () => {
     };
 
     const handlePageChange = (pageNo) => {
-        setCurrentPage(pageNo);
+    setCurrentPage(pageNo);
+  };
+
+  const pageGroupStart = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
+  const pageGroupEnd = Math.min(pageGroupStart + PAGE_GROUP_SIZE - 1, totalPages);
+  const previousPageGroup = pageGroupStart > 1;
+  const nextPageGroup = pageGroupEnd < totalPages;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+    const searchClick = async() => {
+        try{
+            const response = await axios.get('http://localhost:9999/search/city',{
+                params : {
+                    plId: plId,
+                    plName: plName,
+                    plHour: plHour,
+                    plTel: plTel,
+                    plAddress: plAddress
+                }
+            });
+            if(response.status === 200){
+                if(response.data.value){
+                    
+                }
+            }
+            console.log(response.data);
+        }catch(error){
+            console.log(error)
+        }
     };
 
     return (
@@ -60,7 +90,7 @@ const PL = () => {
                 <img className={styles.logo_white} />
                 <div className={styles.search_container}>
                     <PlSelectDong selectPlCity={selectPlCity} setSelectPlCity={setSelectPlCity} />
-                    <button className={styles.search_btn}>
+                    <button className={styles.search_btn} onClick={searchClick}>
                         조회
                     </button>
                 </div>
@@ -83,21 +113,19 @@ const PL = () => {
                                 <td>
                                     <button className={styles.DeleteBtn}>삭제</button>
                                 </td>
-                                <td>{item.plId}</td>
-                                <td>
-                                    <Link to={`/${item.plId}`}>{item.plName}</Link>
-                                </td>
-                                <td>{item.plHour}</td>
-                                <td>{item.plTel}</td>
-                                <td>{item.plAddress}</td>
+                                <td><Link to={`/${item.plId}`} className={styles.plName}>{item.plId}</Link></td>
+                                <td><Link to={`/${item.plId}`} className={styles.plName}>{item.plName}</Link></td>
+                                <td><Link to={`/${item.plId}`} className={styles.plName}>{item.plHour}</Link></td>
+                                <td><Link to={`/${item.plId}`} className={styles.plName}>{item.plTel}</Link></td>
+                                <td><Link to={`/${item.plId}`} className={styles.plName}>{item.plAddress}</Link></td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
             <div className="pagination">
-            {pagination && pagination.previousPageGroup && (
-                    <button onClick={() => handlePageChange(pagination.startPageOfPageGroup - 1)}>◀</button>
+            {previousPageGroup && (
+                    <button onClick={() => handlePageChange(pagination.PageOfPageGroup - 1)}>◀</button>
                   )}
                   {pagination && Array.from({ length: pagination.endPageOfPageGroup - pagination.startPageOfPageGroup + 1 }, (_, i) => (
                     <button
@@ -108,7 +136,7 @@ const PL = () => {
                       {i + pagination.startPageOfPageGroup}
                     </button>
                   ))}
-                  {pagination && pagination.nextPageGroup && (
+                  {nextPageGroup && (
                     <button onClick={() => handlePageChange(pagination.endPageOfPageGroup + 1)}>▶</button>
                   )}
             </div>

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../../css/poci_css/plSelectDong.module.css';
+import axios from 'axios';
 
 const Select1 = () => (
     <select className={styles.select_su_dong}>
@@ -106,6 +107,9 @@ const Select12 = () => (
 
 
 const PlselectDong = ({selectPlCity, setSelectPlCity}) => {
+    const [plId, setPlId] = useState('plId');
+
+
     const SelectOption = (e) => {
         setSelectPlCity(e.target.value);
     };
@@ -141,6 +145,7 @@ const PlselectDong = ({selectPlCity, setSelectPlCity}) => {
         }
     };
 
+    
     return (
         <div className={styles.Search_mainContainer}>
             <form>
