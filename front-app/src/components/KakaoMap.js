@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import './style.css';
+import '../css/style.css';
 
 const KakaoMap = ({ address }) => {
   const mapRef = useRef(null);
