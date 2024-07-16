@@ -1,27 +1,38 @@
 .container{
     width: 100%;
+    
 }
 header{
     width: 100%;
     height: 100px;
     border: 1px solid black;
 }
+
 .main_Image{
-    width: 100%;
     display: flex;
     flex-flow: column nowrap;
-    margin-top: 30px;
+    justify-content: center;
     align-items: center;
 }
+.sub_title {
+    font-size: 48px;
+    font-weight: 600; /* 세미볼드 */
+    color: #0F3C3C;
+    margin: 0; /* 기본 여백 제거 */
+    position: absolute; /* 절대 위치 설정 */
+    left: 50%;
+    transform: translateX(-60%);
+    margin-bottom: 100px;    
+  }
 
-.main_img{
+.logo_white{
     width: 100%;
     height: 150px;
     background-image: url(./../poci_img/logo_white.png);
     background-position: right;
     background-repeat: no-repeat;
     background-size: contain;
-    background-color: antiquewhite;
+    background-color: #F4F2EE;
 }
 
 .search_container{
@@ -32,6 +43,7 @@ header{
     width: 93%;
     justify-content: space-around;
     border-bottom: 1px solid rgb(202, 202, 202);
+    
 }
 
 .search_btn{
@@ -49,25 +61,49 @@ header{
 .info_container{
     width: 93%;
     margin-top: 50px;
-    border-top: 1px solid black;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
     border-bottom: 1px solid rgb(202, 202, 202);
+    margin: 0 auto;
 }
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 70px;
+    border: 1px solid rgb(202, 202, 202);
+    border-left: none;
+    border-right: none;
+}
+
+tr{
+    border-bottom: 1px solid rgb(202, 202, 202);
+
+}
+
 thead{
     border-bottom: 1px solid rgb(202, 202, 202);
 
 }
 th{
     font-size: 18px;
-
+    border-bottom: 1px solid rgb(202, 202, 202);
+    border-left: none;
+    border-right: none;
+    height: 60px;
+    border-top: 1px solid black;
 }
 
 td{
+    text-align: left;
     font-size: 14px;
-    padding-top: 20px;
     padding-bottom: 10px;
+    border-bottom: 1px solid rgb(202, 202, 202);
+    border-left: none;
+    border-right: none;
+    padding: 15px 0px;
+    padding-left: 25px;    
 }
 
 .DeleteBtn{
