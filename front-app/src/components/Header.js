@@ -64,7 +64,7 @@ export default function Header({ isLoggedIn, onLogout }) {
               </Link>
             </li>
             <li className={styles.navItem}><Link to="/animal-medical">동물 의료</Link></li>
-            <li className={styles.navItem}><Link to="/">놀이 · 편의</Link></li>
+            <li className={styles.navItem}><Link to="/member/register">놀이 · 편의</Link></li>
             <li className={styles.navItem}><Link to="/">자랑 게시판</Link></li>
             <li className={styles.navItem}><Link to="/">산책 친구 찾기</Link></li>
             <li className={styles.navItem}><Link to="/">동물보호</Link></li>

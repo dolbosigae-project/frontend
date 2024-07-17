@@ -1,0 +1,30 @@
+
+
+.subTitle {
+  background-image: url('../img/ho_default.png');
+  background-size: cover;
+  background-position: center;
+  height: 250px;
+  margin: 0;
+  text-align: center;
+  padding: 20px 0;
+  position: relative; /* Ensure it stays above other elements */
+  z-index: 2; /* Ensure it's above other elements */
+}
+
+
+.searchContainer {
+  width: 100%; /* Adjust width as per your design */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/*
+.mapContainer {
+  width: 100%; 
+  height: 800px; 
+  border: 1px solid black;
+  margin: 50px;
+  box-sizing: border-box;
+}
+*/

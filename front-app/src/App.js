@@ -1,5 +1,3 @@
-// App.js
-
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
@@ -7,6 +5,8 @@ import Header from './components/Header';
 import Hospital from './components/Hospital';
 import MemberView from './components/MemberView';
 import MemberRegister from './components/MemberRegister';
+import HospitalDetail from './components/HospitalDetail';
+
 
 function App() {
   // 로그인 성공 처리 함수 정의
@@ -25,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
         <Route path="/member/view" element={<MemberView />} />
         <Route path="/member/register" element={<MemberRegister />} />
+        <Route path="/hospitalDetail" element={<HospitalDetail />} />
       </Routes>
     </Router>
   );
