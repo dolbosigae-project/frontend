@@ -6,6 +6,7 @@ import logo from '../img/logo.png';
 import login from '../img/login.png';
 import register from '../img/register.png';
 import memberView from '../img/memberView.png';
+import my_page from '../img/my_page.png';
 
 export default function Header({ isLoggedIn, onLogout }) {
   const navigate = useNavigate();
@@ -50,6 +51,11 @@ export default function Header({ isLoggedIn, onLogout }) {
                 <li className={styles.top_button}>
                   <Link to="/member/view" className={styles.authItem}>
                     <img src={memberView} alt="MemberView" className={styles.memberView} />회원관리
+                  </Link>
+                </li>
+                <li className={styles.top_button}>
+                  <Link to="/member/mypage" className={styles.authItem}>
+                    <img src={my_page} alt="my_page" className={styles.my_page} />마이페이지
                   </Link>
                 </li>
               </>

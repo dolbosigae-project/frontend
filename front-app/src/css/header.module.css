@@ -41,7 +41,7 @@
   margin-right: 8px;
 }
 
-.login, .register, .memberView {
+.login, .register, .memberView, .my_page {
   width: 30px;
   height: auto;
 }
@@ -76,3 +76,4 @@
   height: auto;
   margin-top: 10px;
 }
+
