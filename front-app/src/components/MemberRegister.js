@@ -16,7 +16,7 @@ export default function MemberRegister() {
   const navigate = useNavigate();
 
   const handlePetChange = (e) => {
-    setHasPet(e.target.value === 'yes');
+    setHasPet(e.target.value === 'Y');
   };
 
   const handleAddressSearch = () => {
@@ -59,8 +59,39 @@ export default function MemberRegister() {
     const formData = new FormData(formRef.current);
     const data = Object.fromEntries(formData.entries());
 
+    if (!data.boardMemberRegion) {
+      alert("사는지역을 입력해 주세요.");
+      return;
+    }
+
+    // 디버깅: 수집된 폼 데이터 콘솔에 출력
+    console.log(data);
+
+    const jsonData = {
+      boardMemberId: data.boardMemberId,
+      boardMemberName: data.boardMemberName,
+      boardMemberPasswd: data.boardMemberPasswd,
+      boardMemberRegion: data.boardMemberRegion,
+      boardMemberPetWith: hasPet ? 'T' : 'F',
+      petId: '',
+      boardMemberNick: hasPet ? data.petName : data.boardMemberNick, // 조건에 따라 설정
+      petBirth: data.petBirth,
+      petGender: data.petGender,
+      petSize: data.petSize,
+      petWeight: data.petWeight,
+      petWalkProfile: '',
+      petImageNo: 0,
+      petImagePath: '',
+      petInfo: data.petInfo
+    };
+
+    // 디버깅: 생성된 JSON 데이터 콘솔에 출력
+    console.log(jsonData);
+
+    let response; // 오류 확인을 위해 try 밖에 선언
+
     try {
-      const response = await axios.post('http://localhost:9999/member/register', data, {
+      response = await axios.post('http://localhost:9999/member/register', jsonData, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -68,10 +99,17 @@ export default function MemberRegister() {
 
       if (response.status === 200) {
         alert('회원가입 성공');
+        console.log(response);
         navigate('/');
+      } else {
+        console.error('Unexpected response status:', response.status);
       }
     } catch (error) {
+      console.log(response);
       console.error('회원가입 에러 발생', error);
+      if (response) {
+        console.log('Response data:', response.data);
+      }
       alert('회원가입 중 오류가 발생했습니다.');
     }
   };
@@ -91,19 +129,19 @@ export default function MemberRegister() {
             <tbody>
               <tr>
                 <td><label>회원이름 *</label></td>
-                <td><input type="text" name="name" required /></td>
+                <td><input type="text" name="boardMemberName" required /></td>
               </tr>
               <tr>
                 <td><label>아이디 *</label></td>
                 <td>
-                  <input type="text" name="username" ref={txtId} required />
+                  <input type="text" name="boardMemberId" ref={txtId} required />
                   <button type="button" onClick={isDuplicate}>중복확인</button>
                   {isIdChecked && <span>{errorMessage}</span>}
                 </td>
               </tr>
               <tr>
                 <td><label>비밀번호 *</label></td>
-                <td><input type="password" name="password" required /></td>
+                <td><input type="password" name="boardMemberPasswd" required /></td>
               </tr>
               <tr>
                 <td><label>이메일 *</label></td>
@@ -112,7 +150,7 @@ export default function MemberRegister() {
               <tr>
                 <td><label>사는지역 *</label></td>
                 <td>
-                  <input type="text" name="region" value={address} required readOnly />
+                  <input type="text" name="boardMemberRegion" value={address} required readOnly />
                   <button type="button" onClick={handleAddressSearch}>주소찾기</button>
                 </td>
               </tr>
@@ -128,15 +166,15 @@ export default function MemberRegister() {
                   <div>
                     <input
                       type="radio"
-                      name="hasPet"
-                      value="yes"
+                      name="boardMemberPetWith"
+                      value="Y"
                       onChange={handlePetChange}
                     />
                     <label>반려동물을 키우고 있음</label>
                     <input
                       type="radio"
-                      name="hasPet"
-                      value="no"
+                      name="boardMemberPetWith"
+                      value="N"
                       onChange={handlePetChange}
                     />
                     <label>반려동물을 키우고 있지 않음</label>
@@ -147,7 +185,7 @@ export default function MemberRegister() {
                 <tr>
                   <td><label>닉네임 *</label></td>
                   <td>
-                    <input type="text" name="nickname" required />
+                    <input type="text" name="boardMemberNick" required />
                     <p>* 반려동물을 키우지 않을 경우 반려동물 이름 대신 입력하신 닉네임이 사용됩니다.</p>
                   </td>
                 </tr>
@@ -156,30 +194,30 @@ export default function MemberRegister() {
                 <>
                   <tr>
                     <td><label>반려동물 이름</label></td>
-                    <td><input type="text" name="petName" /></td>
+                    <td><input type="text" name="petName" required /></td>
                   </tr>
                   <tr>
                     <td><label>반려동물 출생년월</label></td>
-                    <td><input type="text" name="petBirth" /></td>
+                    <td><input type="text" name="petBirth" placeholder='0000-00'/></td>
                   </tr>
                   <tr>
                     <td><label>반려동물 성별</label></td>
-                    <td><input type="text" name="petGender" /></td>
+                    <td><input type="text" name="petGender" placeholder='M/F'/></td>
                   </tr>
                   <tr>
                     <td><label>반려동물 무게</label></td>
                     <td>
-                      <select name="petWeight">
+                      <select name="petSize">
                         <option value="소형견">소형견</option>
                         <option value="중형견">중형견</option>
                         <option value="대형견">대형견</option>
                       </select>
-                      <input type='number' step="0.1" />
+                      <input type='number' step="0.1" name="petWeight" />
                     </td>
                   </tr>
                   <tr>
                     <td><label>반려동물 소개</label></td>
-                    <td><input type="text" name="petIntroduction" /></td>
+                    <td><input type="text" name="petInfo" /></td>
                   </tr>
                   <tr>
                     <td><label>반려동물 사진</label></td>
