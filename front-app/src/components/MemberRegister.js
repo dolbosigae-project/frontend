@@ -163,29 +163,34 @@ export default function MemberRegister() {
               <tr>
                 <td><label>등급</label></td>
                 <td>
-                  <span>애견인 *변경 요청은 관리자 문의*</span>
+                  <p>애견인</p>
+                  <p className={styles.notice}>* 변경 요청은 관리자에게 문의해주세요.</p>
                 </td>
               </tr>
               <tr>
                 <td><label>반려동물 유무 *</label></td>
                 <td>
-                  <div>
-                    <input
-                      type="radio"
-                      name="boardMemberPetWith"
-                      value="Y"
-                      id='Y'
-                      onChange={handlePetChange}
-                    />
-                    <label htmlFor='Y'>반려동물을 키우고 있음</label>
-                    <input
-                      type="radio"
-                      name="boardMemberPetWith"
-                      value="N"
-                      id='N'
-                      onChange={handlePetChange}
-                    />
-                    <label htmlFor='N'>반려동물을 키우고 있지 않음</label>
+                  <div className={styles.radio_set}>
+                    <label>
+                      <input
+                        type="radio"
+                        name="boardMemberPetWith"
+                        value="Y"
+                        id='Y'
+                        onChange={handlePetChange}
+                      />
+                      반려동물을 키우고 있음
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="boardMemberPetWith"
+                        value="N"
+                        id='N'
+                        onChange={handlePetChange}
+                      />
+                      반려동물을 키우고 있지 않음
+                    </label>
                   </div>
                 </td>
               </tr>
@@ -194,7 +199,7 @@ export default function MemberRegister() {
                   <td><label>닉네임 *</label></td>
                   <td>
                     <input type="text" name="boardMemberNick" required />
-                    <p>* 반려동물을 키우지 않을 경우 반려동물 이름 대신 입력하신 닉네임이 사용됩니다.</p>
+                    <p className={styles.notice}>* 반려동물을 키우지 않을 경우 반려동물 이름 대신 입력하신 닉네임이 사용됩니다.</p>
                   </td>
                 </tr>
               )}
@@ -235,7 +240,7 @@ export default function MemberRegister() {
                         <option value="T">산책 프로필을 노출합니다.</option>
                         <option value="F">산책 프로필을 노출하지 않습니다.</option>
                       </select>
-                      <p>산책 프로필 노출 여부는 마이페이지에서 언제든 수정할 수 있습니다.</p>
+                      <p className={styles.notice}>산책 프로필 노출 여부는 마이페이지에서 언제든 수정할 수 있습니다.</p>
                     </td>
                   </tr>
                   <tr>
@@ -260,7 +265,7 @@ export default function MemberRegister() {
                         }}
                       ></div>
                       <input type="hidden" name="boardMemberProfile" />
-                      <p>└ 상자 안에 프로필 이미지를 드래그해주세요.</p>
+                      <p className={styles.notice}>└ 상자 안에 프로필 이미지를 드래그해주세요.</p>
                     </td>
                   </tr>
                 </>

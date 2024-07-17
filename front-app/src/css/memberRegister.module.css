@@ -1,5 +1,4 @@
 .sub_title_container {
-  justify-content: center;
   align-items: center;
   height: 100px;
   background-color: #00823E;
@@ -14,15 +13,17 @@
   align-items: center;
   z-index: 3;
   position: relative;
+  padding-left: 50px;
 }
 
-.logo_small {
-  width: 40px;
+.sentence img {
+  width: 50px;
 }
 
 .sentence p {
   padding-left: 10px;
-  font-size: 20px;
+  font-size: 25px;
+  font-weight: bold;
   margin: 0;
 }
 
@@ -32,16 +33,15 @@
   width: 100%;
   height: 100%;
   background-color: #FFFFFF;
-  border-radius: 20px 20px 0 0;
+  border-radius: 50px 50px 0 0;
   z-index: 1;
 }
 
 .form_container {
-  background-color: #FFFFFF;
   padding: 20px;
-  border: 1px solid #CCCCCC;
-  border-radius: 5px;
-  margin-top: 20px;
+  border-top: 1px solid #CCCCCC;
+  display: flex;
+  justify-content: center;
 }
 
 .form_table {
@@ -51,8 +51,9 @@
 
 .form_table td {
   padding: 10px;
-  vertical-align: middle;
+  padding-right: 20px;
   border-bottom: 1px solid #EEEEEE;
+  font-size: 20px;
 }
 
 .form_table label {
@@ -62,23 +63,50 @@
 .form_table input[type="text"],
 .form_table input[type="password"],
 .form_table input[type="number"],
-.form_table input[type="file"],
-.form_table select {
+.form_table input[type="file"] {
   width: 500px;
   padding: 8px;
   box-sizing: border-box;
   border: 1px solid #BEB4B4;
   border-radius: 10px;
-  height: 40px;
+  height: 50px;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.form_table select{
+  width: 120px;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #BEB4B4;
+  border-radius: 10px;
+  height: 50px;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.form_table select[name="petWalkProfile"] {
+  width: 500px;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #BEB4B4;
+  border-radius: 10px;
+  height: 50px;
   margin-right: 10px;
 }
 
+.notice{
+  font-style: italic; 
+  color: #595959;
+}
+
 .form_table button {
-  width: 100px;
-  height: 40px;
+  width: 120px;
+  height: 50px;
   border: 1px solid #BEB4B4;
   background-color: #EFEFEF;
   transition: box-shadow 0.3s ease;
+  font-size: 20px;
 }
 
 .form_table button:hover {
@@ -86,11 +114,29 @@
 }
 
 .form_table input[type="radio"] {
-  margin-right: 10px;
+  width: auto; /* auto width to fit content */
+  margin-right: 5px; /* slight margin for spacing */
 }
 
-.form_table span{
-  padding-left: 10px;
+.radio_set {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.radio_set label {
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.radio_set input[type="radio"] {
+  margin: 0;
+  margin-right: 10px;
+  vertical-align: middle;
+  width: 20px;
 }
 
 .form_table div {
@@ -109,12 +155,13 @@
   border: none;
   background-color: #00823E;
   color: white;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   width: 200px;
-  height: 50px;
-  margin: 0 10px; /* 버튼 간의 간격 조정 */
+  height: 60px;
+  margin: 0 10px;
   margin-top: 50px;
+  font-size: 20px;
 }
 
 .form_buttons button[type="button"] {
@@ -134,4 +181,8 @@
 
 .checkbox_container input {
   margin-right: 10px;
+}
+
+.checkbox_container label{
+  font-size: 20px;
 }
