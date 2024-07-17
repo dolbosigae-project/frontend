@@ -11,6 +11,7 @@ export default function MemberRegister() {
   const [isIdDuplicate, setIsIdDuplicate] = useState(false);
   const [isIdChecked, setIsIdChecked] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
   const txtId = useRef();
   const formRef = useRef();
   const navigate = useNavigate();
@@ -43,6 +44,25 @@ export default function MemberRegister() {
     }
   };
 
+  const handleFileDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    setProfileImage(file);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -59,13 +79,10 @@ export default function MemberRegister() {
     const formData = new FormData(formRef.current);
     const data = Object.fromEntries(formData.entries());
 
-    if (!data.boardMemberRegion) {
-      alert("사는지역을 입력해 주세요.");
-      return;
+    let profileImageBase64 = null;
+    if (profileImage) {
+      profileImageBase64 = await getBase64(profileImage);
     }
-
-    // 디버깅: 수집된 폼 데이터 콘솔에 출력
-    console.log(data);
 
     const jsonData = {
       boardMemberId: data.boardMemberId,
@@ -74,24 +91,22 @@ export default function MemberRegister() {
       boardMemberRegion: data.boardMemberRegion,
       boardMemberPetWith: hasPet ? 'T' : 'F',
       petId: '',
-      boardMemberNick: hasPet ? data.petName : data.boardMemberNick, // 조건에 따라 설정
+      boardMemberNick: hasPet ? data.petName : data.boardMemberNick,
       petBirth: data.petBirth,
       petGender: data.petGender,
       petSize: data.petSize,
       petWeight: data.petWeight,
-      petWalkProfile: '',
+      petWalkProfile: data.petWalkProfile,
       petImageNo: 0,
       petImagePath: '',
-      petInfo: data.petInfo
+      petInfo: data.petInfo,
+      profileImg: profileImageBase64
     };
 
-    // 디버깅: 생성된 JSON 데이터 콘솔에 출력
-    console.log(jsonData);
-
-    let response; // 오류 확인을 위해 try 밖에 선언
+    console.log("jsonData:", jsonData); // JSON 데이터가 올바른지 콘솔에 출력합니다.
 
     try {
-      response = await axios.post('http://localhost:9999/member/register', jsonData, {
+      const response = await axios.post('http://localhost:9999/member/register', jsonData, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -99,17 +114,12 @@ export default function MemberRegister() {
 
       if (response.status === 200) {
         alert('회원가입 성공');
-        console.log(response);
         navigate('/');
       } else {
         console.error('Unexpected response status:', response.status);
       }
     } catch (error) {
-      console.log(response);
       console.error('회원가입 에러 발생', error);
-      if (response) {
-        console.log('Response data:', response.data);
-      }
       alert('회원가입 중 오류가 발생했습니다.');
     }
   };
@@ -144,10 +154,6 @@ export default function MemberRegister() {
                 <td><input type="password" name="boardMemberPasswd" required /></td>
               </tr>
               <tr>
-                <td><label>이메일 *</label></td>
-                <td><input type="email" name="email" required /></td>
-              </tr>
-              <tr>
                 <td><label>사는지역 *</label></td>
                 <td>
                   <input type="text" name="boardMemberRegion" value={address} required readOnly />
@@ -168,16 +174,18 @@ export default function MemberRegister() {
                       type="radio"
                       name="boardMemberPetWith"
                       value="Y"
+                      id='Y'
                       onChange={handlePetChange}
                     />
-                    <label>반려동물을 키우고 있음</label>
+                    <label htmlFor='Y'>반려동물을 키우고 있음</label>
                     <input
                       type="radio"
                       name="boardMemberPetWith"
                       value="N"
+                      id='N'
                       onChange={handlePetChange}
                     />
-                    <label>반려동물을 키우고 있지 않음</label>
+                    <label htmlFor='N'>반려동물을 키우고 있지 않음</label>
                   </div>
                 </td>
               </tr>
@@ -202,7 +210,12 @@ export default function MemberRegister() {
                   </tr>
                   <tr>
                     <td><label>반려동물 성별</label></td>
-                    <td><input type="text" name="petGender" placeholder='M/F'/></td>
+                    <td>
+                      <select name="petGender">
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                      </select>
+                    </td>
                   </tr>
                   <tr>
                     <td><label>반려동물 무게</label></td>
@@ -212,16 +225,43 @@ export default function MemberRegister() {
                         <option value="중형견">중형견</option>
                         <option value="대형견">대형견</option>
                       </select>
-                      <input type='number' step="0.1" name="petWeight" />
+                      <input type='number' step="0.1" name="petWeight" placeholder='0.0 (숫자만 입력)' />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label>산책 프로필 노출</label></td>
+                    <td>
+                      <select name="petWalkProfile">
+                        <option value="T">산책 프로필을 노출합니다.</option>
+                        <option value="F">산책 프로필을 노출하지 않습니다.</option>
+                      </select>
+                      <p>산책 프로필 노출 여부는 마이페이지에서 언제든 수정할 수 있습니다.</p>
                     </td>
                   </tr>
                   <tr>
                     <td><label>반려동물 소개</label></td>
-                    <td><input type="text" name="petInfo" /></td>
+                    <td><input type="text" name="petInfo" placeholder='산책 프로필에 노출됩니다'/></td>
                   </tr>
                   <tr>
                     <td><label>반려동물 사진</label></td>
-                    <td><input type="file" name="petPhoto" /></td>
+                    <td>
+                      <div
+                        id="profile_img"
+                        onDrop={handleFileDrop}
+                        onDragOver={handleDragOver}
+                        style={{
+                          width: '100px',
+                          height: '100px',
+                          border: '1px solid black',
+                          backgroundImage: profileImage ? `url(${URL.createObjectURL(profileImage)})` : 'none',
+                          backgroundRepeat: 'no-repeat',
+                          backgroundPosition: 'center',
+                          backgroundSize: 'contain'
+                        }}
+                      ></div>
+                      <input type="hidden" name="boardMemberProfile" />
+                      <p>└ 상자 안에 프로필 이미지를 드래그해주세요.</p>
+                    </td>
                   </tr>
                 </>
               )}
