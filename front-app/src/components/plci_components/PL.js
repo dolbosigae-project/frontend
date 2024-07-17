@@ -1,113 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import PlSelectDong from './PlSelectDong';
 import styles from '../../css/poci_css/pl.module.css';
 import { Link } from 'react-router-dom';
 
 const PAGE_GROUP_SIZE = 5;
 
-const Select1 = () => (
-    <select className={styles.select_su_dong}>
-        <option>선택</option>
-        <option>수진동</option>
-        <option>삼평동</option>
-        <option>정자동</option>
-        <option>수내동</option>
-        <option>단대동</option>
-        <option>구미동</option>
-        <option>율동</option>
-    </select>
-);
-
-const Select2 = () => (
-    <select className={styles.select_su_dong}>
-            <option>선택</option>
-            <option>하동</option>
-            <option>권선동</option>
-            <option>금곡동</option>
-    </select>
-);
-
-const Select3 = () => (
-    <select className={styles.select_su_dong}>
-        <option>선택</option>
-        <option>석수동</option>
-    </select>
-);
-
-const Select4 = () => (
-    <select className={styles.select_su_dong}>
-        <option>선택</option>
-        <option>성곡동</option>
-    </select>
-);
-
-const Select5 = () => (
-    <select className={styles.select_su_dong}>
-        <option>선택</option>
-        <option>동삭동</option>
-        <option>팽성읍</option>
-        <option>청북읍</option>
-        <option>오성면</option>
-        <option>포승읍</option>
-        <option>이충동</option>
-    </select>
-);
-
-const Select6 = () => (
-    <select className={styles.select_su_dong}>
-        <option>선택</option>
-        <option>상하동</option>
-        <option>하갈동</option>
-        <option>상현동</option>
-    </select>
-);
-
-const Select7 = () => (
-    <select className={styles.select_su_dong}>
-        <option>선택</option>
-        <option>장호원읍</option>
-        <option>부발읍</option>
-    </select>
-);
-
-const Select8 = () => (
-    <select className={styles.select_su_dong}>
-        <option>선택</option>
-        <option>하성면</option>
-    </select>
-);
-
-const Select9 = () => (
-    <select className={styles.select_su_dong}>
-        <option>선택</option>
-        <option>오산동</option>
-        <option>정남면</option>
-    </select>
-);
-
-const Select10 = () => (
-    <select className={styles.select_su_dong}>
-        <option>선택</option>
-        <option>옥정동</option>
-    </select>
-);
-
-const Select11 = () => (
-    <select className={styles.select_su_dong}>
-        <option>선택</option>
-        <option>교문동</option>
-    </select>
-);
-
-const Select12 = () => (
-    <select className={styles.select_su_dong}>
-        <option>선택</option>
-        <option>일산동구</option>
-        <option>일산서구</option>
-        <option>동산동</option>
-    </select>
-);
 const PL = () => {
     const [plId, setPlId] = useState('');
     const [plName, setPlName] = useState('');
@@ -121,12 +18,115 @@ const PL = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [pagination, setPagination] = useState();
 
+const Select1 = () => (
+    <select className={styles.select_su_dong} onChange={(e) => setPlCity(e.target.value)}>
+        <option>선택</option>
+        <option value='수진동'>수진동</option>
+        <option value='삼평동'>삼평동</option>
+        <option value='정자동'>정자동</option>
+        <option value='수내동'>수내동</option>
+        <option value='단대동'>단대동</option>
+        <option value='구미동'>구미동</option>
+        <option value='율동'>율동</option>
+    </select>
+);
+
+const Select2 = () => (
+    <select className={styles.select_su_dong} onChange={(e) => setPlCity(e.target.value)}>
+        <option>선택</option>
+        <option value='하동'>하동</option>
+        <option value='권선동'>권선동</option>
+        <option value='금곡동'>금곡동</option>
+    </select>
+);
+
+const Select3 = () => (
+    <select className={styles.select_su_dong} onChange={(e) => setPlCity(e.target.value)}>
+        <option>선택</option>
+        <option value='석수동'>석수동</option>
+    </select>
+);
+
+const Select4 = () => (
+    <select className={styles.select_su_dong} onChange={(e) => setPlCity(e.target.value)}>
+        <option>선택</option>
+        <option value='성곡동'>성곡동</option>
+    </select>
+);
+
+const Select5 = () => (
+    <select className={styles.select_su_dong} onChange={(e) => setPlCity(e.target.value)}>
+        <option>선택</option>
+        <option value='동삭동'>동삭동</option>
+        <option value='팽성읍'>팽성읍</option>
+        <option value='청북읍'>청북읍</option>
+        <option value='오성면'>오성면</option>
+        <option value='포승읍'>포승읍</option>
+        <option value='이충동'>이충동</option>
+    </select>
+);
+
+const Select6 = () => (
+    <select className={styles.select_su_dong} onChange={(e) => setPlCity(e.target.value)}>
+        <option>선택</option>
+        <option value=''>상하동</option>
+        <option value='하갈동'>하갈동</option>
+        <option value='상현동'>상현동</option>
+    </select>
+);
+
+const Select7 = () => (
+    <select className={styles.select_su_dong} onChange={(e) => setPlCity(e.target.value)}>
+        <option>선택</option>
+        <option value=''>장호원읍</option>
+        <option value='부발읍'>부발읍</option>
+    </select>
+);
+
+const Select8 = () => (
+    <select className={styles.select_su_dong} onChange={(e) => setPlCity(e.target.value)}>
+        <option>선택</option>
+        <option value='하성면'>하성면</option>
+    </select>
+);
+
+const Select9 = () => (
+    <select className={styles.select_su_dong} onChange={(e) => setPlCity(e.target.value)}>
+        <option>선택</option>
+        <option value=''>오산동</option>
+        <option value='정남면'>정남면</option>
+    </select>
+);
+
+const Select10 = () => (
+    <select className={styles.select_su_dong} onChange={(e) => setPlCity(e.target.value)}>
+        <option>선택</option>
+        <option value='옥정동'>옥정동</option>
+    </select>
+);
+
+const Select11 = () => (
+    <select className={styles.select_su_dong} onChange={(e) => setPlCity(e.target.value)}>
+        <option>선택</option>
+        <option value='교문동'>교문동</option>
+    </select>
+);
+
+const Select12 = () => (
+    <select className={styles.select_su_dong} onChange={(e) => setPlCity(e.target.value)}>
+        <option>선택</option>
+        <option value='일산동구'>일산동구</option>
+        <option value='일산서구'>일산서구</option>
+        <option value='동산동'>동산동</option>
+    </select>
+);
+
     useEffect(() => {
         fetchData();
     }, [plId, plName, plHour, plTel, plAddress, currentPage]);
 
     const fetchData = async() => {
-        try {
+        try{ 
             const response = await axios.get('http://localhost:9999/city/list', {
                 params: {
                     plId: plId,
@@ -198,17 +198,31 @@ const SearchCity = () => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     const searchClick = async() => {
         try {
-            const response = await axios.get('http://localhost:9999/search/city', {
-                params: {
+            const response = await axios.post('http://localhost:9999/search/city', {
                     plCity : plCity// 선택된 도시 정보 전송
-                }
             });
-            if (response.status === 200) {
-                const { contents, pagination } = response.data;
-                setSearchResult(contents); // 검색 결과 업데이트
-                setTotalPages(pagination.totalPages); // 전체 페이지 수 업데이트
-                setPagination(pagination); // 페이징 정보 업데이트
-            }
+            if(response.status === 200){
+                try{
+                    const getResponse = await axios.get('http://localhost:9999/search/result',{
+                        params:{
+                        plId : plId,
+                        plName : plName,
+                        plHour : plHour,
+                        plAddress : plAddress,
+                        page: currentPage,
+                        limit : 5
+                    }
+                });
+                if(getResponse.status === 200)   {
+                    const { contents, pagination } = getResponse.data;
+                    setSearchResult(contents);
+                    setTotalPages(pagination.totalPages);
+                    setPagination(pagination);
+                }  
+            }catch(error){
+                console.log(error);
+            }      
+        }  
         } catch (error) {
             console.error('Error searching:', error);
         }
@@ -225,7 +239,7 @@ const SearchCity = () => {
                 <div className={styles.search_container}>
                         <select className={styles.select_gu} onChange={SelectOption}>
                             <option>선택</option>
-                            <option className={styles.option} value="1">성남시</option>
+                            <option className={styles.option} id='성수동' value="1">성남시</option>
                             <option className={styles.option} value="2">수원시</option>
                             <option className={styles.option} value="3">안양시</option>
                             <option className={styles.option} value="4">안산시</option>
