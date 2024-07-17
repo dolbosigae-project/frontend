@@ -49,7 +49,7 @@ header{
     flex-flow: row nowrap;
 
 }
-.search_btn{
+.search_input{
     margin-top: 10px;
     margin-bottom: 10px;
     width: 80px;
