@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import KakaoMap from './KakaoMap';  // KakaoMap 컴포넌트를 import 합니다.
 
 const ShelterDetail = () => {
     const { shID } = useParams();
@@ -33,12 +34,17 @@ const ShelterDetail = () => {
 
     return (
         <div>
-            <p>센터명 : {shelter.shName}</p>
-            <p>센터번호 : {shelter.shTel}</p>
-            <p>센터지역 : {shelter.shRegion}</p>
-            <p>구조대상동물: {shelter.shAnimalType}</p>
-            <p>센터주소 : {shelter.shAddress}</p>
-            <p>센터운영시간 : {shelter.shHour}</p>
+            <div>
+                <KakaoMap address={shelter.shAddress} />  {/* KakaoMap 컴포넌트를 사용하여 지도를 표시합니다. */}
+            </div>
+            <div>
+                <p>센터명 : {shelter.shName}</p>
+                <p>센터번호 : {shelter.shTel}</p>
+                <p>센터지역 : {shelter.shRegion}</p>
+                <p>구조대상동물: {shelter.shAnimalType}</p>
+                <p>센터주소 : {shelter.shAddress}</p>
+                <p>센터운영시간 : {shelter.shHour}</p>
+            </div>
         </div>
     );
 };
