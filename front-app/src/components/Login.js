@@ -16,10 +16,8 @@ export default function Login({ onLoginSuccess }) {
       const response = await axios.post('http://localhost:9999/login', { id, pass: password }, { withCredentials: true });
       console.log('로그인 응답:', response.data);
 
-      // 응답 데이터가 success인 경우 처리
       if (response.data.success) {
         const userInfo = response.data.user; // 서버 응답에서 user 정보를 가져옴
-        console.log('로그인한 사용자 정보:', userInfo);
         localStorage.setItem('user', JSON.stringify(userInfo)); // 로컬 스토리지에 사용자 정보 저장
         onLoginSuccess(userInfo); // 로그인 성공 시 상위 컴포넌트의 상태 업데이트
         navigate('/');

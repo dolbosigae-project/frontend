@@ -14,12 +14,17 @@ export default function Header({ isLoggedIn, onLogout }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      console.log('저장된 사용자 정보:', JSON.parse(storedUser));
-      setUser(JSON.parse(storedUser));
+    if (isLoggedIn) {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        console.log('저장된 사용자 정보:', parsedUser);
+        setUser(parsedUser);
+      }
+    } else {
+      setUser(null);
     }
-  }, []);
+  }, [isLoggedIn]);
 
   const handleLogout = async (event) => {
     event.preventDefault();
@@ -45,21 +50,20 @@ export default function Header({ isLoggedIn, onLogout }) {
           <ul>
             {isLoggedIn ? (
               <>
-                <li>
-                  <button onClick={handleLogout} className={styles.authItem}>로그아웃</button>
-                </li>
                 <li className={styles.top_button}>
                   <Link to="/member/mypage" className={styles.authItem}>
                     <img src={my_page} alt="my_page" className={styles.my_page} />마이페이지
                   </Link>
                 </li>
-                {user && user.boardMemberGradeNo === 0 && ( // 'boardMemberGradeNo' 속성 사용
+                {user && user.boardMemberGradeNo === 0 && (
                   <li className={styles.top_button}>
                     <Link to="/member/view" className={styles.authItem}>
                       <img src={memberView} alt="MemberView" className={styles.memberView} />회원관리
                     </Link>
-                  </li>
-                )}
+                  </li>)}
+                <li>
+                  <button onClick={handleLogout} className={styles.authItem}>로그아웃</button>
+                </li>
               </>
             ) : (
               <>
