@@ -79,6 +79,11 @@ export default function MemberRegister() {
     const formData = new FormData(formRef.current);
     const data = Object.fromEntries(formData.entries());
 
+    if (data.boardMemberPasswd !== data.checkPasswd) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
     let profileImageBase64 = null;
     if (profileImage) {
       profileImageBase64 = await getBase64(profileImage);
@@ -152,6 +157,12 @@ export default function MemberRegister() {
               <tr>
                 <td><label>비밀번호 *</label></td>
                 <td><input type="password" name="boardMemberPasswd" required /></td>
+              </tr>
+              <tr>
+                <td><label>비밀번호 확인 *</label></td>
+                <td>
+                  <input type="password" name="checkPasswd" required />
+                </td>
               </tr>
               <tr>
                 <td><label>사는지역 *</label></td>
