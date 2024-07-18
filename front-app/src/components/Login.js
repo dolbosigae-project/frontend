@@ -11,7 +11,7 @@ export default function Login({ onLoginSuccess }) {
       <div className={styles.sub_container}>
         <LoginForm onLoginSuccess={onLoginSuccess} />
         <div className={styles.vertical_line}></div>
-        <KakaoLogin />
+        <KakaoLogin onLoginSuccess={onLoginSuccess} />
       </div>
     </div>
   );
