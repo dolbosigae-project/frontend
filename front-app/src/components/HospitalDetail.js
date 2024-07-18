@@ -45,7 +45,7 @@ const HospitalDetail = () => {
 
     return (
         <div className={styles.container}>
-            <h2 className={styles.subTitle}></h2> {/* 이 부분을 container 밖으로 빼냈습니다. */}
+            <h2 className={styles.subTitle}></h2> 
             <div className={styles.infoContainer}>
                 <table>
                     <thead>
