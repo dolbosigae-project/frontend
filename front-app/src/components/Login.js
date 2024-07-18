@@ -14,16 +14,21 @@ export default function Login({ onLoginSuccess }) {
 
     try {
       const response = await axios.post('http://localhost:9999/login', { id, pass: password }, { withCredentials: true });
-      if (response.data === 'success') {
-        alert('로그인하였습니다.');
-        onLoginSuccess(); // 로그인 성공 시 상위 컴포넌트의 상태 업데이트
+      console.log('로그인 응답:', response.data);
+
+      // 응답 데이터가 success인 경우 처리
+      if (response.data.success) {
+        const userInfo = response.data.user; // 서버 응답에서 user 정보를 가져옴
+        console.log('로그인한 사용자 정보:', userInfo);
+        localStorage.setItem('user', JSON.stringify(userInfo)); // 로컬 스토리지에 사용자 정보 저장
+        onLoginSuccess(userInfo); // 로그인 성공 시 상위 컴포넌트의 상태 업데이트
         navigate('/');
       } else {
         alert('로그인에 실패하였습니다.');
       }
     } catch (error) {
       alert('로그인에 실패하였습니다.');
-      console.error(error);
+      console.error('로그인 에러:', error);
     }
   }
 
@@ -51,7 +56,7 @@ export default function Login({ onLoginSuccess }) {
         />
         <div>
           <button type="submit">로그인</button>
-          <a onClick={() => navigate('/register')}>회원가입</a>
+          <a onClick={() => navigate('/member/register')}>회원가입</a>
         </div>
       </form>
       <div>
