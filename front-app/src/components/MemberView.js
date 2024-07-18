@@ -68,7 +68,7 @@ export default function MemberView() {
   const handleWalkProfileChange = (e, memberId) => {
     const updatedList = memberList.map(member => {
       if (member.boardMemberId === memberId) {
-        return { ...member, petWalkProfile: e.target.value === '예' ? true : false };
+        return { ...member, petWalkProfile: e.target.value === 'T' ? 'T' : 'F' };
       }
       return member;
     });
@@ -236,9 +236,9 @@ export default function MemberView() {
                   <td>
                     <div className={styles.flex_container}>
                       <span className={styles.label}>산책프로필 노출 여부</span>
-                      <select className={styles.customSelect} ref={txtPetWalkProfile} value={member.petWalkProfile ? '예' : '아니오'} onChange={(e) => handleWalkProfileChange(e, member.boardMemberId)}>
-                        <option value="예">예</option>
-                        <option value="아니오">아니오</option>
+                      <select className={styles.customSelect} ref={txtPetWalkProfile} value={member.petWalkProfile} onChange={(e) => handleWalkProfileChange(e, member.boardMemberId)}>
+                        <option value="T">예</option>
+                        <option value="F">아니오</option>
                       </select><br />
                     </div>
                     <div className={styles.flex_container}>

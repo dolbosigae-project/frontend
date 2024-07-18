@@ -245,7 +245,7 @@ export default function MemberRegister() {
                   </tr>
                   <tr>
                     <td><label>반려동물 소개</label></td>
-                    <td><input type="text" name="petInfo" placeholder='산책 프로필에 노출됩니다'/></td>
+                    <td><textarea name="petInfo" placeholder='산책 프로필에 노출됩니다'/></td>
                   </tr>
                   <tr>
                     <td><label>반려동물 사진</label></td>
@@ -257,7 +257,7 @@ export default function MemberRegister() {
                         style={{
                           width: '100px',
                           height: '100px',
-                          border: '1px solid black',
+                          border: '1px solid #CCCCCC',
                           backgroundImage: profileImage ? `url(${URL.createObjectURL(profileImage)})` : 'none',
                           backgroundRepeat: 'no-repeat',
                           backgroundPosition: 'center',

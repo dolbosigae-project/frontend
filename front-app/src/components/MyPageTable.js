@@ -1,41 +1,36 @@
 import styles from '../css/myPageTable.module.css';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-export default function MyPageTable() {
-  const [memberList, setMemberList] = useState([]); // 빈 배열로 초기화
-  const [userId, setUserId] = useState(null); // 사용자 ID 상태 추가
+export default function MyPageTable({ member, onMemberChange }) {
+  const [address, setAddress] = useState('');
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      //console.log('저장된 사용자 정보:', user); 사용자 정보 확인용
-      setUserId(user.boardMemberId); // 사용자 ID 설정
-    } else {
-      console.error('사용자 정보를 찾을 수 없습니다.');
+    if (address) {
+      onMemberChange({
+        ...member,
+        boardMemberRegion: address
+      });
     }
-  }, []);
+  }, [address]);
 
-  useEffect(() => {
-    const readData = async () => {
-      if (userId) {
-        try {
-          const response = await axios.get(`http://localhost:9999/member/search/${userId}`);
-          setMemberList(response.data);
-        } catch (error) {
-          console.error('정보를 불러오지 못했습니다.', error);
-        }
-      } else {
-        console.error('사용자 ID를 찾을 수 없습니다.');
+  const handleInputChange = (e, field) => {
+    onMemberChange({
+      ...member,
+      [field]: e.target.value || '' // null일 경우 빈 문자열로 설정
+    });
+  };
+
+  const handleAddressSearch = () => {
+    new window.daum.Postcode({
+      oncomplete: function(data) {
+        setAddress(data.address);
       }
-    };
-    readData();
-  }, [userId]);
+    }).open();
+  };
 
   return (
-    <div>
-      {memberList.length === 0 ? (
+    <div className={styles.tableContainer}>
+      {!member ? (
         <div>데이터가 로딩 중입니다...</div>
       ) : (
         <table>
@@ -43,10 +38,44 @@ export default function MyPageTable() {
             <tr>
               <td>회원이름</td>
               <td>
-                <input type="text" value={memberList[0].boardMemberName} readOnly />
+                <input 
+                  type="text" 
+                  value={member.boardMemberName || ''} 
+                  onChange={(e) => handleInputChange(e, 'boardMemberName')}
+                />
               </td>
             </tr>
-            {/* 필요한 다른 사용자 정보도 추가할 수 있습니다. */}
+            <tr>
+              <td>아이디</td>
+              <td>
+                <input 
+                  type="text" 
+                  value={member.boardMemberId || ''} 
+                  readOnly
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>비밀번호</td>
+              <td>
+                <input 
+                  type="password" 
+                  value={member.boardMemberPasswd || ''} 
+                  onChange={(e) => handleInputChange(e, 'boardMemberPasswd')}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>사는 지역</td>
+              <td>
+                <input 
+                  type="text" 
+                  value={member.boardMemberRegion || ''} 
+                  onChange={(e) => handleInputChange(e, 'boardMemberRegion')}
+                />
+                <button type="button" onClick={handleAddressSearch}>주소찾기</button>
+              </td>
+            </tr>
           </tbody>
         </table>
       )}
