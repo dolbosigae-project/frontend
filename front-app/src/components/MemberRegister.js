@@ -3,6 +3,9 @@ import SubTitleMemberRegister from "./SubTitleMemberRegister";
 import styles from '../css/memberRegister.module.css';
 //import logo_small from '../img/logo_small.png';
 import { Link } from 'react-router-dom';
+=======
+import logo_small from '../img/logo_small.png';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function MemberRegister() {
@@ -12,6 +15,16 @@ export default function MemberRegister() {
 
   const handlePetChange = (e) => {
     setHasPet(e.target.value === 'yes');
+  const [isIdDuplicate, setIsIdDuplicate] = useState(false);
+  const [isIdChecked, setIsIdChecked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
+  const txtId = useRef();
+  const formRef = useRef();
+  const navigate = useNavigate();
+
+  const handlePetChange = (e) => {
+    setHasPet(e.target.value === 'Y');
   };
 
   const handleAddressSearch = () => {
@@ -33,6 +46,97 @@ export default function MemberRegister() {
     } catch (error) {
       console.error("중복 확인 에러 발생", error);
       alert("회원정보 중복 조회 중 오류가 발생했습니다.");
+      setIsIdDuplicate(isDuplicate);
+      setIsIdChecked(true);
+      setErrorMessage(isDuplicate ? "중복된 아이디입니다." : "아이디를 사용할 수 있습니다.");
+    } catch (error) {
+      console.error("중복 확인 에러 발생", error);
+      setErrorMessage("회원정보 중복 조회 중 오류가 발생했습니다.");
+    }
+  };
+
+  const handleFileDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    setProfileImage(file);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!isIdChecked) {
+      alert("아이디 중복 확인 후 회원가입이 가능합니다.");
+      return;
+    }
+
+    if (isIdDuplicate) {
+      alert("중복된 아이디입니다.");
+      return;
+    }
+
+    const formData = new FormData(formRef.current);
+    const data = Object.fromEntries(formData.entries());
+
+    if (data.boardMemberPasswd !== data.checkPasswd) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    let profileImageBase64 = null;
+    if (profileImage) {
+      profileImageBase64 = await getBase64(profileImage);
+    }
+
+    const jsonData = {
+      boardMemberId: data.boardMemberId,
+      boardMemberName: data.boardMemberName,
+      boardMemberPasswd: data.boardMemberPasswd,
+      boardMemberRegion: data.boardMemberRegion,
+      boardMemberPetWith: hasPet ? 'T' : 'F',
+      petId: '',
+      boardMemberNick: hasPet ? data.petName : data.boardMemberNick,
+      petBirth: data.petBirth,
+      petGender: data.petGender,
+      petSize: data.petSize,
+      petWeight: data.petWeight,
+      petWalkProfile: data.petWalkProfile,
+      petImageNo: 0,
+      petImagePath: '',
+      petInfo: data.petInfo,
+      profileImg: profileImageBase64
+    };
+
+    console.log("jsonData:", jsonData); // JSON 데이터가 올바른지 콘솔에 출력합니다.
+
+    try {
+      const response = await axios.post('http://localhost:9999/member/register', jsonData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        alert('회원가입 성공');
+        navigate('/');
+      } else {
+        console.error('Unexpected response status:', response.status);
+      }
+    } catch (error) {
+      console.error('회원가입 에러 발생', error);
+      alert('회원가입 중 오류가 발생했습니다.');
     }
   };
 
