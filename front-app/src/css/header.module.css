@@ -1,0 +1,79 @@
+.headerContainer {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.auth {
+  align-self: flex-end;
+  margin: 10px;
+}
+
+.auth ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.top_button {
+  display: flex;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.authItem {
+  color: #BEB4B4;
+  text-decoration: none;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.authItem img {
+  margin-right: 8px;
+}
+
+.login, .register, .memberView, .my_page, .chat {
+  width: 30px;
+  height: auto;
+}
+
+.nav {
+  width: 100%;
+  border-top: 1px solid #e0e0e0; 
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 0px;
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+.navItem {
+  margin-left: 20px;
+}
+
+.navItem a {
+  color: black;
+  text-decoration: none;
+  font-size: 24px;
+}
+
+.logo {
+  width: 287px;
+  height: auto;
+  margin-top: 10px;
+}
+
