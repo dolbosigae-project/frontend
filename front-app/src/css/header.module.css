@@ -1,0 +1,95 @@
+.headerContainer {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.auth {
+  align-self: flex-end;
+  margin: 10px;
+}
+
+.auth ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.top_button {
+  display: flex;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.authItem {
+  color: #BEB4B4;
+  text-decoration: none;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+button.authItem {
+  width: 120px;
+  height: 50px;
+  border: 1px solid #CCCCCC;
+  background-color: #EFEFEF;
+  transition: box-shadow 0.3s ease;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button.authItem:hover {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.authItem img {
+  margin-right: 8px;
+}
+
+.login, .register, .memberView, .my_page {
+  width: 30px;
+  height: auto;
+}
+
+.nav {
+  width: 100%;
+  border-top: 1px solid #e0e0e0; 
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 0px;
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+.navItem {
+  margin-left: 20px;
+}
+
+.navItem a {
+  color: black;
+  text-decoration: none;
+  font-size: 24px;
+}
+
+.logo {
+  width: 287px;
+  height: auto;
+  margin-top: 10px;
+}
+
