@@ -8,8 +8,8 @@ import MemberView from './components/MemberView';
 import MemberRegister from './components/MemberRegister';
 import MyPage from './components/MyPage';
 import LoginPasswd from './components/LoginPasswd';
-import PL from './components/pl_main_components/PL';
 import PlInfoView from './components/pl_info_component/PlInfoView';
+import PL from './components/pl_main_components/contents/PL';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
