@@ -6,8 +6,10 @@ import Hospital from './components/Hospital';
 import MemberView from './components/MemberView';
 import MemberRegister from './components/MemberRegister';
 import HospitalDetail from './components/HospitalDetail';
-
-
+import MyPage from './components/MyPage';
+import LoginPasswd from './components/LoginPasswd';
+import PL from './components/pl_main_components/PL';
+import PlInfoView from './components/pl_info_component/PlInfoView';
 function App() {
   // 로그인 성공 처리 함수 정의
   const handleLoginSuccess = () => {
@@ -18,19 +20,24 @@ function App() {
 
   return (
     <Router>
-      <Header isLoggedIn={false} onLogout={() => {}} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/animal-medical" element={<Hospital />} />
-        <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-        <Route path="/member/view" element={<MemberView />} />
-        <Route path="/member/register" element={<MemberRegister />} />
-        <Route path="/hospitalDetail" element={<HospitalDetail />} />
-      </Routes>
+      <div>
+        <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
+          <Route path="/login/passwd" element={<LoginPasswd />} />
+          <Route path="/member/view" element={<MemberView />} />
+          <Route path="/member/register" element={<MemberRegister />} />
+          <Route path="/member/mypage" element={<MyPage />} />
+          <Route path="/pl" element={<PL />} />
+          <Route path='/plinfo/:plId' element={<PlInfoView />} />
+          <Route path="/animal-medical" element={<Hospital />} />
+          <Route path="/hospitalDetail" element={<HospitalDetail />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
 
 const Home = () => <div>Home Page</div>;
-
 export default App;

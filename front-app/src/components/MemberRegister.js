@@ -3,7 +3,6 @@ import SubTitleMemberRegister from "./SubTitleMemberRegister";
 import styles from '../css/memberRegister.module.css';
 //import logo_small from '../img/logo_small.png';
 import { Link } from 'react-router-dom';
-=======
 import logo_small from '../img/logo_small.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
