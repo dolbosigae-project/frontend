@@ -8,6 +8,7 @@ const ShelterList = () => {
     const [error, setError] = useState(null);
     const [selectedRegion, setSelectedRegion] = useState('선택');
     const [filteredShelters, setFilteredShelters] = useState([]);
+    const [searchKeyword, setSearchKeyword] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [pageOfContentCount, setPageOfContentCount] = useState(10);
     const [totalPage, setTotalPage] = useState(1);
@@ -16,7 +17,7 @@ const ShelterList = () => {
     useEffect(() => {
         const fetchShelters = async () => {
             try {
-                const response = await axios.get(`https://nam3324.synology.me:32800/shelter?pageNo=${currentPage}&pageContentEa=${pageOfContentCount}`);
+                const response = await axios.get(`http://localhost:9999/shelter?pageNo=${currentPage}&pageContentEa=${pageOfContentCount}`);
                 setShelters(response.data.list);
                 setFilteredShelters(response.data.list);
                 setTotalPage(response.data.totalPage);
@@ -34,13 +35,22 @@ const ShelterList = () => {
         setSelectedRegion(event.target.value);
     };
 
+    const handleSearchChange = (event) => {
+        setSearchKeyword(event.target.value);
+    };
+
     const filterShelters = () => {
-        if (selectedRegion === '선택') {
-            setFilteredShelters(shelters);
-        } else {
-            const filtered = shelters.filter(shelter => shelter.shRegion === selectedRegion);
-            setFilteredShelters(filtered);
+        let filtered = shelters;
+
+        if (selectedRegion !== '선택') {
+            filtered = filtered.filter(shelter => shelter.shRegion === selectedRegion);
         }
+
+        if (searchKeyword.trim() !== '') {
+            filtered = filtered.filter(shelter => shelter.shName.includes(searchKeyword));
+        }
+
+        setFilteredShelters(filtered);
     };
 
     const renderPageNumbers = () => {
@@ -96,6 +106,12 @@ const ShelterList = () => {
                         <option key={region} value={region}>{region}</option>
                     ))}
                 </select>
+                <input
+                    type="text"
+                    value={searchKeyword}
+                    onChange={handleSearchChange}
+                    placeholder="센터명을 입력하세요"
+                />
                 <button onClick={filterShelters}>조회</button>
             </div>
             <table>
