@@ -1,3 +1,5 @@
+// src/components/HospitalSelectDong.js
+
 import React, { useEffect, useState } from 'react';
 import styles from '../css/HospitalSelectDong.module.css';
 
@@ -105,14 +107,14 @@ const Select12 = () => (
 );
 
 
-const PlselectDong = ({selectPlCity, setSelectPlCity}) => {
+const hoselectDong = ({selecthoRegion, setSelecthoRegion}) => {
 
     const SelectOption = (e) => {
-        setSelectPlCity(e.target.value);
+        setSelecthoRegion(e.target.value);
     };
 
-    const SearchCity = () => {
-        switch (selectPlCity) {
+    const SearchRegion = () => {
+        switch (selecthoRegion) {
             case '1':
                 return <Select1 />;
             case '2':
@@ -162,8 +164,8 @@ const PlselectDong = ({selectPlCity, setSelectPlCity}) => {
                 <option className={styles.option} value="12">고양시</option>
             </select>
                 </form>
-            <div className={styles.Search_City}>
-                {SearchCity()}
+            <div className={styles.Search_Region}>
+                {SearchRegion()}
             </div>
         </div>
     );
