@@ -1,6 +1,14 @@
 import styles from './../css/homeMainImg.module.css';
 import React, { useState, useEffect } from "react";
 
+import adopt from '../img/adopt.png';
+import amenities from '../img/amenities.png';
+import fun from '../img/fun.png';
+import animal_shelter from '../img/animal_shelter.png';
+import hospital from '../img/hospital.png';
+import message from '../img/message.png';
+import { Link } from 'react-router-dom';
+
 export default function HomeMainImg() {
   
   const [slideIndex, setSlideIndex] = useState(0);
@@ -24,19 +32,55 @@ export default function HomeMainImg() {
   }, [slides.length]);
 
   return (
-    <div className={styles.parentContainer}>
-      <div className={styles.container}>
-        <div className={styles.whiteBox}></div>
-        <div className={styles.imgContainer}>
-          {slides.map((slide, index) => (
-            <img
-              key={index}
-              className={`${styles.mySlides} ${index === slideIndex ? styles.active : ''}`}
-              src={slide}
-              alt={`Slide ${index + 1}`}
-            />
-          ))}
-        </div>
+    <div className={styles.container}>
+      <div className={styles.whiteBox}></div>
+      <div className={styles.imgContainer}>
+        {slides.map((slide, index) => (
+        <img
+        key={index}
+        className={`${styles.mySlides} ${index === slideIndex ? styles.active : ''}`}
+        src={slide}
+        alt={`Slide ${index + 1}`}
+        />
+        ))}
+      </div>
+      <div className={styles.btnContainer}>
+        <Link to='/' className={styles.miniBtn}>
+          <div className={styles.circle}>
+            <img src={message} alt="message" className={styles.icon} />
+          </div>
+          <label className={styles.btnName}>받은 쪽지함</label>
+        </Link>
+        <Link to='/' className={styles.miniBtn}>
+          <div className={styles.circle}>
+            <img src={hospital} alt="hospital" className={styles.icon} />
+          </div>
+          <label className={styles.btnName}>동물병원 찾기</label>
+        </Link>
+        <Link to='/' className={styles.miniBtn}>
+          <div className={styles.circle}>
+            <img src={animal_shelter} alt="animal_shelter" className={styles.icon} />
+          </div>
+          <label className={styles.btnName}>보호센터 찾기</label>
+        </Link>
+        <Link to='/' className={styles.miniBtn}>
+          <div className={styles.circle}>
+            <img src={adopt} alt="adopt" className={styles.icon} />
+          </div>
+          <label className={styles.btnName}>유기동물 현황</label>
+        </Link>
+        <Link to='/' className={styles.miniBtn}>
+          <div className={styles.circle}>
+            <img src={fun} alt="fun" className={styles.icon} />
+          </div>
+          <label className={styles.btnName}>놀이시설 찾기</label>
+        </Link>
+        <Link to='/' className={styles.miniBtn}>
+          <div className={styles.circle}>
+            <img src={amenities} alt="amenities" className={styles.icon} />
+          </div>
+          <label className={styles.btnName}>편의시설 찾기</label>
+        </Link>
       </div>
     </div>
   );
