@@ -9,6 +9,7 @@ import axios from 'axios';
 export default function MyPage() {
   const [member, setMember] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [isPasswordMatched, setIsPasswordMatched] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -37,8 +38,16 @@ export default function MyPage() {
   }, [userId]);
 
   const updateClick = async () => {
+    if (!isPasswordMatched) {
+      alert('비밀번호가 일치하지 않습니다.');
+      return;
+    }
     try {
-      const response = await axios.post(`http://localhost:9999/member/update`, member);
+      const requestData = {
+        ...member,
+        passwordChanged: member.passwordChanged ? 1 : 0 // boolean을 숫자로 변환
+      };
+      const response = await axios.post(`http://localhost:9999/member/update`, requestData);
       console.log(response.data);
       alert("회원 정보가 업데이트되었습니다."); 
     } catch (error) {
@@ -51,13 +60,17 @@ export default function MyPage() {
     setMember(updatedMember);
   };
 
+  const handlePasswordMatchChange = (isMatched) => {
+    setIsPasswordMatched(isMatched);
+  };
+
   return (
     <div>
       <SubTitleMyPage />
       <MyPageProfile member={member} onMemberChange={handleMemberChange} />
-      <MyPageTable member={member} onMemberChange={handleMemberChange} />
+      <MyPageTable member={member} onMemberChange={handleMemberChange} onPasswordMatchChange={handlePasswordMatchChange} />
       <MyPageTablePet member={member} onMemberChange={handleMemberChange} />
-      <MyPageButton onUpdateClick={updateClick} />
+      <MyPageButton onUpdateClick={updateClick} isPasswordMatched={isPasswordMatched} />
     </div>
   );
 }
