@@ -8,7 +8,8 @@ import MemberView from './components/MemberView';
 import MemberRegister from './components/MemberRegister';
 import MyPage from './components/MyPage';
 import LoginPasswd from './components/LoginPasswd';
-
+import PL from './components/pl_main_components/PL';
+import PlInfoView from './components/pl_info_component/PlInfoView';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -32,12 +33,14 @@ function App() {
       <div>
         <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
         <Routes>
-          <Route path="/" element={<Home/>} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-          <Route path="/login/passwd" element={<LoginPasswd/>} />
-          <Route path="/member/view" element={<MemberView/>} />
-          <Route path="/member/register" element={<MemberRegister/>} />
-          <Route path="/member/mypage" element={<MyPage/>} />
+          <Route path="/login/passwd" element={<LoginPasswd />} />
+          <Route path="/member/view" element={<MemberView />} />
+          <Route path="/member/register" element={<MemberRegister />} />
+          <Route path="/member/mypage" element={<MyPage />} />
+          <Route path="/pl" element={<PL />} />
+          <Route path='/plinfo/:plId' element={<PlInfoView />} />
         </Routes>
       </div>
     </Router>
