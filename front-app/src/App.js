@@ -11,6 +11,7 @@ import LoginPasswd from './components/LoginPasswd';
 import KakaoLogin from './components/KakaoLogin';
 import PL from './components/pl_main_components/contents/PL'
 import PlInfoView from './components/pl_info_component/PlInfoView'
+import ShelterList from './components/ShelterList';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,6 +45,7 @@ function App() {
           <Route path="/kakao/callback" element={<KakaoLogin onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/pl"  element={<PL/>} />
           <Route path='/plinfo/:plId' element={<PlInfoView />} />
+          <Route path='/shelter' element={<ShelterList/>} />
         </Routes>
       </div>
     </Router>

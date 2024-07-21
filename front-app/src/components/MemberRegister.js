@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import SubTitleMemberRegister from "./SubTitleMemberRegister";
+import SubTitleMemberRegister from "./SubTitles/SubTitleMemberRegister";
 import styles from '../css/memberRegister.module.css';
 import logo_small from '../img/logo_small.png';
 import { Link, useNavigate } from 'react-router-dom';

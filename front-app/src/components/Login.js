@@ -1,5 +1,5 @@
 import React from "react";
-import SubTitleLogin from "./SubTitleLogin";
+import SubTitleLogin from "./SubTitles/SubTitleLogin";
 import LoginForm from "./LoginForm";
 import KakaoLogin from "./KakaoLogin";
 import styles from '../css/login.module.css';

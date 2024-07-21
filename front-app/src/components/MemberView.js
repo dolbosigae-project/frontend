@@ -2,7 +2,7 @@ import styles from '../css/memberView.module.css';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import default_img from '../img/default_img.png';
-import SubTitleMemberView from './SubTitleMemberView';
+import SubTitleMemberView from './SubTitles/SubTitleMemberView';
 
 export default function MemberView() {
   const [memberList, setMemberList] = useState([]); // 빈 배열로 초기화

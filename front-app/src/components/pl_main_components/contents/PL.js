@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import React, { useState, useEffect, useCallback } from 'react';
 import styles from './css/pl.module.css';
 import PlNumberRing from '../../pl_numberring_component/PlNumberRing';
-import SubTitlePL from '../../SubTitlePL';
+import SubTitlePL from '../../SubTitles/SubTitlePL';
 
 const PL = () => {
     const [plText, setPlText] = useState('');

@@ -11,7 +11,7 @@ const ShelterDetail = () => {
     useEffect(() => {
         const fetchShelter = async () => {
             try {
-                const response = await axios.get(`https://nam3324.synology.me:32800/shelter/${shID}`);
+                const response = await axios.get(`http://localhost:9999/shelter/${shID}`);
                 setShelter(response.data);
             } catch (error) {
                 setError(error);
