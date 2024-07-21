@@ -1,4 +1,3 @@
-// KakaoLogin.js
 import React, { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import kakaoIcon from '../img/kakaotalk_icon.png';
@@ -13,16 +12,29 @@ export default function KakaoLogin({ onLoginSuccess }) {
   }
 
   useEffect(() => {
+    console.log('useEffect executed'); // useEffect 실행 여부 확인
+
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
+    console.log('Code:', code);
 
     if (code) {
+      console.log('Fetching data with code:', code); // Fetch 요청 전 콘솔 로그
       fetch(`http://localhost:9999/kakao/callback?code=${code}`)
-        .then(response => response.json())
+        .then(response => {
+          console.log('Response:', response);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
         .then(data => {
+          console.log('Data:', data); // 데이터 구조 확인
           if (data.status === 'success') {
             localStorage.setItem('user', JSON.stringify(data)); // 사용자 정보 로컬 스토리지에 저장
-            onLoginSuccess();
+            if (typeof onLoginSuccess === 'function') {
+              onLoginSuccess();
+            }
             navigate('/');
           } else {
             navigate('/login?loginSuccess=false');
@@ -33,7 +45,7 @@ export default function KakaoLogin({ onLoginSuccess }) {
           navigate('/login?loginSuccess=false');
         });
     }
-  }, [navigate, onLoginSuccess]);
+  }, [navigate, onLoginSuccess]); // useEffect 의존성 배열에 필요한 값들을 추가합니다.
 
   return (
     <div className={style.container}>
