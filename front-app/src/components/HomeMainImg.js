@@ -51,7 +51,7 @@ export default function HomeMainImg() {
           </div>
           <label className={styles.btnName}>받은 쪽지함</label>
         </Link>
-        <Link to='/' className={styles.miniBtn}>
+        <Link to='/animal-medical' className={styles.miniBtn}>
           <div className={styles.circle}>
             <img src={hospital} alt="hospital" className={styles.icon} />
           </div>

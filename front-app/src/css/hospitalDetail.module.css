@@ -1,9 +1,4 @@
 .subTitle {
-  background-image: url('../img/ho_default.png');
-  background-size: 100% 100%; /* 이미지를 가로 세로 모두 꽉 차게 설정 */
-  background-position: center; /* 이미지를 가운데 정렬 */ 
-  height: 250px;
-  margin: 0;
   text-align: center; /* 텍스트를 가운데 정렬 */
   padding: 20px 0; /* 내용과의 간격 설정 */
 }
