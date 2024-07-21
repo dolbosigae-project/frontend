@@ -9,8 +9,6 @@ import MemberRegister from './components/MemberRegister';
 import MyPage from './components/MyPage';
 import LoginPasswd from './components/LoginPasswd';
 import KakaoLogin from './components/KakaoLogin';
-/* import PL from './components/pl_main_components/PL';
-import PlInfoView from './components/pl_info_component/PlInfoView'; */
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -42,8 +40,6 @@ function App() {
           <Route path="/member/register" element={<MemberRegister />} />
           <Route path="/member/mypage" element={<MyPage />} />
           <Route path="/kakao/callback" element={<KakaoLogin onLoginSuccess={handleLoginSuccess} />} />
-          {/* <Route path="/pl" element={<PL />} />
-          <Route path='/plinfo/:plId' element={<PlInfoView />} /> */}
         </Routes>
       </div>
     </Router>
