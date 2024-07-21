@@ -1,6 +1,6 @@
 import React from 'react';
 import logo_white from '../../img/logo_white.png';
-import styles from '../../css/subtitles/subTitleMyPage.module.css';
+import styles from '../../css/subtitles/subTitleWhite.module.css';
 
 const subTitleMyPage = () => {
   return (

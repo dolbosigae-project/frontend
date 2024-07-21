@@ -12,6 +12,8 @@ import KakaoLogin from './components/KakaoLogin';
 import PL from './components/pl_main_components/contents/PL'
 import PlInfoView from './components/pl_info_component/PlInfoView'
 import ShelterList from './components/ShelterList';
+import Hospital from './components/Hospital';
+import HospitalDetail from './components/HospitalDetail';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -46,6 +48,8 @@ function App() {
           <Route path="/pl"  element={<PL/>} />
           <Route path='/plinfo/:plId' element={<PlInfoView />} />
           <Route path='/shelter' element={<ShelterList/>} />
+          <Route path='/animal-medical' element={<Hospital />} />
+          <Route path='hospitalDetail' element={<HospitalDetail />}/>
         </Routes>
       </div>
     </Router>

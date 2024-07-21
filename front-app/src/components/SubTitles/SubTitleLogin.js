@@ -1,7 +1,7 @@
 import React from 'react';
 import logo_white from '../../img/logo_white.png';
 import full_logo_white from '../../img/full_logo_white.png';
-import styles from '../../css/subtitles/subTitleLogin.module.css';
+import styles from '../../css/subtitles/subTitleGreen.module.css';
 
 export default function SubTitleLogin() {
   return (

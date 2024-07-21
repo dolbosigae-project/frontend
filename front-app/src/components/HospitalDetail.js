@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styles from '../css/hospitalDetail.module.css';
+import SubTitleHospital from '../components/SubTitles/SubTitleHospital'
 
 const PAGE_GROUP_SIZE = 5;
 
@@ -45,6 +46,7 @@ const HospitalDetail = () => {
 
     return (
         <div className={styles.container}>
+            <SubTitleHospital />
             <h2 className={styles.subTitle}>병원 정보 목록</h2>
             <div className={styles.infoContainer}>
                 <table>
