@@ -1,9 +1,0 @@
- .img {
-    width: 100px;
-    height: 100px;
-    background-image: url('../css/poci_img/113123036001_1.jpeg');
-    object-fit: cover;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
- }

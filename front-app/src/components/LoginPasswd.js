@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import SubTitleLoginPasswd from "./SubTitleLoginPasswd";
+import SubTitleLoginPasswd from "./SubTitles/SubTitleLoginPasswd";
 import axios from 'axios';
 import styles from '../css/loginPasswd.module.css';
 

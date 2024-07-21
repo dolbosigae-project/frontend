@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SubTitleMyPage from './SubTitleMyPage';
+import SubTitleMyPage from './SubTitles/SubTitleMyPage';
 import MyPageProfile from './MyPageProfile';
 import MyPageTable from './MyPageTable';
 import MyPageTablePet from './MyPageTablePet';
@@ -10,6 +10,7 @@ export default function MyPage() {
   const [member, setMember] = useState(null);
   const [userId, setUserId] = useState(null);
   const [isPasswordMatched, setIsPasswordMatched] = useState(true);
+  const [hasPet, setHasPet] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -26,7 +27,8 @@ export default function MyPage() {
       if (userId) {
         try {
           const response = await axios.get(`http://localhost:9999/member/search/${userId}`);
-          setMember(response.data[0]);
+          setMember(response.data);
+          setHasPet(response.data.boardMemberPetWith === 'T');
         } catch (error) {
           console.error('정보를 불러오지 못했습니다.', error);
         }
@@ -58,6 +60,7 @@ export default function MyPage() {
 
   const handleMemberChange = (updatedMember) => {
     setMember(updatedMember);
+    setHasPet(updatedMember.boardMemberPetWith === 'T');
   };
 
   const handlePasswordMatchChange = (isMatched) => {
@@ -68,7 +71,7 @@ export default function MyPage() {
     <div>
       <SubTitleMyPage />
       <MyPageProfile member={member} onMemberChange={handleMemberChange} />
-      <MyPageTable member={member} onMemberChange={handleMemberChange} onPasswordMatchChange={handlePasswordMatchChange} />
+      <MyPageTable member={member} onMemberChange={handleMemberChange} onPasswordMatchChange={handlePasswordMatchChange} hasPet={hasPet} />
       <MyPageTablePet member={member} onMemberChange={handleMemberChange} />
       <MyPageButton onUpdateClick={updateClick} isPasswordMatched={isPasswordMatched} />
     </div>
