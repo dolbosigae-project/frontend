@@ -1,4 +1,3 @@
-// src/ShelterList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -10,7 +9,7 @@ const ShelterList = () => {
     useEffect(() => {
         const fetchShelters = async () => {
             try {
-                const response = await axios.get('https://nam3324.synology.me:32800/shelter');
+                const response = await axios.get('http://localhost:9999/shelter');
                 setShelters(response.data);
             } catch (error) {
                 setError(error);
@@ -47,9 +46,9 @@ const ShelterList = () => {
                         <tr key={shelter.shID}>
                             <td>{shelter.shRegion}</td>
                             <td>
-                                <Link to={`/shelter/${shelter.shID}`}>
+                               {/*  <Link to={`/shelter/${shelter.shID}`}>
                                 {shelter.shName}
-                                </Link>
+                                </Link> */}
                             </td>
                             <td>{shelter.shTel}</td>
                             <td>{shelter.shAddress}</td>

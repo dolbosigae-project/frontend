@@ -129,7 +129,7 @@ export default function Header({ isLoggedIn, onLogout }) {
               onMouseOut={handleMouseOut}>
               <Link className={styles.navLink}>동물보호</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'protection' ? styles.visible : ''}`}>
-                <li className={styles.navSublink}><Link to="/">동물보호센터 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/shelter">동물보호센터 찾기</Link></li>
                 <li className={styles.navSublink}><Link to="/">유기동물 보호현황</Link></li>
               </ul>
             </li>

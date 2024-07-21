@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SubTitleMyPage from './SubTitleMyPage';
+import SubTitleMyPage from './SubTitles/SubTitleMyPage';
 import MyPageProfile from './MyPageProfile';
 import MyPageTable from './MyPageTable';
 import MyPageTablePet from './MyPageTablePet';

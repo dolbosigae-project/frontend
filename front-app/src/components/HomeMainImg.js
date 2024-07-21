@@ -57,7 +57,7 @@ export default function HomeMainImg() {
           </div>
           <label className={styles.btnName}>동물병원 찾기</label>
         </Link>
-        <Link to='/' className={styles.miniBtn}>
+        <Link to='/shelter' className={styles.miniBtn}>
           <div className={styles.circle}>
             <img src={animal_shelter} alt="animal_shelter" className={styles.icon} />
           </div>
