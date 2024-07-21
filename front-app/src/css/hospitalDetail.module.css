@@ -13,19 +13,19 @@
   margin-top: 50px;
 }
 
-table {
+.container table {
   width: 100%; /* 테이블 너비를 화면에 맞게 설정 */
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-th, td {
+.container th, td {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
 
-tr:nth-child(even) {
+.container tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
