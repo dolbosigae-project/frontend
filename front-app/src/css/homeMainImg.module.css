@@ -45,12 +45,13 @@
 
 .btnContainer {
   position: absolute;
-  top: 240px;
-  left: 1650px;
+  top: 37%;
+  left: 65%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 90px; /* 좌우 간격 */
   grid-row-gap: 50px; /* 상하 간격 */
+  z-index: 10; /* z-index 값을 높여서 다른 요소들 위에 배치 */
 }
 
 .miniBtn {
@@ -60,6 +61,7 @@
   transition: transform 1.5s ease-in-out, box-shadow 1.5s ease-in-out;
   text-decoration: none;
   color: black;
+  z-index: 11; /* z-index 값을 높여서 다른 요소들 위에 배치 */
 }
 
 .miniBtn:hover .circle {
@@ -68,9 +70,9 @@
 }
 
 .circle {
-  width: 120px;
-  height: 120px;
-  border-radius: 60px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
   background-color: #EAF9F1;
   position: relative; /* 부모 요소에 relative를 설정하여 자식 요소를 절대 위치로 배치할 수 있게 함 */
 }
@@ -80,8 +82,8 @@
   top: 50%; /* 부모 요소의 세로 중앙 */
   left: 50%; /* 부모 요소의 가로 중앙 */
   transform: translate(-50%, -50%); /* 요소의 중앙을 기준으로 배치 */
-  width: 90px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
 }
 
 .btnName {

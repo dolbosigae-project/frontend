@@ -13,14 +13,14 @@ export default function HomeMainImg() {
   
   const [slideIndex, setSlideIndex] = useState(0);
   const slides = [
-    `${process.env.PUBLIC_URL}/img/1.jpg`,
-    `${process.env.PUBLIC_URL}/img/2.jpg`,
-    `${process.env.PUBLIC_URL}/img/3.jpg`,
-    `${process.env.PUBLIC_URL}/img/4.jpg`,
-    `${process.env.PUBLIC_URL}/img/5.jpg`,
-    `${process.env.PUBLIC_URL}/img/6.jpg`,
-    `${process.env.PUBLIC_URL}/img/7.jpg`,
-    `${process.env.PUBLIC_URL}/img/8.jpg`,
+    `${process.env.PUBLIC_URL}/img/main1.jpg`,
+    `${process.env.PUBLIC_URL}/img/main2.jpg`,
+    `${process.env.PUBLIC_URL}/img/main3.jpg`,
+    `${process.env.PUBLIC_URL}/img/main4.jpg`,
+    `${process.env.PUBLIC_URL}/img/main5.jpg`,
+    `${process.env.PUBLIC_URL}/img/main6.jpg`,
+    `${process.env.PUBLIC_URL}/img/main7.jpg`,
+    `${process.env.PUBLIC_URL}/img/main8.jpg`,
   ];
 
   useEffect(() => {
@@ -51,13 +51,13 @@ export default function HomeMainImg() {
           </div>
           <label className={styles.btnName}>받은 쪽지함</label>
         </Link>
-        <Link to='/' className={styles.miniBtn}>
+        <Link to='/animal-medical' className={styles.miniBtn}>
           <div className={styles.circle}>
             <img src={hospital} alt="hospital" className={styles.icon} />
           </div>
           <label className={styles.btnName}>동물병원 찾기</label>
         </Link>
-        <Link to='/' className={styles.miniBtn}>
+        <Link to='/shelter' className={styles.miniBtn}>
           <div className={styles.circle}>
             <img src={animal_shelter} alt="animal_shelter" className={styles.icon} />
           </div>
@@ -69,7 +69,7 @@ export default function HomeMainImg() {
           </div>
           <label className={styles.btnName}>유기동물 현황</label>
         </Link>
-        <Link to='/' className={styles.miniBtn}>
+        <Link to='/pl' className={styles.miniBtn}>
           <div className={styles.circle}>
             <img src={fun} alt="fun" className={styles.icon} />
           </div>

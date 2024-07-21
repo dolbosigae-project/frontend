@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Modal from "react-modal";
 import styles from '../css/loginForm.module.css';
-
-Modal.setAppElement("#root");
 
 export default function LoginForm({ onLoginSuccess }) {
   const [id, setId] = useState('');

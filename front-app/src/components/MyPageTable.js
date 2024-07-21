@@ -1,8 +1,7 @@
 import styles from '../css/myPageTable.module.css';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
-export default function MyPageTable({ member, onMemberChange, onPasswordMatchChange }) {
+export default function MyPageTable({ member, onMemberChange, onPasswordMatchChange, hasPet }) {
   const [address, setAddress] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -84,6 +83,18 @@ export default function MyPageTable({ member, onMemberChange, onPasswordMatchCha
                   />
                 </td>
               </tr>
+                  {!hasPet && (
+                    <tr>
+                      <td>닉네임</td>
+                      <td>
+                        <input 
+                          type="text" 
+                          value={member.boardMemberNick || ''} 
+                          onChange={(e) => handleInputChange(e, 'boardMemberNick')}
+                        />
+                      </td>
+                    </tr>
+                  )}
               <tr>
                 <td>비밀번호</td>
                 <td>

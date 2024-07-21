@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import KakaoMap from './KakaoMap';
 import styles from '../css/hospital.module.css';
+import SubTitleHospital from '../components/SubTitles/SubTitleHospital'
 
 const PAGE_GROUP_SIZE = 5;
 
@@ -46,7 +47,7 @@ const HO = () => {
 
     return (
         <div>
-            <div className={styles.banner}></div>
+            <SubTitleHospital />
             <div className={styles.container}>
                 <div className={styles.mapContainer}>
                     <KakaoMap />
