@@ -44,27 +44,27 @@
   justify-content: center;
 }
 
-.form_table {
+.form_table_00 {
   width: 100%;
   border-collapse: collapse;
 }
 
-.form_table tr:first-child td {
+.form_table_00 tr:first-child td {
   border-top: 2px solid #929292; /* 첫 번째 행의 상단 테두리 */
 }
 
-.form_table tr:last-child td {
+.form_table_00 tr:last-child td {
   border-bottom: 2px solid #929292; /* 마지막 행의 하단 테두리 */
 }
 
-.form_table td {
+.form_table_00 td {
   padding: 10px;
   padding-right: 20px;
   border: 1px solid #CCCCCC;
   font-size: 20px;
 }
 
-.form_table td:first-child {
+.form_table_00 td:first-child {
   font-weight: bold;
   text-align: center;
   background-color: #f2f2f2;
@@ -72,19 +72,19 @@
   border-left: none;
 }
 
-.form_table td:last-child {
+.form_table_00 td:last-child {
   border-right: none;
 }
 
 
-.form_table label {
+.form_table_00 label {
   font-weight: bold;
 }
 
-.form_table input[type="text"],
-.form_table input[type="password"],
-.form_table input[type="number"],
-.form_table input[type="file"] {
+.form_table_00 input[type="text"],
+.form_table_00 input[type="password"],
+.form_table_00 input[type="number"],
+.form_table_00 input[type="file"] {
   width: 500px;
   padding: 8px;
   box-sizing: border-box;
@@ -95,7 +95,7 @@
   font-size: 20px;
 }
 
-.form_table select{
+.form_table_00 select{
   width: 120px;
   padding: 8px;
   box-sizing: border-box;
@@ -106,7 +106,7 @@
   font-size: 20px;
 }
 
-.form_table select[name="petWalkProfile"] {
+.form_table_00 select[name="petWalkProfile"] {
   width: 500px;
   padding: 8px;
   box-sizing: border-box;
@@ -130,7 +130,7 @@ textarea{
   color: #595959;
 }
 
-.form_table button {
+.form_table_00 button {
   width: 120px;
   height: 50px;
   border: 1px solid #CCCCCC;
@@ -139,11 +139,11 @@ textarea{
   font-size: 20px;
 }
 
-.form_table button:hover {
+.form_table_00 button:hover {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.form_table input[type="radio"] {
+.form_table_00 input[type="radio"] {
   width: auto; /* auto width to fit content */
   margin-right: 5px; /* slight margin for spacing */
 }
@@ -169,7 +169,7 @@ textarea{
   width: 20px;
 }
 
-.form_table div {
+.form_table_00 div {
   display: flex;
   align-items: center;
 }
@@ -203,16 +203,16 @@ textarea{
   opacity: 0.8;
 }
 
-.checkbox_container {
+.checkbox_container_00 {
   display: flex;
   align-items: center;
   margin-top: 20px;
 }
 
-.checkbox_container input {
+.checkbox_container_00 input {
   margin-right: 10px;
 }
 
-.checkbox_container label{
+.checkbox_container_00 label{
   font-size: 20px;
 }
