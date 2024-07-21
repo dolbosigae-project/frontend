@@ -44,7 +44,7 @@ const PL = () => {
     };
 
     const renderTable = useCallback(() => (
-        <table>
+        <table className={styles.specificTable}>
             <thead>
                 <tr>
                     <th></th>

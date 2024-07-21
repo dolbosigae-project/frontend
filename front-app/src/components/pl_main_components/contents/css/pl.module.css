@@ -93,8 +93,7 @@
 
 }
 
-table{
-  
+.specificTable{
   width: 900px;
   display: flex;
   flex-flow: column nowrap;

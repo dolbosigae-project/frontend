@@ -141,7 +141,7 @@ export default function MemberRegister() {
       </div>
       <div className={styles.form_container}>
         <form ref={formRef} onSubmit={handleSubmit}>
-          <table className={styles.form_table}>
+          <table className={styles.form_table_00}>
             <tbody>
               <tr>
                 <td><label>회원이름 *</label></td>
@@ -284,7 +284,7 @@ export default function MemberRegister() {
               )}
             </tbody>
           </table>
-          <div className={styles.checkbox_container}>
+          <div className={styles.checkbox_container_00}>
             <input type='checkbox' id='check' required/>
             <label htmlFor='check'>개인정보 제공에 동의합니다.</label>
           </div>
