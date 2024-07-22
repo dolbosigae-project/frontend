@@ -11,8 +11,8 @@ const KakaoMap = ({ locations }) => {
         if (mapContainer.current && kakao) {
             // 지도를 생성합니다.
             const map = new kakao.maps.Map(mapContainer.current, {
-                center: new kakao.maps.LatLng(37.407546, 127.115474), 
-                level: 3
+                center: new kakao.maps.LatLng(37.814536,127.510739), 
+                level: 8
             });
 
             // 마커를 추가합니다.
@@ -26,7 +26,7 @@ const KakaoMap = ({ locations }) => {
         }
     }, [locations]);
 
-    return <div ref={mapContainer} style={{ width: '100%', height: '400px' }}></div>;
+    return <div ref={mapContainer} style={{ width: '100%', height: '550px' }}></div>;
 };
 
 export default KakaoMap;

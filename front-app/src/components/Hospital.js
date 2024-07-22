@@ -40,7 +40,7 @@ const HO = () => {
     };
 
     const onNumberRing = (number) => {
-        setPage(number);
+        setPage(Number(number));  // ensure the number is parsed as a number
     };
 
     const renderTable = useCallback(() => (
@@ -68,7 +68,14 @@ const HO = () => {
                         <td>{hospital.hoTel}</td>
                         <td>{hospital.hoAddress}</td>
                         <td>{hospital.hoInfo}</td>
-                        <td><Link to={`/hoinfo/${hospital.hoId}`}>이동</Link></td>
+                        <td>
+                            <Link
+                                to={`/hoinfo/${hospital.hoId}`}
+                                className={styles.linkButton} // Apply button styles
+                            >
+                                이동
+                            </Link>
+                        </td>
                     </tr>
                 ))}
             </tbody>
