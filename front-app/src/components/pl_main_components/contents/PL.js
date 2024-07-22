@@ -7,7 +7,6 @@ import PlNumberRing from '../../pl_numberring_component/PlNumberRing';
 const PL = () => {
     const [plId, setPlId] = useState('');
     const [plText, setPlText] = useState('');
-    const [error, setError] = useState('');
     const [result, setResult] = useState([]);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
@@ -25,8 +24,7 @@ const PL = () => {
                 currentPage: page,
             });
         } catch (error) {
-            console.log('Error fetching city data:', error);
-            setError('Error fetching city data');
+            console.log('서버에러:', error);
         }
     };
 
@@ -35,6 +33,10 @@ const PL = () => {
     }, [page, limit]);
 
     const searchClick = async () => {
+        if(!plText.trim()){
+            alert("지역을 입력해주세요");
+            return;
+        }
         setPage(1);
         cityList();
     };
@@ -102,7 +104,7 @@ const PL = () => {
                         onChange={(e) => setPlText(e.target.value)}
                     />
                     <button onClick={searchClick} className={styles.searchBtn}>조회</button>
-                    {error && <div className={styles.error}>{error}</div>}
+                    
                 </div>
                 <div className={styles.searchResult_container}>
                     {result.length > 0 && renderTable()}

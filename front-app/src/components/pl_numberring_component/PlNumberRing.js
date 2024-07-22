@@ -13,7 +13,7 @@ const PlNumberRing = ({ onNumberRing, pagination }) => {
         pages.push(i);
     }
 
-    console.log("PlNumberRing pages: ", pages); // 로그 추가
+    console.log(pages); // 로그 추가
 
     return (
         <div className={styles.numberRing_Container}>
