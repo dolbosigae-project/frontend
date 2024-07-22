@@ -15,6 +15,7 @@ import ShelterList from './components/ShelterList';
 import Hospital from './components/Hospital';
 import HospitalDetail from './components/HospitalDetail';
 import AdminContact from './components/AdminContact';
+import AdminContactNormalTableDetail from './components/AdminContactNormalTableDetail';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -52,6 +53,7 @@ function App() {
           <Route path='/animal-medical' element={<Hospital />} />
           <Route path='hospitalDetail' element={<HospitalDetail />}/>
           <Route path='/admin/contact' element={<AdminContact />} />
+          <Route path='/admin/contact/detail/:adminNo' element={<AdminContactNormalTableDetail />} />
         </Routes>
       </div>
     </Router>
