@@ -1,26 +1,32 @@
-import {useEffect} from 'react';
+// src/components/KakaoMap.js
+import React, { useEffect, useRef } from 'react';
 
-const {kakao} = window;
+const KakaoMap = ({ locations }) => {
+    const mapContainer = useRef(null);
 
-export default function KakaoMap() {
-  const style = {
-    width : '800px',
-    height : '800px',
-    border: '1px solid black',
-    marginTop: '50px',
-    marginLeft: '50px',
-    marginBottom: '50px'
-  }
-  //script 태그로 라이브러리 읽으면 window 객체에 등록
-  // console.log(window);
-  useEffect(() => {
-    var container = document.getElementById('map');
-    var options = {
-      center: new kakao.maps.LatLng(37.407546, 127.115474),
-      level: 3
-    };
-    
-    var map = new kakao.maps.Map(container, options);
-  },[]);
-  return <div id="map" style={style}></div>;
-}
+    useEffect(() => {
+        // 카카오 지도 API를 초기화합니다.
+        const { kakao } = window;
+
+        if (mapContainer.current && kakao) {
+            // 지도를 생성합니다.
+            const map = new kakao.maps.Map(mapContainer.current, {
+                center: new kakao.maps.LatLng(37.407546, 127.115474), 
+                level: 3
+            });
+
+            // 마커를 추가합니다.
+            locations.forEach(location => {
+                const marker = new kakao.maps.Marker({
+                    position: new kakao.maps.LatLng(location.lat, location.lng),
+                    map: map,
+                    title: location.name
+                });
+            });
+        }
+    }, [locations]);
+
+    return <div ref={mapContainer} style={{ width: '100%', height: '400px' }}></div>;
+};
+
+export default KakaoMap;

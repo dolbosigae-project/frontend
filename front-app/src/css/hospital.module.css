@@ -58,3 +58,63 @@
   align-items: flex-start;
   width: 100%;
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.mapContainer {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.searchContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border-left: 1px solid #ddd;
+}
+
+.hospitalList {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.hospitalItem {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.select_gu {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 180px;
+  height: 40px;
+  border-radius: 7px;
+  padding-left: 10px;
+  font-size: 16px;
+}
+
+.select_su_dong {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 180px;
+  height: 40px;
+  border-radius: 7px;
+  padding-left: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.Search_mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}

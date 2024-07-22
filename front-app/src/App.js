@@ -49,7 +49,7 @@ function App() {
           <Route path='/plinfo/:plId' element={<PlInfoView />} />
           <Route path='/shelter' element={<ShelterList/>} />
           <Route path='/animal-medical' element={<Hospital />} />
-          <Route path='hospitalDetail' element={<HospitalDetail />}/>
+          <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
         </Routes>
       </div>
     </Router>
