@@ -1,5 +1,5 @@
 import React from 'react';
-
+import styles from './plNumberRing.css/plNumberRing.module.css'
 const PlNumberRing = ({ onNumberRing, pagination }) => {
     const totalPages = pagination.totalPages;
     const currentPage = pagination.currentPage;
@@ -16,11 +16,11 @@ const PlNumberRing = ({ onNumberRing, pagination }) => {
     console.log("PlNumberRing pages: ", pages); // 로그 추가
 
     return (
-        <div>
+        <div className={styles.numberRing_Container}>
             {currentPageGroup > 1 && (
                 <>
-                    <button onClick={() => onNumberRing(1)}>&lt;&lt;</button>
-                    <button onClick={() => onNumberRing(startPage - 1)}>&lt;</button>
+                    <button onClick={() => onNumberRing(1)} className={styles.leftAllButton}>&lt;&lt;</button>
+                    <button onClick={() => onNumberRing(startPage - 1)} className={styles.leftButton}>&lt;</button>
                 </>
             )}
             {pages.map((number) => (
@@ -28,14 +28,15 @@ const PlNumberRing = ({ onNumberRing, pagination }) => {
                     key={number}
                     onClick={() => onNumberRing(number)}
                     style={{ fontWeight: number === currentPage ? 'bold' : 'normal' }}
+                    className={styles.numberButton}
                 >
                     {number}
                 </button>
             ))}
             {currentPageGroup < Math.ceil(totalPages / pageGroupSize) && (
                 <>
-                    <button onClick={() => onNumberRing(endPage + 1)}>&gt;</button>
-                    <button onClick={() => onNumberRing(totalPages)}>&gt;&gt;</button>
+                    <button onClick={() => onNumberRing(endPage + 1)} className={styles.rightAllButton}>&gt;</button>
+                    <button onClick={() => onNumberRing(totalPages)} className={styles.rightAllButton}>&gt;&gt;</button>
                 </>
             )}
         </div>
