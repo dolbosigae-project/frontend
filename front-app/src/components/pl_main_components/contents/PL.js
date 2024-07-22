@@ -5,12 +5,24 @@ import styles from './css/pl.module.css';
 import PlNumberRing from '../../pl_numberring_component/PlNumberRing';
 
 const PL = () => {
-    const [plId, setPlId] = useState('');
     const [plText, setPlText] = useState('');
     const [result, setResult] = useState([]);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
     const [pagination, setPagination] = useState({ totalPages: 0, currentPage: 1 });
+    const [plUser, setPlAdmin] = useState(false);
+
+    useEffect(() => {
+        const PlUserInfo = async() => {
+            try{
+            const response = await axios.get('http://localhost:9999/city/admin');
+            setPlAdmin(response.data.plAdmin);// 백엔드에서 관리자정보 받을 수 있는 dto만들고 시작
+        }catch(error){
+            console.log("사용자 정보를 가져오는데 실패하였습니다.");
+        }
+    }
+    PlUserInfo();
+},[]);
 
     const cityList = async () => {
         try {
@@ -77,7 +89,9 @@ const PL = () => {
                 {result.map((city, index) => (
                     <tr key={index} className={styles.list_tdAll}>
                         <td className={styles.list_td}>
-                            <button className={styles.DeleteBtn} onClick={() => deleteClick(city.plId)}>삭제</button>
+                        {plUser && (
+                                <button className={styles.DeleteBtn} onClick={() => deleteClick(city.plId)}>삭제</button>
+                            )}
                         </td>
                         <td className={styles.list_td}>{city.plId}</td>
                         <td className={styles.list_td}>{city.plName}</td>
@@ -89,7 +103,7 @@ const PL = () => {
                 ))}
             </tbody>
         </table>
-    ), [result]);
+    ), [result, plUser]);
 
     return (
         <div className={styles.plMain_container}>
