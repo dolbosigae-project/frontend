@@ -133,7 +133,7 @@ export default function Header({ isLoggedIn, onLogout }) {
                 <li className={styles.navSublink}><Link to="/">유기동물 보호현황</Link></li>
               </ul>
             </li>
-            <li className={styles.navItem}><Link to="/" className={styles.navLink}>관리자문의</Link></li>
+            <li className={styles.navItem}><Link to="/admin/contact" className={styles.navLink}>관리자문의</Link></li>
           </ul>
         </nav>
       </header>
