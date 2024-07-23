@@ -56,6 +56,5 @@
 }
 
 .commentBtn:hover{
-  background-color: #00A44B;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+  opacity: 0.8;
 }

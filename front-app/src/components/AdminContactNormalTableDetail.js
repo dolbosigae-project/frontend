@@ -4,11 +4,22 @@ import styles from '../css/adminContactNormalTableDetail.module.css';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import AdminCommentWrite from './AdminCommentWrite';
 
 export default function AdminContactNormalTableDetail() {
   const { adminNo } = useParams();
   const [detail, setDetail] = useState(null);
   const [comment, setComment] = useState([]);
+  const[user, setUser] = useState(null);
+
+  //로컬 스토리지에서 user정보를 가져와 노출여부를 설정함
+  useEffect(()=>{
+    const storedUser = localStorage.getItem('user');
+    if(storedUser){
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+    }
+  },[]);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -78,6 +89,9 @@ export default function AdminContactNormalTableDetail() {
             ))}
           </tbody>
         </table>
+        {user && user.boardMemberGradeNo === 0 &&(
+          <AdminCommentWrite />
+        )}
         <Link to='/admin/contact'>
           <button className={styles.commentBtn}>글 목록</button>
         </Link>

@@ -1,0 +1,29 @@
+.adminCommentWrite{
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0;
+  margin-top: 40px;
+}
+
+.adminCommentWrite textarea{
+  font-size: 16px;
+  width: 700px;
+  height: 100px;
+  margin-right: 10px;
+  box-sizing: border-box;
+}
+
+.adminCommentWrite button{
+  height: 90px;
+  width: 100px;
+  background-color: #595959;
+  color: white;
+}
+
+.adminCommentWrite button:hover{
+  opacity: 0.8;
+}
