@@ -16,6 +16,7 @@ const ShelterList = () => {
 
     useEffect(() => {
         const fetchShelters = async () => {
+            setLoading(true);
             try {
                 const response = await axios.get(`http://localhost:9999/shelter?pageNo=${currentPage}&pageContentEa=${pageOfContentCount}`);
                 setShelters(response.data.list);
@@ -30,6 +31,10 @@ const ShelterList = () => {
 
         fetchShelters();
     }, [currentPage, pageOfContentCount]);
+
+    useEffect(() => {
+        filterShelters();
+    }, [selectedRegion, searchKeyword, shelters]);
 
     const handleFilterChange = (event) => {
         setSelectedRegion(event.target.value);
@@ -51,6 +56,7 @@ const ShelterList = () => {
         }
 
         setFilteredShelters(filtered);
+        setCurrentPage(1); // 필터링 후 페이지를 처음으로 설정
     };
 
     const renderPageNumbers = () => {
@@ -124,7 +130,7 @@ const ShelterList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredShelters.map((shelter) => (
+                    {filteredShelters.slice((currentPage - 1) * pageOfContentCount, currentPage * pageOfContentCount).map((shelter) => (
                         <tr key={shelter.shID}>
                             <td>{shelter.shRegion}</td>
                             <td>
