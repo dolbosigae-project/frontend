@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-<<<<<<< HEAD
 import styles from './../pl_info_component/css/plInfoView.module.css';
 import { Link } from 'react-router-dom';
-=======
-import styles from './plInfoView.css/plInfoView.module.css';
->>>>>>> origin/main
 
 const PlInfoView = () => {
     const { plId } = useParams();
@@ -43,9 +39,8 @@ const PlInfoView = () => {
 
     return (
         <div className={styles.main_container}>
-<<<<<<< HEAD
-            <img className={styles.Img}/>
-            <img className={styles.info_Img} src={placeInfo.plImg}/>
+            <img className={styles.Img} />
+            <img className={styles.info_Img} src={placeInfo.plImg} />
             <table>
                 <tbody>
                     <tr className={styles.Info_tr}>
@@ -55,18 +50,6 @@ const PlInfoView = () => {
                         <td className={styles.data_Td}>{placeInfo.plTel}</td>
                     </tr>
                     <tr className={styles.Info_tr}>
-=======
-            <img src={placeInfo.plImg} className={styles.info_Img} alt="Park" />
-            <table>
-                <tbody>
-                    <tr className={styles.tr}>
-                        <td className={styles.name_td}><p className={styles.p_Tag}>공원명</p></td>
-                        <td className={styles.data_Td}>{placeInfo.plName}</td>
-                        <td className={styles.name_td}><p className={styles.p_Tag}>연락처</p></td>
-                        <td className={styles.data_Td}>{placeInfo.plTel}</td>
-                    </tr>
-                    <tr className={styles.tr}>
->>>>>>> origin/main
                         <td className={styles.name_td}><p className={styles.p_Tag}>위치</p></td>
                         <td className={styles.data_Td}>{placeInfo.plCity}</td>
                         <td className={styles.name_td}><p className={styles.p_Tag}>입장료</p></td>
@@ -76,17 +59,12 @@ const PlInfoView = () => {
                         <td className={styles.name_td}><p className={styles.p_Tag}>주소</p></td>
                         <td className={styles.data_Td} colSpan="4">{placeInfo.plAddress}</td>
                     </tr>
-<<<<<<< HEAD
                     <tr className={styles.Info_tr}>
-=======
-                    <tr className={styles.tr}>
->>>>>>> origin/main
                         <td className={styles.name_td}><p className={styles.p_Tag}>운영 요일</p></td>
                         <td className={styles.data_Td}>{placeInfo.plDay}</td>
                         <td className={styles.name_td}><p className={styles.p_Tag}>운영 시간</p></td>
                         <td className={styles.data_Td}>{placeInfo.plHour}</td>
                     </tr>
-<<<<<<< HEAD
                     <tr className={styles.Info_tr}>
                         <td className={styles.name_td}><p className={styles.p_Tag}>면적</p></td>
                         <td className={styles.data_Td} colSpan="4">{placeInfo.plArea}</td>
@@ -96,14 +74,6 @@ const PlInfoView = () => {
             <div className={styles.list_link_container}>
                 <Link to="/pl" className={styles.list_Link}>목록</Link>
             </div>
-=======
-                    <tr className={styles.tr}>
-                        <td className={styles.name_td}><p className={styles.p_Tag}>면적</p></td>
-                        <td className={styles.data_Td}>{placeInfo.plArea}</td>
-                    </tr>
-                </tbody>
-            </table>
->>>>>>> origin/main
             <footer className={styles.footer}>하단바</footer>
         </div>
     );
