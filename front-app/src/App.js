@@ -14,7 +14,7 @@ import PlInfoView from './components/pl_info_component/PlInfoView'
 import ShelterList from './components/ShelterList';
 import Hospital from './components/Hospital';
 import HospitalDetail from './components/HospitalDetail';
-
+import CO from './components/co_main_components/CO';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -47,6 +47,7 @@ function App() {
           <Route path="/kakao/callback" element={<KakaoLogin onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/pl" element={<PL />} />
           <Route path='/plinfo/:plId' element={<PlInfoView />} />
+          <Route path='/co' element={<CO />} />
           <Route path='/shelter' element={<ShelterList />} />
           <Route path='/animal-medical' element={<Hospital />} />
           <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />

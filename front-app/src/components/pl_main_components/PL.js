@@ -110,7 +110,7 @@ const PL = () => {
     return (
         <div className={styles.plMain_container}>
             <SubTitlePL />
-            <div className={styles.main_Image}>
+            <div className={styles.search_and_result_container}>
                 <div className={styles.search_container}>
                     <input
                         className={styles.search_input}
@@ -129,7 +129,6 @@ const PL = () => {
             <div>
                 <PlNumberRing onNumberRing={onNumberRing} pagination={pagination} />
             </div>
-            <footer className={styles.footer}>하단바</footer>
         </div>
     );
 };

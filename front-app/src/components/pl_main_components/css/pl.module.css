@@ -62,7 +62,7 @@
   background-size: contain;
 }
 
-.main_Image{
+.search_and_result_container{
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
