@@ -1,47 +1,32 @@
+// src/components/KakaoMap.js
 import React, { useEffect, useRef } from 'react';
-import '../css/style.css';
 
-const KakaoMap = ({ address }) => {
-  const mapRef = useRef(null);
+const KakaoMap = ({ locations }) => {
+    const mapContainer = useRef(null);
 
-  useEffect(() => {
-    const createMap = () => {
-      const { kakao } = window;
-      const container = mapRef.current;
-      const options = {
-        center: new kakao.maps.LatLng(37.407546, 127.115474),
-        level: 3
-      };
-      const map = new kakao.maps.Map(container, options);
-      const geocoder = new kakao.maps.services.Geocoder();
-      const marker = new kakao.maps.Marker({
-        position: new kakao.maps.LatLng(37.407546, 127.115474),
-        map: map
-      });
+    useEffect(() => {
+        // 카카오 지도 API를 초기화합니다.
+        const { kakao } = window;
 
-      if (address) {
-        geocoder.addressSearch(address, function(results, status) {
-          if (status === kakao.maps.services.Status.OK) {
-            const result = results[0];
-            const coords = new kakao.maps.LatLng(result.y, result.x);
-            map.setCenter(coords);
-            marker.setPosition(coords);
-          }
-        });
-      }
-    };
+        if (mapContainer.current && kakao) {
+            // 지도를 생성합니다.
+            const map = new kakao.maps.Map(mapContainer.current, {
+                center: new kakao.maps.LatLng(37.814536,127.510739), 
+                level: 8
+            });
 
-    if (window.kakao && window.kakao.maps && window.kakao.maps.services) {
-      createMap();
-    } else {
-      const script = document.createElement('script');
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=발급받은 API KEY를 사용하세요`;
-      script.onload = createMap;
-      document.head.appendChild(script);
-    }
-  }, [address]);
+            // 마커를 추가합니다.
+            locations.forEach(location => {
+                const marker = new kakao.maps.Marker({
+                    position: new kakao.maps.LatLng(location.lat, location.lng),
+                    map: map,
+                    title: location.name
+                });
+            });
+        }
+    }, [locations]);
 
-  return <div ref={mapRef} className="map"></div>;
+    return <div ref={mapContainer} style={{ width: '100%', height: '550px' }}></div>;
 };
 
 export default KakaoMap;
