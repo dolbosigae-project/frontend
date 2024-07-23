@@ -6,6 +6,17 @@ import axios from 'axios';
 export default function AdminContactNormalTable() {
   const [adminBoardList, setAdminBoardList] = useState([]);
   const [pagination, setPagination] = useState(null);
+  const[user, setUser] = useState(null);
+
+  //로컬 스토리지에서 user정보를 가져와 노출여부를 설정함
+  useEffect(()=>{
+    const storedUser = localStorage.getItem('user');
+    if(storedUser){
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+    }
+  },[]);
+
 
   useEffect(() => {
     const readData = async () => {
@@ -38,7 +49,9 @@ export default function AdminContactNormalTable() {
     <div className={styles.tableContainer}>
       <table className={styles.table}>
         <colgroup>
-          <col style={{ width: '10%' }} />
+          {user && user.boardMemberGradeNo === 0 && (
+            <col style={{ width: '10%' }} />
+          )}
           <col style={{ width: '10%' }} />
           <col style={{ width: '40%' }} />
           <col style={{ width: '10%' }} />
@@ -48,7 +61,9 @@ export default function AdminContactNormalTable() {
         </colgroup>
         <thead>
           <tr>
-            <th>관리자</th>
+            {user && user.boardMemberGradeNo === 0 &&(
+              <th>관리자</th>
+            )}
             <th>글번호</th>
             <th>제목</th>
             <th>작성자ID</th>
@@ -61,14 +76,16 @@ export default function AdminContactNormalTable() {
           {adminBoardList.map((item, index) => (
             <React.Fragment key={index}>
               <tr>
-                <td>
-                  <button className={styles.deleteButton}>삭제</button>
-                  <button
-                    className={`${styles.unansweredButton} ${item.adminCommentCount > 0 ? styles.answered : styles.unanswered}`}
-                  >
-                    {item.adminCommentCount > 0 ? '답변완료' : '미답변'}
-                  </button>
-                </td>
+                {user && user.boardMemberGradeNo === 0 &&(
+                  <td>
+                    <button className={styles.deleteButton}>삭제</button>
+                    <button
+                      className={`${styles.unansweredButton} ${item.adminCommentCount > 0 ? styles.answered : styles.unanswered}`}
+                    >
+                      {item.adminCommentCount > 0 ? '답변완료' : '미답변'}
+                    </button>
+                  </td>
+                )}
                 <td>{item.adminNo}</td>
                 <td>
                   <Link to={`/admin/contact/detail/${item.adminNo}`} className={styles.link}>
