@@ -13,6 +13,13 @@
   justify-content: center;
 }
 
+.searchInput {
+  width: 70%; /* 입력 필드 너비를 부모 요소의 100%로 설정 */
+  padding: 10px; /* 입력 필드 내 여백 */
+  border: 1px solid #ddd; /* 입력 필드 테두리 스타일 */
+  border-radius: 4px; /* 입력 필드 모서리 둥글게 설정 */
+}
+
 .searchContainer {
   flex: 1;
   display: flex;

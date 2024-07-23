@@ -92,12 +92,13 @@ const HO = () => {
     return (
         <div className={styles.container}>
             <div className={styles.main_Image}>
-                <div className={styles.search_container}>
+                <div className={styles.searchContainer}>
                     <input
                         type="text"
                         value={hoText}
-                        placeholder="병원명 입력"
+                        placeholder="주소를 입력해주세요. (예: 기흥, 성남)"
                         onChange={(e) => setHoText(e.target.value)}
+                        className={styles.searchInput} // Apply the new style here
                     />
                     <button onClick={searchHospitalClick}>조회</button>
                     {error && <div className={styles.error}>{error}</div>}
