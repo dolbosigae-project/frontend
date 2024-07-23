@@ -9,7 +9,7 @@ import MemberRegister from './components/MemberRegister';
 import MyPage from './components/MyPage';
 import LoginPasswd from './components/LoginPasswd';
 import KakaoLogin from './components/KakaoLogin';
-import PL from './components/pl_main_components/contents/PL'
+import PL from './components/pl_main_components/PL';
 import PlInfoView from './components/pl_info_component/PlInfoView'
 import ShelterList from './components/ShelterList';
 import Hospital from './components/Hospital';

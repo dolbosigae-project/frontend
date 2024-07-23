@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './../pl_info_component/css/plInfoView.module.css';
 import { Link } from 'react-router-dom';
-
+import SubTitlePL from '../SubTitles/SubTitlePL';
 const PlInfoView = () => {
     const { plId } = useParams();
     const [placeInfo, setPlaceInfo] = useState(null);
@@ -39,7 +39,9 @@ const PlInfoView = () => {
 
     return (
         <div className={styles.main_container}>
-            <img className={styles.Img} />
+            <div className={styles.SubTitlePL_container}>
+                <SubTitlePL />
+            </div>
             <img className={styles.info_Img} src={placeInfo.plImg} />
             <table>
                 <tbody>
@@ -74,7 +76,6 @@ const PlInfoView = () => {
             <div className={styles.list_link_container}>
                 <Link to="/pl" className={styles.list_Link}>목록</Link>
             </div>
-            <footer className={styles.footer}>하단바</footer>
         </div>
     );
 };
