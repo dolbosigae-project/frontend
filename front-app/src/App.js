@@ -36,20 +36,8 @@ function App() {
   return (
     <Router>
       <div>
-        <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-          <Route path="/login/passwd" element={<LoginPasswd />} />
-          <Route path="/member/view" element={<MemberView />} />
-          <Route path="/member/register" element={<MemberRegister />} />
-          <Route path="/member/mypage" element={<MyPage />} />
-          <Route path="/kakao/callback" element={<KakaoLogin onLoginSuccess={handleLoginSuccess} />} />
-          <Route path="/pl"  element={<PL/>} />
-          <Route path='/plinfo/:plId' element={<PlInfoView />} />
           <Route path='/shelter' element={<ShelterList/>} />
-          <Route path='/animal-medical' element={<Hospital />} />
-          <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
         </Routes>
       </div>
     </Router>
