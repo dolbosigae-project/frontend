@@ -96,7 +96,7 @@ const HO = () => {
                     <input
                         type="text"
                         value={hoText}
-                        placeholder="주소를 입력해주세요. (예: 기흥, 성남)"
+                        placeholder="주소를 입력해주세요(예: 기흥)"
                         onChange={(e) => setHoText(e.target.value)}
                         className={styles.searchInput} // Apply the new style here
                     />
@@ -109,7 +109,7 @@ const HO = () => {
                 <HospitalNumberRing onNumberRing={onNumberRing} pagination={pagination} />
                 <KakaoMap locations={locations} /> {/* KakaoMap 컴포넌트 추가 */}
             </div>
-            <footer className={styles.footer}>박유영0722</footer>
+            <footer className={styles.footer}>박유영0723</footer>
         </div>
     );
 };
