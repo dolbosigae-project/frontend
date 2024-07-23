@@ -3,31 +3,28 @@ import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 import styles from '../css/IoChat.module.css';
 
-function IoChat({ roomId, nickname }) {
+function IoChat() {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
+  const [nickname, setNickname] = useState('');
   const [stompClient, setStompClient] = useState(null);
   const [userId, setUserId] = useState('');
+  const [roomId, setRoomId] = useState('');
+  const [recipientId, setRecipientId] = useState('');
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user'); // localStorage에서 사용자 정보 가져오기
+    const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
+      console.log('현재 회원의 정보:', parsedUser);
       if (parsedUser && parsedUser.boardMemberId) {
+        setNickname(parsedUser.boardMemberNick);
         setUserId(parsedUser.boardMemberId);
       }
     } else {
       console.error('로그인된 사용자가 없습니다.');
     }
   }, []);
-
-  useEffect(() => {
-    if (roomId) {
-      connectWebSocket(roomId).then(client => {
-        setStompClient(client);
-      });
-    }
-  }, [roomId]);
 
   const connectWebSocket = (roomId) => {
     return new Promise((resolve, reject) => {
@@ -36,19 +33,24 @@ function IoChat({ roomId, nickname }) {
         connectHeaders: {},
         webSocketFactory: () => new SockJS('http://localhost:9999/ws'),
         onConnect: (frame) => {
-          console.log(`생성된 방 이름 ${roomId} 닉네임은  ${nickname}`); // 연결 로그 추가
+          console.log('Connected: ' + frame);
           setStompClient(client);
+
           client.subscribe(`/topic/${roomId}`, (messageOutput) => {
             const message = JSON.parse(messageOutput.body);
-            console.log('받은 메시지:', message);  // 수신된 메시지 콘솔 출력
+            console.log('메시지 수신됨: ', message);
             setMessages((prevMessages) => [...prevMessages, message]);
           });
+
           resolve(client);
         },
         onStompError: (frame) => {
+          console.error('Broker reported error: ' + frame.headers['message']);
+          console.error('Additional details: ' + frame.body);
           reject(frame.body);
         },
       });
+
       client.activate();
 
       window.addEventListener('beforeunload', () => {
@@ -63,29 +65,87 @@ function IoChat({ roomId, nickname }) {
     });
   };
 
+  const createRoom = async () => {
+    if (recipientId) {
+      const newRoomId = generateRoomId(userId, recipientId);
+      setRoomId(newRoomId);
+
+      try {
+        const client = await connectWebSocket(newRoomId);
+        setStompClient(client);
+        client.publish({
+          destination: `/IoChat/chat.createRoom/${userId}/${recipientId}`,
+          body: JSON.stringify({ sender: nickname, type: 'JOIN' }),
+        });
+        console.log('방 생성 요청 전송됨: ', newRoomId);
+      } catch (error) {
+        console.error('방 생성 실패:', error);
+      }
+    } else {
+      alert('수신자 ID를 입력하세요.');
+    }
+  };
+
+  const acceptInvite = () => {
+    if (stompClient && stompClient.active) {
+      stompClient.publish({
+        destination: `/IoChat/chat.acceptInvite/${roomId}/${userId}`,
+        body: JSON.stringify({ sender: nickname, type: 'JOIN' }),
+      });
+      console.log('초대 수락 요청 전송됨: ', roomId);
+    }
+  };
+
+  const rejectInvite = () => {
+    if (stompClient && stompClient.active) {
+      stompClient.publish({
+        destination: `/IoChat/chat.rejectInvite/${roomId}/${userId}`,
+        body: JSON.stringify({ sender: nickname, type: 'LEAVE' }),
+      });
+      console.log('초대 거절 요청 전송됨: ', roomId);
+    }
+  };
+
   const sendMessage = () => {
     if (stompClient && stompClient.active) {
       const chatMessage = {
-        sender: nickname, // nickname 설정
+        sender: nickname,
         content: message,
         type: 'CHAT',
         roomId: roomId,
       };
-      console.log('보낸 메시지:', chatMessage);  // 전송할 메시지 콘솔 출력
       stompClient.publish({
         destination: `/IoChat/chat/${roomId}`,
         body: JSON.stringify(chatMessage),
       });
       setMessages((prevMessages) => [...prevMessages, chatMessage]);
       setMessage('');
+      console.log('메시지 전송됨: ', chatMessage);
     } else {
       console.error('stomp 연결 또는 방 ID 없음');
     }
   };
 
+  const handleRecipientChange = (event) => {
+    setRecipientId(event.target.value);
+  };
+
+  const generateRoomId = (userA, userB) => {
+    return (userA.localeCompare(userB) < 0) ? `${userA}-${userB}` : `${userB}-${userA}`;
+  };
+
   return (
     <div className={styles.chatcontainer}>
       <h1>채팅하기</h1>
+      <div>
+        <input 
+          type="text" 
+          placeholder="수신자 ID 입력" 
+          value={recipientId} 
+          onChange={handleRecipientChange} 
+        />
+        <button className={styles.chatRequestBtn} onClick={createRoom}>상대방과 채팅하기</button>
+      </div>
       <div className={styles.chatbox}>
         <div id="messages">
           {messages.map((msg, index) => (
@@ -96,6 +156,10 @@ function IoChat({ roomId, nickname }) {
             </div>
           ))}
         </div>
+      </div>
+      <div>
+        <button className={styles.chatRequestYesBtn} onClick={acceptInvite}>초대 수락</button>
+        <button className={styles.chatRequestNoBtn} onClick={rejectInvite}>초대 거절</button>
       </div>
       <input id='input_msg'
         type="text"

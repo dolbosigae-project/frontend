@@ -8,6 +8,9 @@ import MemberView from './components/MemberView';
 import MemberRegister from './components/MemberRegister';
 import MyPage from './components/MyPage';
 import IoChat from './components/IoChat';
+import ChatIntro from './components/ChatIntro';
+import MateSearch from './components/MateSearch';
+import moduleName from './components/';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,6 +41,9 @@ function App() {
           <Route path="/member/register" element={<MemberRegister/>} />
           <Route path="/member/mypage" element={<MyPage/>} />
           <Route path="/mate/chat" element={<IoChat/>} />
+          <Route path="/mate/intro" element={<ChatIntro/>} />
+          <Route path="/mate/member" element={<MateSearch/>} />
+          <Route path="/mate/petinfo" element={<MatePetProfile/>} />
         </Routes>
       </div>
     </Router>

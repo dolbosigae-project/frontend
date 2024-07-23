@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import SockJS from 'sockjs-client';
-import { Stomp } from '@stomp/stompjs';
 
 
 export default function PetProfile() {
@@ -9,25 +7,10 @@ export default function PetProfile() {
      const [profile, setProfile] = useState({});
      const [id, setId] = useState('');
    
-     //현재 로그인한 회원의 id 
      
      
      /* 프로필 정보 가져오는데, 사람아니고 동물 */
-     useEffect(() => {
-       if (setId) {
-         loadPetProfile(id);
-       }
-     }, [setId]);
      
-     const loadPetProfile = (id) => {
-       fetch(`/api/users/${id}`)
-         .then(response => response.json())
-         .then(data => {
-           // 프로필 정보를 상태에 저장
-           setProfile(data);
-         })
-         .catch(error => console.error('프로필 에러 뜸:', error));
-     };
    
    
      return (
