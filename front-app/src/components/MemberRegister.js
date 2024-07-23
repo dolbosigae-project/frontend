@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import SubTitleMemberRegister from "./SubTitleMemberRegister";
+import SubTitleMemberRegister from "./SubTitles/SubTitleMemberRegister";
 import styles from '../css/memberRegister.module.css';
 import logo_small from '../img/logo_small.png';
 import { Link, useNavigate } from 'react-router-dom';
@@ -118,6 +118,7 @@ export default function MemberRegister() {
       });
 
       if (response.status === 200) {
+        console.log(response.data);
         alert('회원가입 성공');
         navigate('/');
       } else {
@@ -140,7 +141,7 @@ export default function MemberRegister() {
       </div>
       <div className={styles.form_container}>
         <form ref={formRef} onSubmit={handleSubmit}>
-          <table className={styles.form_table}>
+          <table className={styles.form_table_00}>
             <tbody>
               <tr>
                 <td><label>회원이름 *</label></td>
@@ -283,7 +284,7 @@ export default function MemberRegister() {
               )}
             </tbody>
           </table>
-          <div className={styles.checkbox_container}>
+          <div className={styles.checkbox_container_00}>
             <input type='checkbox' id='check' required/>
             <label htmlFor='check'>개인정보 제공에 동의합니다.</label>
           </div>

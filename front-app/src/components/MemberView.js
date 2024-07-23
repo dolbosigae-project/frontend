@@ -2,7 +2,7 @@ import styles from '../css/memberView.module.css';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import default_img from '../img/default_img.png';
-import SubTitleMemberView from './SubTitleMemberVIew';
+import SubTitleMemberView from './SubTitles/SubTitleMemberView';
 
 export default function MemberView() {
   const [memberList, setMemberList] = useState([]); // 빈 배열로 초기화
@@ -26,6 +26,7 @@ export default function MemberView() {
     const readData = async () => {
       try {
         const response = await axios.get('http://localhost:9999/member/list');
+        console.log('Pagination Data:', response.data.pagination);
         setMemberList(response.data.members);
         setPagination(response.data.pagination);
       } catch (error) {
