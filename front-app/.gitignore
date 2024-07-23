@@ -27,3 +27,7 @@ yarn-error.log*
 
 # Webpack cache
 *.pack
+
+# Cache files
+node_modules/.cache/
+"node_modules/.cache/" 
