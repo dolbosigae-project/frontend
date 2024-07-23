@@ -58,6 +58,12 @@ export default function MateSearch() {
     }
   };
 
+  // 회원 클릭 시 새로운 창에서 PetProfile 페이지를 여는 함수 추가
+  const handleMateClick = (id) => {
+    const url = `/mate/petinfo?userId=${id}`; // PetProfile 페이지의 URL에 ID를 쿼리 파라미터로 포함
+    window.open(url, '_blank', 'noopener,noreferrer'); // 새로운 창에서 열기
+  };
+
   return (
     <div>
       <SubTitleMateSearch />
@@ -70,20 +76,15 @@ export default function MateSearch() {
       ) : (
         <div className={styles.mateTableContainer}>
           <div className={styles.mateTable}>
-            {mateList.map((mate) => (
-              <div key={mate.boardMemberId} className={styles.mateCard}>
-                <img src={mate.petImagePath || default_img} alt="Pet" />
-                <span>{mate.boardMemberNick}</span>
-                {/* <div className={styles.mateFlexContainer}>
-                  <span className={styles.mateLabel}>출생년월</span>
-                  <input value={mate.petBirth || ''} readOnly className={styles.mateInput} />
-                </div> */}
-                <div className={styles.mateFlexContainer}>
-                  {/* <span className={styles.mateLabel}>소개글</span> */}
-                  <input value={mate.petInfo || ''} className={`${styles.mateInput} ${styles.matePetInfo}`} readOnly />
-                </div>
+          {mateList.map((mate) => (
+            <div key={mate.boardMemberId} className={styles.mateCard} onClick={() => handleMateClick(mate.boardMemberId)}> {/* 회원 카드 클릭 시 handleMateClick 호출 */}
+              <img src={mate.petImagePath || default_img} alt="Pet" />
+              <span>{mate.boardMemberNick}</span>
+              <div className={styles.mateFlexContainer}>
+                <input value={mate.petInfo || ''} className={`${styles.mateInput} ${styles.matePetInfo}`} readOnly />
               </div>
-            ))}
+            </div>
+          ))}
           </div>
           <div className={styles.matePagination}>
             {pagination && pagination.priviousPageGroup && (
@@ -106,6 +107,4 @@ export default function MateSearch() {
       )}
     </div>
   );
-  
-  
 }

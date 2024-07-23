@@ -1,40 +1,48 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import styles from '../css/matePetProfile.module.css'; 
+import default_img from '../img/default_img.png';
 
+export default function PetProfile() { 
+  const [petProfile, setPetProfile] = useState(null);
 
-export default function PetProfile() {
+  // URL에서 userId 파라미터 추출
+  const queryParams = new URLSearchParams(window.location.search);
+  const userId = queryParams.get('userId');
 
-     const [nickname, setNickname] = useState('');
-     const [profile, setProfile] = useState({});
-     const [id, setId] = useState('');
-   
-     
-     
-     /* 프로필 정보 가져오는데, 사람아니고 동물 */
-     
-   
-   
-     return (
-       <div>
-           <div className='chatcontainer'>
-               <table>
-                 <tbody>
-                 <tr>
-                   <td>나이</td>
-                   <td>성별</td>
-                   <td>크기</td> 
-                   <td>몸무게</td>
-                   <td>소개</td>
-                 </tr>
-                 <tr>
-                   <td>{profile.petBirth}</td>
-                   <td>{profile.petGender}</td>
-                   <td>{profile.petSize}</td>
-                   <td>{profile.petWeight}</td>
-                   <td>{profile.petWalkProfile}</td>
-                 </tr>
-                 </tbody>
-               </table>
-           </div>
-       </div>
-     );
+  useEffect(() => {
+    const readData = async () => {
+      if (userId) {
+        try {
+          const response = await axios.get(`http://localhost:9999/member/petprofile/${userId}`);
+          setPetProfile(response.data);
+        } catch (error) {
+          console.error('정보를 불러오지 못했습니다.', error);
+        }
+      } else {
+        console.error('사용자 ID를 찾을 수 없습니다.');
+      }
+    };
+    readData();
+  }, [userId]);
+
+  return (
+    <div>
+      {!petProfile ? (
+        <div>데이터 가져오는 중</div>
+      ) : (
+        <div className={styles.petContainer}>
+          <div className={styles.petTable}>
+            <img src={petProfile.petImagePath || default_img} alt="Pet" />
+            <div>이름: {petProfile.boardMemberNick}</div>
+            <div>나이: {petProfile.petBirth}</div>
+            <div>성별: {petProfile.petGender}</div>
+            <div>크기: {petProfile.petSize}</div>
+            <div>몸무게: {petProfile.petWeight}</div>
+            <div>소개: {petProfile.petInfo}</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }

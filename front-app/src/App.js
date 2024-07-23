@@ -10,7 +10,7 @@ import MyPage from './components/MyPage';
 import IoChat from './components/IoChat';
 import ChatIntro from './components/ChatIntro';
 import MateSearch from './components/MateSearch';
-import moduleName from './components/';
+import MatePetProfile from './components/MatePetProfile';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
