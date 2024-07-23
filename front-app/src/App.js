@@ -14,6 +14,9 @@ import PlInfoView from './components/pl_info_component/PlInfoView'
 import ShelterList from './components/ShelterList';
 import Hospital from './components/Hospital';
 import HospitalDetail from './components/HospitalDetail';
+import Pharmacy from './components/Pharmacy';  // Updated import
+import PharmacyDetail from './components/PharmacyDetail';  // Updated import
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -50,6 +53,9 @@ function App() {
           <Route path='/shelter' element={<ShelterList/>} />
           <Route path='/animal-medical' element={<Hospital />} />
           <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
+          <Route path="/pharmacies" element={<Pharmacy />} />
+          <Route path="/pharmacies/:phId" element={<PharmacyDetail />} /> 
+
         </Routes>
       </div>
     </Router>

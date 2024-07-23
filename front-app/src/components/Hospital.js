@@ -96,7 +96,7 @@ const HO = () => {
                     <input
                         type="text"
                         value={hoText}
-                        placeholder="주소를 입력해주세요(예: 기흥)"
+                        placeholder="주소를 입력해주세요. (예: 기흥, 성남)"
                         onChange={(e) => setHoText(e.target.value)}
                         className={styles.searchInput} // Apply the new style here
                     />
