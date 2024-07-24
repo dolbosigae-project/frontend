@@ -54,7 +54,7 @@ function App() {
           <Route path='/animal-medical' element={<Hospital />} />
           <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
           <Route path="/pharmacies" element={<Pharmacy />} />
-          <Route path="/pharmacies/:phId" element={<PharmacyDetail />} /> 
+          <Route path="/phinfo/:phId" element={<PharmacyDetail />} /> 
 
         </Routes>
       </div>

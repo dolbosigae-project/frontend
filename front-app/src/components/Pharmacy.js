@@ -52,8 +52,8 @@ const PH = () => {
                     <th>약국명</th> {/* 병원명을 약국명으로 변경 */}
                     <th>지역</th>
                     <th>전화번호</th>
-                    <th>주소</th>
-                    <th>운영시간</th>
+                    <th>도로명 주소</th>
+                    <th>상세정보</th>
                 </tr>
             </thead>
             <tbody>
@@ -109,7 +109,7 @@ const PH = () => {
                 <PharmacyNumberRing onNumberRing={onNumberRing} pagination={pagination} /> {/* HospitalNumberRing 대신 PharmacyNumberRing 사용 */}
                 <KakaoMap locations={locations} /> {/* KakaoMap 컴포넌트 추가 */}
             </div>
-            <footer className={styles.footer}>박유영0723</footer>
+            <footer className={styles.footer}>박유영0724</footer>
         </div>
     );
 };
