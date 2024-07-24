@@ -81,7 +81,7 @@ function ChatIntro() {
           onChange={handleRecipientChange}
         />
         <select value={searchCategory} onChange={handleCategoryChange}>
-          <option value="id">ID</option> {/* 'ID' 옵션이 위에 오도록 설정 */}
+          <option value="id">ID</option> 
           <option value="nickname">닉네임</option>
         </select>
         <button className={styles.chatSearchBtn} onClick={searchUsers}>

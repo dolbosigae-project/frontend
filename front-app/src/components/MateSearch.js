@@ -58,7 +58,7 @@ export default function MateSearch() {
     }
   };
 
-  // 회원 클릭 시 새로운 창에서 PetProfile 페이지를 여는 함수 추가
+  // 회원 클릭 시 새로운 창에서 PetProfile 페이지가 열리도록 함
   const handleMateClick = (id) => {
     const url = `/mate/petinfo?userId=${id}`; // PetProfile 페이지의 URL에 ID를 쿼리 파라미터로 포함
     const windowFeatures = 'width=500,height=650,left=100,top=100,toolbar=no'; // 창의 크기와 위치 지정 및 UI 요소 숨김

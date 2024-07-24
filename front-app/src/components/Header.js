@@ -16,7 +16,7 @@ export default function Header({ isLoggedIn, onLogout }) {
   const [isPetInfo, setIsPetInfo] = useState(false);
 
   useEffect(() => {
-    setIsPetInfo(location.pathname === '/mate/petinfo'); // <-- 변경된 부분: 특정 경로 설정
+    setIsPetInfo(location.pathname === '/mate/petinfo'); // 특정 경로 설정해서 header 안보이게 하는 부분
 
     if (isLoggedIn) {
       const storedUser = localStorage.getItem('user');
@@ -28,7 +28,7 @@ export default function Header({ isLoggedIn, onLogout }) {
     } else {
       setUser(null);
     }
-  }, [location.pathname, isLoggedIn]); // <-- 수정된 부분: 종속성 배열에 location.pathname과 isLoggedIn을 추가
+  }, [location.pathname, isLoggedIn]); //  기존 종속성 배열에 isLoggedIn가 있었는데 location.pathname도 추가한거 pathname header없애려고
 
   const handleLogout = async (event) => {
     event.preventDefault();
@@ -48,7 +48,7 @@ export default function Header({ isLoggedIn, onLogout }) {
   }
 
   // 특정 경로에서는 헤더를 렌더링하지 않음
-  if (isPetInfo) return null; // <-- 변경된 부분: 특정 경로에서 헤더 숨기기
+  if (isPetInfo) return null; // 위에서 설정했던 특정 경로에서 헤더 숨기기
 
   return (
     <div className={styles.headerContainer}>

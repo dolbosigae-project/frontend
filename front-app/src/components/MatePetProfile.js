@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // useNavigate 임포트 추가 <--------
+import { useNavigate } from 'react-router-dom'; 
 import styles from '../css/matePetProfile.module.css'; 
 import default_img from '../img/default_img.png';
 
-export default function MatePetProfile() { // 컴포넌트 이름 수정 <--------
+export default function MatePetProfile() { 
   const [petProfile, setPetProfile] = useState(null);
-  const navigate = useNavigate(); // useNavigate 사용 <--------
+  const navigate = useNavigate(); 
 
   // URL에서 userId 파라미터 추출
   const queryParams = new URLSearchParams(window.location.search);
@@ -33,8 +33,8 @@ export default function MatePetProfile() { // 컴포넌트 이름 수정 <------
   };
 
   const handleFavoriteClick = () => {
-    // 즐겨찾기 등록 로직을 추가
-    alert(`${petProfile.boardMemberNick}님을 즐겨찾기에 등록했습니다.`); // 알림 표시 <--------
+    // 즐겨찾기 등록.   기능 제대로 만들고 한 번 더 누르면 취소(버튼 표시도 바뀌도록하고)
+    alert(`${petProfile.boardMemberNick}님을 즐겨찾기에 등록했습니다.`); // 이건 안이어져있어서 임시로 알림만 나오게 함
   };
 
   return (
@@ -52,9 +52,9 @@ export default function MatePetProfile() { // 컴포넌트 이름 수정 <------
             <div>몸무게: {petProfile.petWeight}</div>
             <div>소개: {petProfile.petInfo}</div>
           </div>
-          <div className={styles.petActions}> {/* 추가된 부분: 버튼 컨테이너 <-------- */}
-            <button onClick={handleChatClick} className={styles.messageButton}>쪽지 보내기</button> {/* 추가된 부분 <-------- */}
-            <button onClick={handleFavoriteClick} className={styles.favoriteButton}>즐겨찾기 등록</button> {/* 추가된 부분 <-------- */}
+          <div className={styles.petActions}> 
+            <button onClick={handleChatClick} className={styles.messageButton}>쪽지 보내기</button> 
+            <button onClick={handleFavoriteClick} className={styles.favoriteButton}>즐겨찾기 등록</button> 
           </div>
         </div>
       )}
