@@ -89,12 +89,13 @@ const PH = () => {
                     <tr key={index}>
                         <td>
                             {user && user.boardMemberGradeNo === 0 && (
-                                <button
+                               <>
+                               <button
                                     className={styles.DeleteBtn}
-                                    onClick={() => deletePharmacy(pharmacy.phId)}
-                                >
-                                    삭제
-                                </button>
+                                    onClick={() => deletePharmacy(pharmacy.phId)} >삭제</button>
+                                <Link to={`/addPharmacy`}
+                                            className={styles.linkButton}> 추가 </Link>
+</>
                             )}
                         </td>
                         <td>{pharmacy.phId}</td>
@@ -106,10 +107,7 @@ const PH = () => {
                         <td>
                             <Link
                                 to={`/phinfo/${pharmacy.phId}`}
-                                className={styles.linkButton}
-                            >
-                                이동
-                            </Link>
+                                className={styles.linkButton} >이동</Link>
                         </td>
                     </tr>
                 ))}

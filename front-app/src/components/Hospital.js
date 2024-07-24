@@ -90,12 +90,12 @@ const HO = () => {
                         <tr key={index}>
                             <td>
                                 {user && user.boardMemberGradeNo === 0 && (
-                                    <button
-                                        className={styles.DeleteBtn}
-                                        onClick={() => deleteHospital(hospital.hoId)}
-                                    >
-                                        삭제
-                                    </button>
+                                    <>
+                                    <button className={styles.DeleteBtn}
+                                        onClick={() => deleteHospital(hospital.hoId)} > 삭제 </button>
+                               <Link to={`/addHospital`}
+                                            className={styles.linkButton}> 추가 </Link>
+                               </>
                                 )}
                             </td>
                             <td>{hospital.hoId}</td>
