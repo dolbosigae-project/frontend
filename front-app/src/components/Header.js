@@ -1,20 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from 'react-router-dom';
 import styles from '../css/header.module.css';
 import logo from '../img/logo.png';
 import login from '../img/login.png';
 import register from '../img/register.png';
 import memberView from '../img/memberView.png';
 import my_page from '../img/my_page.png';
-import choco from '../img/choco.png';
 import { useState, useEffect } from 'react';
 
 export default function Header({ isLoggedIn, onLogout }) {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const location = useLocation();
+  const [isPetInfo, setIsPetInfo] = useState(false);
 
   useEffect(() => {
+    setIsPetInfo(location.pathname === '/mate/petinfo'); // <-- 변경된 부분: 특정 경로 설정
+
     if (isLoggedIn) {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
@@ -25,7 +28,7 @@ export default function Header({ isLoggedIn, onLogout }) {
     } else {
       setUser(null);
     }
-  }, [isLoggedIn]);
+  }, [location.pathname, isLoggedIn]); // <-- 수정된 부분: 종속성 배열에 location.pathname과 isLoggedIn을 추가
 
   const handleLogout = async (event) => {
     event.preventDefault();
@@ -44,6 +47,9 @@ export default function Header({ isLoggedIn, onLogout }) {
     }
   }
 
+  // 특정 경로에서는 헤더를 렌더링하지 않음
+  if (isPetInfo) return null; // <-- 변경된 부분: 특정 경로에서 헤더 숨기기
+
   return (
     <div className={styles.headerContainer}>
       <header className={styles.header}>
@@ -61,7 +67,8 @@ export default function Header({ isLoggedIn, onLogout }) {
                     <Link to="/member/view" className={styles.authItem}>
                       <img src={memberView} alt="MemberView" className={styles.memberView} />회원관리
                     </Link>
-                  </li>)}
+                  </li>
+                )}
                 <li>
                   <button onClick={handleLogout} className={styles.authItem}>로그아웃</button>
                 </li>
