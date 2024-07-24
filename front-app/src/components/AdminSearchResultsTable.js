@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../css/adminContactNormalTable.module.css';
 
-export default function AdminContactNormalTable({ adminBoardList, pagination, handlePageChange, user, deleteClick }) {
+export default function AdminSearchResultsTable({ adminBoardList, user, deleteClick }) {
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
@@ -56,27 +56,6 @@ export default function AdminContactNormalTable({ adminBoardList, pagination, ha
             </React.Fragment>
           ))}
         </tbody>
-        <tfoot>
-          <tr>
-            <td colSpan="7" className={styles.pagination}>
-              {pagination && pagination.previousPageGroup && (
-                <button onClick={() => handlePageChange(pagination.startPageOfPageGroup - 1)}>◀</button>
-              )}
-              {pagination && Array.from({ length: pagination.endPageOfPageGroup - pagination.startPageOfPageGroup + 1 }, (_, i) => (
-                <button
-                  key={i + pagination.startPageOfPageGroup}
-                  onClick={() => handlePageChange(i + pagination.startPageOfPageGroup)}
-                  className={pagination.currentPage === i + pagination.startPageOfPageGroup ? styles.activePage : ''}
-                >
-                  {i + pagination.startPageOfPageGroup}
-                </button>
-              ))}
-              {pagination && pagination.nextPageGroup && (
-                <button onClick={() => handlePageChange(pagination.endPageOfPageGroup + 1)}>▶</button>
-              )}
-            </td>
-          </tr>
-        </tfoot>
       </table>
     </div>
   );
