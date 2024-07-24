@@ -9,7 +9,6 @@ const ShelterList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedRegion, setSelectedRegion] = useState('선택');
-    const [filteredShelters, setFilteredShelters] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [pageOfContentCount, setPageOfContentCount] = useState(10);
@@ -23,25 +22,27 @@ const ShelterList = () => {
     useEffect(() => {
         setCurrentPage(queryPageNo);
         setPageOfContentCount(queryPageCount);
-        fetchShelters(queryPageNo, queryPageCount);
     }, [location.search]);
 
-    // Shelter 데이터를 로드하는 함수
+    useEffect(() => {
+        fetchShelters(currentPage, pageOfContentCount);
+    }, [currentPage, pageOfContentCount]); // currentPage와 pageOfContentCount가 변경될 때마다 실행
+
     const fetchShelters = async (pageNo, pageCount) => {
         setLoading(true);
         try {
             const response = await axios.get(`http://localhost:9999/shelter?pageNo=${pageNo}&pageContentEa=${pageCount}`);
+            console.log("Fetched shelters:", response.data); // 데이터 확인
             setShelters(response.data.list);
-            setFilteredShelters(response.data.list);
             setTotalPage(response.data.totalPage);
         } catch (error) {
+            console.error("Failed to fetch shelters:", error); // 에러 확인
             setError(error);
         } finally {
             setLoading(false);
         }
     };
 
-    // 필터와 검색어가 변경될 때마다 필터링 적용
     useEffect(() => {
         filterShelters();
     }, [selectedRegion, searchKeyword, shelters]);
@@ -65,8 +66,14 @@ const ShelterList = () => {
             filtered = filtered.filter(shelter => shelter.shName.includes(searchKeyword));
         }
 
-        setFilteredShelters(filtered);
-        setCurrentPage(1); // 필터링 후 페이지를 처음으로 설정
+        console.log("Filtered shelters:", filtered); // 필터링된 데이터 확인
+        setShelters(filtered);
+    };
+
+    const handlePageChange = (page) => {
+        if (page < 1 || page > totalPage) return; // 페이지 번호 유효성 검사
+        setCurrentPage(page); // 페이지 번호 업데이트
+        navigate(`?pageNo=${page}&pageContentEa=${pageOfContentCount}`); // URL 업데이트
     };
 
     const renderPageNumbers = () => {
@@ -75,7 +82,7 @@ const ShelterList = () => {
         const startPageOfPageGroup = (currentPageGroupNo - 1) * PAGE_GROUP_OF_COUNT + 1;
         const endPageOfPageGroup = Math.min(currentPageGroupNo * PAGE_GROUP_OF_COUNT, totalPage);
         const pages = [];
-
+    
         if (currentPageGroupNo > 1) {
             pages.push(
                 <button key="prev" onClick={() => handlePageChange(startPageOfPageGroup - PAGE_GROUP_OF_COUNT)}>
@@ -83,7 +90,7 @@ const ShelterList = () => {
                 </button>
             );
         }
-
+    
         for (let i = startPageOfPageGroup; i <= endPageOfPageGroup; i++) {
             pages.push(
                 <button key={i} onClick={() => handlePageChange(i)} className={i === currentPage ? 'active' : ''}>
@@ -91,7 +98,7 @@ const ShelterList = () => {
                 </button>
             );
         }
-
+    
         if (currentPageGroupNo < totalPageGroup) {
             pages.push(
                 <button key="next" onClick={() => handlePageChange(startPageOfPageGroup + PAGE_GROUP_OF_COUNT)}>
@@ -99,12 +106,8 @@ const ShelterList = () => {
                 </button>
             );
         }
-
+    
         return pages;
-    };
-
-    const handlePageChange = (page) => {
-        navigate(`?pageNo=${page}&pageContentEa=${pageOfContentCount}`);
     };
 
     if (loading) {
@@ -114,6 +117,15 @@ const ShelterList = () => {
     if (error) {
         return <div>Error: {error.message}</div>;
     }
+
+    // 페이지에 맞는 데이터 계산
+    const startIdx = (currentPage - 1) * pageOfContentCount;
+    const endIdx = startIdx + pageOfContentCount;
+
+    // 필터링된 데이터를 페이지별로 나누기
+    const currentPageShelters = shelters.slice(startIdx, endIdx);
+
+    console.log("Current page shelters:", currentPageShelters); // 현재 페이지의 데이터 확인
 
     return (
         <div className="shelter-list">
@@ -144,7 +156,7 @@ const ShelterList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredShelters.slice((currentPage - 1) * pageOfContentCount, currentPage * pageOfContentCount).map((shelter) => (
+                    {currentPageShelters.map((shelter) => (
                         <tr key={shelter.shID}>
                             <td>{shelter.shRegion}</td>
                             <td>
