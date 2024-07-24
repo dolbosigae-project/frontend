@@ -1,114 +1,164 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import KakaoMap from './KakaoMap';
 import styles from '../css/hospital.module.css';
-import SubTitleHospital from '../components/SubTitles/SubTitleHospital'
-
-const PAGE_GROUP_SIZE = 5;
-
-// Select 컴포넌트들은 생략
+import HospitalNumberRing from './HospitalNumberRing';
+import KakaoMap from './KakaoMap';
 
 const HO = () => {
-    const [searchResult, setSearchResult] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
+    const [hoText, setHoText] = useState('');
+    const [error, setError] = useState('');
+    const [result, setResult] = useState([]);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(5);
+    const [pagination, setPagination] = useState({ totalPages: 0, currentPage: 1 });
+    const [user, setUser] = useState(null);
 
+    // 로컬 스토리지에서 user 정보를 가져와 노출 여부를 설정함
     useEffect(() => {
-        fetchData();
-    }, [currentPage]);
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            setUser(parsedUser);
+        }
+    }, []);
 
-    const fetchData = async () => {
+    const fetchHospitalData = async () => {
         try {
-            const response = await axios.get('http://localhost:9999/hospitals', {
-                params: {
-                    page: currentPage,
-                    limit: 5
-                }
+            const response = await axios.get('http://localhost:9999/hospitals/list', {
+                params: { hoText, page, limit }
             });
-            if (response.status === 200) {
-                const { contents, pagination } = response.data;
-                setSearchResult(contents);
-                setTotalPages(pagination.totalPages);
-            }
+            const contents = response.data.contents || [];
+            setResult(contents);
+            setPagination({
+                totalPages: response.data.pagination.totalPages,
+                currentPage: page,
+            });
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.log('Error fetching data:', error);
+            setError('Error fetching data');
         }
     };
 
-    const handlePageChange = (pageNo) => {
-        setCurrentPage(pageNo);
+    useEffect(() => {
+        fetchHospitalData();
+    }, [page, limit]);
+
+    const searchHospitalClick = async () => {
+        setPage(1);
+        fetchHospitalData();
     };
 
-    const pageGroupStart = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
-    const pageGroupEnd = Math.min(pageGroupStart + PAGE_GROUP_SIZE - 1, totalPages);
-    const previousPageGroup = pageGroupStart > 1;
-    const nextPageGroup = pageGroupEnd < totalPages;
+    const onNumberRing = (number) => {
+        setPage(Number(number));  // ensure the number is parsed as a number
+    };
+
+    const deleteHospital = async (hoId) => {
+        try {
+            const response = await axios.delete(`http://localhost:9999/hospitals/delete/${hoId}`, {
+                headers: {
+                    'userRole': user.boardMemberGradeNo === 0 ? 'ADMIN' : ''
+                }
+            });
+            if (response.data.status === 'success') {
+                fetchHospitalData();  // 삭제 후 목록 갱신
+            } else {
+                setError(response.data.message || 'Error deleting hospital');
+            }
+        } catch (error) {
+            console.log('Error deleting hospital:', error);
+            setError('Error deleting hospital');
+        }
+    };
+
+    const renderTable = useCallback(() => (
+        <div className={styles.tableContainer}>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>번호</th>
+                        <th>병원명</th>
+                        <th>지역</th>
+                        <th>전화번호</th>
+                        <th>주소</th>
+                        <th>우편번호</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {result.map((hospital, index) => (
+                        <tr key={index}>
+                            <td>
+                                {user && user.boardMemberGradeNo === 0 && (
+                                    <button
+                                        className={styles.DeleteBtn}
+                                        onClick={() => deleteHospital(hospital.hoId)}
+                                    >
+                                        삭제
+                                    </button>
+                                )}
+                            </td>
+                            <td>{hospital.hoId}</td>
+                            <td>{hospital.hoName}</td>
+                            <td>{hospital.hoRegion}</td>
+                            <td>{hospital.hoTel}</td>
+                            <td>{hospital.hoAddress}</td>
+                            <td>{hospital.hoPost}</td>
+                            <td>
+                                <Link
+                                    to={`/hoinfo/${hospital.hoId}`}
+                                    className={styles.linkButton}
+                                >
+                                    이동
+                                </Link>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    ), [result, user]);
+
+    // 병원 위치 데이터를 KakaoMap에 전달할 형태로 변환합니다.
+    const locations = result.map(hospital => ({
+        name: hospital.hoName,
+        lat: parseFloat(hospital.hoLat), // 위도
+        lng: parseFloat(hospital.hoLng)  // 경도
+    }));
 
     return (
-        <div>
-            <SubTitleHospital />
+        <>
+            <div className={styles.banner}></div>
             <div className={styles.container}>
-                <div className={styles.mapContainer}>
-                    <KakaoMap />
-                </div>
-                <div className={styles.searchContainer}>
-                    <div className={styles.Search_mainContainer}>
-                        <select className={styles.select_gu} onChange={e => setCurrentPage(1)}>
-                            <option value="1">성남시 분당구</option>
-                            <option value="2">수원시 권선구</option>
-                            <option value="3">안양시 만안구</option>
-                            <option value="4">부천시 오정구</option>
-                            <option value="5">평택시</option>
-                            <option value="6">용인시 기흥구</option>
-                            <option value="7">이천시</option>
-                            <option value="8">김포시</option>
-                            <option value="9">화성시</option>
-                            <option value="10">의정부시</option>
-                            <option value="11">구리시</option>
-                            <option value="12">고양시</option>
-                        </select>
-                       
-                        <Link to="/hospitalDetail">
-                            <button className={styles.searchBtn} onClick={fetchData}>
-                                조회
-                            </button>
-                        </Link>
-                    </div>
-                    <div className={styles.hospitalList}>
-                        {searchResult.map((item) => (
-                            <div key={item.hoId} className={styles.hospitalItem}>
-                                <h3>{item.hoName}</h3>
-                                <p>우편번호: {item.hoPost}</p>
-                                <p>전화번호: {item.hoTel}</p>
-                                <p>주소: {item.hoAddress}</p>
-                            </div>
-                        ))}
-                    </div>
-                    <div className={styles.pagination}>
-                        {previousPageGroup && (
-                            <button onClick={() => handlePageChange(pageGroupStart - 1)}>
-                                이전
-                            </button>
-                        )}
-                        {Array.from({ length: pageGroupEnd - pageGroupStart + 1 }, (_, idx) => (
-                            <button
-                                key={idx}
-                                onClick={() => handlePageChange(pageGroupStart + idx)}
-                                disabled={currentPage === pageGroupStart + idx}
-                            >
-                                {pageGroupStart + idx}
-                            </button>
-                        ))}
-                        {nextPageGroup && (
-                            <button onClick={() => handlePageChange(pageGroupEnd + 1)}>
-                                다음
-                            </button>
+                <div className={styles.mainContent}>
+                    <div className={styles.searchAndTableContainer}>
+                        <div className={styles.searchContainer}>
+                            <input
+                                type="text"
+                                value={hoText}
+                                placeholder="주소를 입력해주세요. (예: 기흥, 성남)"
+                                onChange={(e) => setHoText(e.target.value)}
+                                className={styles.searchInput}
+                            />
+                            <button onClick={searchHospitalClick} className={styles.searchButton}>조회</button>
+                        </div>
+                        {error && <div className={styles.error}>{error}</div>}
+                        {result.length > 0 && (
+                            <>
+                                {renderTable()}
+                                <div className={styles.paginationContainer}>
+                                    <HospitalNumberRing onNumberRing={onNumberRing} pagination={pagination} />
+                                </div>
+                            </>
                         )}
                     </div>
+                    <div className={styles.mapContainer}>
+                        <KakaoMap locations={locations} />
+                    </div>
                 </div>
+                <footer className={styles.footer}>박유영0724</footer>
             </div>
-        </div>
+        </>
     );
 };
 

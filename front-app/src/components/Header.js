@@ -108,7 +108,7 @@ export default function Header({ isLoggedIn, onLogout }) {
               <Link className={styles.navLink}>동물 의료</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'medical' ? styles.visible : ''}`}>
                 <li className={styles.navSublink}><Link to="/animal-medical">동물병원 찾기</Link></li>
-                <li className={styles.navSublink}><Link to="/">동물약국 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/pharmacies">동물약국 찾기</Link></li>
               </ul>
             </li>
             <li 
