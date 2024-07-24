@@ -54,6 +54,21 @@ export default function Co() {
         setPage(number);
     };
 
+    const coDeleteClick = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost:9999/conven/delete/${id}`)
+            if (response.status === 200) {
+                alert("삭제되었습니다.");
+                convenienceList();
+            } else {
+                alert("작성자만 삭제할 수 있습니다.");
+            }
+        } catch (error) {
+            alert("삭제 요청 오류 : ", error);
+            console.log(error)
+        }
+    }
+
     const renderTable = useCallback(() => {
         return (
             <table className={styles.co_list_container}>
@@ -70,20 +85,20 @@ export default function Co() {
                     </tr>
                 </thead>
                 <tbody>
-                    {result.map((city, index) => (
+                    {result.map((conven, index) => (
                         <tr key={index} className={styles.co_list_tr}>
                             <td className={styles.co_list_td}>
                                 {user && user.boardMemberGradeNo === 0 ? (
-                                    <button className={styles.co_deleteBtn}>삭제</button>
+                                    <button className={styles.co_deleteBtn} onClick={() => coDeleteClick(conven.coId)}>삭제</button>
                                 ) : null}
                             </td>
-                            <td className={styles.co_list_td}>{city.coId}</td>
-                            <td className={styles.co_list_td}>{city.coDistinction}</td>
-                            <td className={styles.co_list_td}>{city.coName}</td>
-                            <td className={styles.co_list_td}>{city.coHour}</td>
-                            <td className={styles.co_list_td}>{city.coTel}</td>
-                            <td className={styles.co_list_td}>{city.coAddress}</td>
-                            <td className={styles.co_list_td}><Link to={`/coinfo/${city.coId}`} className={styles.co_list_link}>이동</Link></td>
+                            <td className={styles.co_list_td}>{conven.coId}</td>
+                            <td className={styles.co_list_td}>{conven.coDistinction}</td>
+                            <td className={styles.co_list_td}>{conven.coName}</td>
+                            <td className={styles.co_list_td}>{conven.coHour}</td>
+                            <td className={styles.co_list_td}>{conven.coTel}</td>
+                            <td className={styles.co_list_td}>{conven.coAddress}</td>
+                            <td className={styles.co_list_td}><Link to={`/coinfo/${conven.coId}`} className={styles.co_list_link}>이동</Link></td>
                         </tr>
                     ))}
                 </tbody>
