@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import styles from '../css/pharmacy.module.css'; // CSS 파일명도 변경했는지 확인
-import PharmacyNumberRing from './PharmacyNumberRing'; // Correct import
+import styles from '../css/pharmacy.module.css';
+import PharmacyNumberRing from './PharmacyNumberRing';
 import KakaoMap from './KakaoMap';
 
 const PH = () => {
@@ -12,6 +12,16 @@ const PH = () => {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
     const [pagination, setPagination] = useState({ totalPages: 0, currentPage: 1 });
+    const [user, setUser] = useState(null);
+
+    // 로컬 스토리지에서 user 정보를 가져와 노출 여부를 설정함
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            setUser(parsedUser);
+        }
+    }, []);
 
     const fetchPharmacyData = async () => {
         try {
@@ -43,13 +53,31 @@ const PH = () => {
         setPage(Number(number));  // ensure the number is parsed as a number
     };
 
+    const deletePharmacy = async (phId) => {
+        try {
+            const response = await axios.delete(`http://localhost:9999/pharmacies/delete/${phId}`, {
+                headers: {
+                    'userRole': user.boardMemberGradeNo === 0 ? 'ADMIN' : ''
+                }
+            });
+            if (response.data.status === 'success') {
+                fetchPharmacyData();  // 삭제 후 목록 갱신
+            } else {
+                setError(response.data.message || 'Error deleting pharmacy');
+            }
+        } catch (error) {
+            console.log('Error deleting pharmacy:', error);
+            setError('Error deleting pharmacy');
+        }
+    };
+
     const renderTable = useCallback(() => (
         <table>
             <thead>
                 <tr>
                     <th></th>
                     <th>번호</th>
-                    <th>약국명</th> {/* 병원명을 약국명으로 변경 */}
+                    <th>약국명</th>
                     <th>지역</th>
                     <th>전화번호</th>
                     <th>도로명 주소</th>
@@ -57,21 +85,28 @@ const PH = () => {
                 </tr>
             </thead>
             <tbody>
-                {result.map((pharmacy, index) => ( // 병원 대신 약국으로 변경
+                {result.map((pharmacy, index) => (
                     <tr key={index}>
                         <td>
-                            <button className={styles.DeleteBtn}>삭제</button>
+                            {user && user.boardMemberGradeNo === 0 && (
+                                <button
+                                    className={styles.DeleteBtn}
+                                    onClick={() => deletePharmacy(pharmacy.phId)}
+                                >
+                                    삭제
+                                </button>
+                            )}
                         </td>
-                        <td>{pharmacy.phId}</td> {/* hoId 대신 phId로 변경 */}
-                        <td>{pharmacy.phName}</td> {/* hoName 대신 phName으로 변경 */}
-                        <td>{pharmacy.phRegion}</td> {/* hoRegion 대신 phRegion으로 변경 */}
-                        <td>{pharmacy.phTel}</td> {/* hoTel 대신 phTel로 변경 */}
-                        <td>{pharmacy.phAddress}</td> {/* hoAddress 대신 phAddress로 변경 */}
-                        <td>{pharmacy.phHour}</td> {/* 추가된 phHour 필드 사용 */}
+                        <td>{pharmacy.phId}</td>
+                        <td>{pharmacy.phName}</td>
+                        <td>{pharmacy.phRegion}</td>
+                        <td>{pharmacy.phTel}</td>
+                        <td>{pharmacy.phAddress}</td>
+                        <td>{pharmacy.phHour}</td>
                         <td>
                             <Link
-                                to={`/phinfo/${pharmacy.phId}`} // 병원 ID 대신 약국 ID 사용
-                                className={styles.linkButton} // Apply button styles
+                                to={`/phinfo/${pharmacy.phId}`}
+                                className={styles.linkButton}
                             >
                                 이동
                             </Link>
@@ -80,37 +115,48 @@ const PH = () => {
                 ))}
             </tbody>
         </table>
-    ), [result]);
+    ), [result, user]);
 
     // 약국 위치 데이터를 KakaoMap에 전달할 형태로 변환합니다.
     const locations = result.map(pharmacy => ({
-        name: pharmacy.phName, // 약국명 사용
+        name: pharmacy.phName,
         lat: parseFloat(pharmacy.phLat), // 위도
         lng: parseFloat(pharmacy.phLng)  // 경도
     }));
 
     return (
-        <div className={styles.container}>
-            <div className={styles.main_Image}>
-                <div className={styles.searchContainer}>
-                    <input
-                        type="text"
-                        value={phText} // hoText 대신 phText 사용
-                        placeholder="주소를 입력해주세요. (예: 기흥, 성남)"
-                        onChange={(e) => setPhText(e.target.value)} // hoText 대신 phText 사용
-                        className={styles.searchInput} // Apply the new style here
-                    />
-                    <button onClick={searchPharmacyClick}>조회</button> {/* searchHospitalClick 대신 searchPharmacyClick 사용 */}
-                    {error && <div className={styles.error}>{error}</div>}
+        <>
+            <div className={styles.banner}></div>
+            <div className={styles.container}>
+                <div className={styles.mainContent}>
+                    <div className={styles.searchAndTableContainer}>
+                        <div className={styles.searchContainer}>
+                            <input
+                                type="text"
+                                value={phText}
+                                placeholder="주소를 입력해주세요. (예: 기흥, 성남)"
+                                onChange={(e) => setPhText(e.target.value)}
+                                className={styles.searchInput}
+                            />
+                            <button onClick={searchPharmacyClick} className={styles.searchButton}>조회</button>
+                        </div>
+                        {error && <div className={styles.error}>{error}</div>}
+                        {result.length > 0 && (
+                            <>
+                                {renderTable()}
+                                <div className={styles.paginationContainer}>
+                                    <PharmacyNumberRing onNumberRing={onNumberRing} pagination={pagination} />
+                                </div>
+                            </>
+                        )}
+                    </div>
+                    <div className={styles.mapContainer}>
+                        <KakaoMap locations={locations} />
+                    </div>
                 </div>
-                {result.length > 0 && renderTable()}
+                <footer className={styles.footer}>박유영0724</footer>
             </div>
-            <div className={styles.info_container}>
-                <PharmacyNumberRing onNumberRing={onNumberRing} pagination={pagination} /> {/* HospitalNumberRing 대신 PharmacyNumberRing 사용 */}
-                <KakaoMap locations={locations} /> {/* KakaoMap 컴포넌트 추가 */}
-            </div>
-            <footer className={styles.footer}>박유영0724</footer>
-        </div>
+        </>
     );
 };
 

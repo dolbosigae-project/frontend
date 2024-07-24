@@ -60,6 +60,14 @@
   cursor: pointer; /* 커서 모양 변경 */
 }
 
+.DeleteBtn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
 .searchButton:hover {
   background-color: #45a049; /* 마우스 오버 시 배경색 변경 */
 }

@@ -12,6 +12,16 @@ const HO = () => {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5);
     const [pagination, setPagination] = useState({ totalPages: 0, currentPage: 1 });
+    const [user, setUser] = useState(null);
+
+    // 로컬 스토리지에서 user 정보를 가져와 노출 여부를 설정함
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            setUser(parsedUser);
+        }
+    }, []);
 
     const fetchHospitalData = async () => {
         try {
@@ -43,6 +53,24 @@ const HO = () => {
         setPage(Number(number));  // ensure the number is parsed as a number
     };
 
+    const deleteHospital = async (hoId) => {
+        try {
+            const response = await axios.delete(`http://localhost:9999/hospitals/delete/${hoId}`, {
+                headers: {
+                    'userRole': user.boardMemberGradeNo === 0 ? 'ADMIN' : ''
+                }
+            });
+            if (response.data.status === 'success') {
+                fetchHospitalData();  // 삭제 후 목록 갱신
+            } else {
+                setError(response.data.message || 'Error deleting hospital');
+            }
+        } catch (error) {
+            console.log('Error deleting hospital:', error);
+            setError('Error deleting hospital');
+        }
+    };
+
     const renderTable = useCallback(() => (
         <div className={styles.tableContainer}>
             <table>
@@ -61,7 +89,14 @@ const HO = () => {
                     {result.map((hospital, index) => (
                         <tr key={index}>
                             <td>
-                                <button className={styles.DeleteBtn}>삭제</button>
+                                {user && user.boardMemberGradeNo === 0 && (
+                                    <button
+                                        className={styles.DeleteBtn}
+                                        onClick={() => deleteHospital(hospital.hoId)}
+                                    >
+                                        삭제
+                                    </button>
+                                )}
                             </td>
                             <td>{hospital.hoId}</td>
                             <td>{hospital.hoName}</td>
@@ -82,7 +117,7 @@ const HO = () => {
                 </tbody>
             </table>
         </div>
-    ), [result]);
+    ), [result, user]);
 
     // 병원 위치 데이터를 KakaoMap에 전달할 형태로 변환합니다.
     const locations = result.map(hospital => ({
