@@ -52,6 +52,7 @@ function App() {
           <Route path="/kakao/callback" element={<KakaoLogin onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/pl" element={<PL />} />
           <Route path='/plinfo/:plId' element={<PlInfoView />} />
+          <Route path='/plUpdate' element={<PlInfoView />} />
           <Route path='/co' element={<CO />} />
           <Route path='/coinfo/:coId' element={<CoInfoView />} />
           <Route path='/shelter' element={<ShelterList />} />

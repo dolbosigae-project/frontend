@@ -95,6 +95,11 @@ const PL = () => {
                                 <button className={styles.DeleteBtn} onClick={() => deleteClick(city.plId)}>삭제</button>
                             ) : null}
                         </td>
+                        <td>
+                            {user && user.boardMemberGradeNo === 0 ? (
+                                <Link to="/plUpdate">수정</Link>
+                            ) : null}
+                        </td>
                         <td className={styles.list_td}>{city.plId}</td>
                         <td className={styles.list_td}>{city.plName}</td>
                         <td className={styles.list_td}>{city.plHour}</td>
