@@ -16,6 +16,10 @@ import Hospital from './components/Hospital';
 import HospitalDetail from './components/HospitalDetail';
 import CO from './components/co_main_components/CO';
 import CoInfoView from './components/co_info_components/CoInfoView';
+import Pharmacy from './components/Pharmacy';
+import PharmacyDetail from './components/PharmacyDetail';
+
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -53,6 +57,9 @@ function App() {
           <Route path='/shelter' element={<ShelterList />} />
           <Route path='/animal-medical' element={<Hospital />} />
           <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
+          <Route path="/pharmacies" element={<Pharmacy />} />
+          <Route path="/phinfo/:phId" element={<PharmacyDetail />} />
+
         </Routes>
       </div>
     </Router>
