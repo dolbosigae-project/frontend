@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './css/plNumberRing.module.css';
-const PlNumberRing = ({ onNumberRing, pagination }) => {
+import styles from './css/coNumberRing.module.css';
+const CoNumberRing = ({ onNumberRing, pagination }) => {
     const totalPages = pagination.totalPages;
     const currentPage = pagination.currentPage;
-    const pageGroupSize = 5;
+    const pageGroupSize = 10;
     const currentPageGroup = Math.ceil(currentPage / pageGroupSize);
     const startPage = (currentPageGroup - 1) * pageGroupSize + 1;
     const endPage = Math.min(currentPageGroup * pageGroupSize, totalPages);
@@ -43,4 +43,4 @@ const PlNumberRing = ({ onNumberRing, pagination }) => {
     );
 };
 
-export default PlNumberRing;
+export default CoNumberRing;

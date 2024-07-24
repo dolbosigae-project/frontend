@@ -14,7 +14,7 @@ const PlInfoView = () => {
             try {
                 const response = await fetch(`http://localhost:9999/city/info?plId=${plId}`);
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('데이터를 가져오는데 실패하였습니다.');
                 }
                 const data = await response.json();
                 setPlaceInfo(data); // 받은 데이터를 상태에 저장
@@ -43,7 +43,7 @@ const PlInfoView = () => {
                 <SubTitlePL />
             </div>
             <img className={styles.info_Img} src={placeInfo.plImg} />
-            <table>
+            <table className={styles.pl_table}>
                 <tbody>
                     <tr className={styles.Info_tr}>
                         <td className={styles.name_td}><p className={styles.p_Tag}>공원명</p></td>

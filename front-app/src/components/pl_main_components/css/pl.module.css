@@ -45,21 +45,9 @@
   margin-top: 10px;
 }
 
-.plMian_container{
+.pl_main_container{
   margin: 0;
   padding: 0;
-}
-
-
-.Img{
-  width: 100%;
-  height: 200px;
-  background-color: #F4F2EE;
-  border: 1px solid #F4F2EE;
-  background-image: url(../../../img/logo_white.png);
-  background-position: right;
-  background-repeat: no-repeat;
-  background-size: contain;
 }
 
 .search_and_result_container{

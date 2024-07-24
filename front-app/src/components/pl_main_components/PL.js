@@ -33,7 +33,7 @@ const PL = () => {
             setPagination({
                 totalPages: response.data.pagination.totalPages,
                 currentPage: page,
-            });
+            })
         } catch (error) {
             console.log('서버에러:', error);
         }
@@ -108,7 +108,7 @@ const PL = () => {
     ), [result, user]);
 
     return (
-        <div className={styles.plMain_container}>
+        <div className={styles.pl_main_container}>
             <SubTitlePL />
             <div className={styles.search_and_result_container}>
                 <div className={styles.search_container}>
