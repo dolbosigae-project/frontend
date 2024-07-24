@@ -40,7 +40,7 @@ export default function AdminCommentWrite({ adminNo }) {
 
       if (response.status === 200) {
         console.log(response.data);
-        alert('답변 댓글을 업로드하였습니다.');
+        alert('답변 댓글을 작성하였습니다.');
         navigate('/admin/contact');
       } else {
         console.error('Unexpected response status:', response.status);

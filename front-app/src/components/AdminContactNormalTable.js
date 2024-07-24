@@ -45,6 +45,29 @@ export default function AdminContactNormalTable() {
     fetchPageData();
   };
 
+  // 삭제 버튼
+  const deleteClick = async (adminNo, adminCommentCount) => {
+    try {
+      const response = await axios.delete(`http://localhost:9999/admin/delete/${adminNo}/${adminCommentCount}`);
+      alert(response.data); // 서버 응답 메시지를 알림으로 표시
+
+      // 상태 업데이트: 삭제된 게시글을 목록에서 제거한 후 최신 데이터 다시 불러오기
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`http://localhost:9999/admin/contact?page=${pagination.currentPage}`);
+          setAdminBoardList(response.data.admin);
+          setPagination(response.data.pagination);
+        } catch (error) {
+          console.error("There was an error fetching the page data!", error);
+        }
+      };
+      fetchData();
+    } catch (error) {
+      console.error("문의글 삭제 오류", error);
+      alert("문의글 삭제 중 오류가 발생했습니다.");
+    }
+  };
+
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
@@ -74,7 +97,7 @@ export default function AdminContactNormalTable() {
               <tr>
                   <td>
                   {user && (user.boardMemberGradeNo === 0 || user.boardMemberId === item.adminMemberId) &&(
-                    <button className={styles.deleteButton}>삭제</button>
+                    <button className={styles.deleteButton} onClick={() => deleteClick(item.adminNo, item.adminCommentCount)}>삭제</button>
                   )}
                   {user && user.boardMemberGradeNo === 0 &&(
                     <button

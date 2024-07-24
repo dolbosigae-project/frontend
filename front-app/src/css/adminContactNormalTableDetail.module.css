@@ -45,16 +45,48 @@
 
 .commentContent{
   height: 100px;
+  width: 100%;
+}
+
+.commentContent div{
+  display: flex;
+  justify-content: space-between;
+}
+
+.commentContent div button{
+  padding-right: 10px;
+  font-size: 15px;
+  background-color: white;
+  border: 1px solid #ddd;
+}
+
+.commentContent div button:hover{
+  background-color: #f2f2f2;
+  color: white;
+}
+
+.adminDetailBtnGroup{
+  display: flex;
+  flex-flow: row;
+}
+
+.adminDetailBtnGroup button:hover{
+  opacity: 0.8;
 }
 
 .commentBtn{
   margin-top: 20px;
   background-color: #00823E;
   color: white;
-  width: 100px;
-  font-size: 18px;
+  width: 110px;
+  font-size: 16px;
 }
 
-.commentBtn:hover{
-  opacity: 0.8;
+.deleteBigBtn{
+  margin-top: 20px;
+  background-color: #CF1E1E;
+  color: white;
+  width: 110px;
+  font-size: 16px; 
+  margin-left: 10px;
 }
