@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const ShelterList = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
     const [shelters, setShelters] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -14,24 +16,32 @@ const ShelterList = () => {
     const [totalPage, setTotalPage] = useState(1);
     const PAGE_GROUP_OF_COUNT = 5;
 
+    const query = new URLSearchParams(location.search);
+    const queryPageNo = parseInt(query.get('pageNo')) || 1;
+    const queryPageCount = parseInt(query.get('pageContentEa')) || 10;
+
     useEffect(() => {
-        const fetchShelters = async () => {
-            setLoading(true);
-            try {
-                const response = await axios.get(`http://localhost:9999/shelter?pageNo=${currentPage}&pageContentEa=${pageOfContentCount}`);
-                setShelters(response.data.list);
-                setFilteredShelters(response.data.list);
-                setTotalPage(response.data.totalPage);
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
-            }
-        };
+        setCurrentPage(queryPageNo);
+        setPageOfContentCount(queryPageCount);
+        fetchShelters(queryPageNo, queryPageCount);
+    }, [location.search]);
 
-        fetchShelters();
-    }, [currentPage, pageOfContentCount]);
+    // Shelter 데이터를 로드하는 함수
+    const fetchShelters = async (pageNo, pageCount) => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`http://localhost:9999/shelter?pageNo=${pageNo}&pageContentEa=${pageCount}`);
+            setShelters(response.data.list);
+            setFilteredShelters(response.data.list);
+            setTotalPage(response.data.totalPage);
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    // 필터와 검색어가 변경될 때마다 필터링 적용
     useEffect(() => {
         filterShelters();
     }, [selectedRegion, searchKeyword, shelters]);
@@ -68,7 +78,7 @@ const ShelterList = () => {
 
         if (currentPageGroupNo > 1) {
             pages.push(
-                <button key="prev" onClick={() => setCurrentPage(startPageOfPageGroup - 1)}>
+                <button key="prev" onClick={() => handlePageChange(startPageOfPageGroup - PAGE_GROUP_OF_COUNT)}>
                     ◀
                 </button>
             );
@@ -76,7 +86,7 @@ const ShelterList = () => {
 
         for (let i = startPageOfPageGroup; i <= endPageOfPageGroup; i++) {
             pages.push(
-                <button key={i} onClick={() => setCurrentPage(i)} className={i === currentPage ? 'active' : ''}>
+                <button key={i} onClick={() => handlePageChange(i)} className={i === currentPage ? 'active' : ''}>
                     {i}
                 </button>
             );
@@ -84,13 +94,17 @@ const ShelterList = () => {
 
         if (currentPageGroupNo < totalPageGroup) {
             pages.push(
-                <button key="next" onClick={() => setCurrentPage(endPageOfPageGroup + 1)}>
+                <button key="next" onClick={() => handlePageChange(startPageOfPageGroup + PAGE_GROUP_OF_COUNT)}>
                     ▶
                 </button>
             );
         }
 
         return pages;
+    };
+
+    const handlePageChange = (page) => {
+        navigate(`?pageNo=${page}&pageContentEa=${pageOfContentCount}`);
     };
 
     if (loading) {

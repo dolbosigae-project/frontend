@@ -12,6 +12,7 @@ import KakaoLogin from './components/KakaoLogin';
 import PL from './components/pl_main_components/contents/PL'
 import PlInfoView from './components/pl_info_component/PlInfoView'
 import ShelterList from './components/ShelterList';
+import ShelterDetail from './components/ShelterDetail';  // ShelterDetail import 추가
 import Hospital from './components/Hospital';
 import HospitalDetail from './components/HospitalDetail';
 
@@ -37,7 +38,8 @@ function App() {
     <Router>
       <div>
         <Routes>
-          <Route path='/shelter' element={<ShelterList/>} />
+          <Route path='/shelter' element={<ShelterList />} />
+          <Route path='/shelter/:shID' element={<ShelterDetail />} /> 
         </Routes>
       </div>
     </Router>

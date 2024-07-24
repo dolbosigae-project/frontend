@@ -13,7 +13,7 @@ const ShelterDetail = () => {
     useEffect(() => {
         const fetchShelter = async () => {
             try {
-                const response = await axios.get(`http://localhost:9999//shelter/${shID}`);
+                const response = await axios.get(`http://localhost:9999/shelter/${shID}`);
                 setShelter(response.data);
             } catch (error) {
                 setError(error);
@@ -24,7 +24,7 @@ const ShelterDetail = () => {
 
         const fetchABList = async () => {
             try {
-                const response = await axios.get(`https://localhost:9999/ab`, {
+                const response = await axios.get(`http://localhost:9999/ab`, {
                     params: { shID }
                 });
                 setAbList(response.data.list);
@@ -48,7 +48,7 @@ const ShelterDetail = () => {
     return (
         <div>
             <div>
-                <KakaoMap address={shelter.shAddress} />  {/* KakaoMap 컴포넌트를 사용하여 지도를 표시합니다. */}
+                <KakaoMap address={shelter.shAddress} />
             </div>
             <div>
                 <p>센터명 : {shelter.shName}</p>
@@ -64,7 +64,7 @@ const ShelterDetail = () => {
                     abList.map((ab) => (
                         <Link to={`/ab/${ab.abID}`} key={ab.abID} className="ab-card">
                             <div className="ab-image">
-                                {/* Image will be added here */}
+                                Image will be added here
                             </div>
                             <div className="ab-info">
                                 <p>보호종 : {ab.abBreed}</p>
@@ -76,7 +76,7 @@ const ShelterDetail = () => {
                 ) : (
                     <p>보호 중인 동물이 없습니다.</p>
                 )}
-            </div>
+            </div> 
         </div>
     );
 };
