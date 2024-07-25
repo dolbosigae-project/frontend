@@ -137,7 +137,7 @@ export default function Header({ isLoggedIn, onLogout }) {
               <Link className={styles.navLink}>커뮤니티</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'community' ? styles.visible : ''}`}>
                 <li className={styles.navSublink}><Link to="/">자랑 게시판</Link></li>
-                <li className={styles.navSublink}><Link to="/">산책 친구 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/mate/member">산책 친구 찾기</Link></li>
                 <li className={styles.navSublink}><Link to="/dog/random/date">랜덤 댕개팅</Link></li>
                 <li className={styles.navSublink}><Link to="/dwc">개상형 월드컵</Link></li>
               </ul>
