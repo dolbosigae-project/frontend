@@ -20,6 +20,7 @@ import Pharmacy from './components/Pharmacy';
 import PharmacyDetail from './components/PharmacyDetail';
 import PlInsert from './components/pl_insert_component/PlInsert';
 import CoInsert from './components/co_insert_component/CoInsert';
+import DogWorldCup from './components/dog_worldCup_components/DogWorldCup';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -62,6 +63,7 @@ function App() {
           <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
           <Route path="/pharmacies" element={<Pharmacy />} />
           <Route path="/phinfo/:phId" element={<PharmacyDetail />} />
+          <Route path='/dwc' element={<DogWorldCup />} />
 
         </Routes>
       </div>
