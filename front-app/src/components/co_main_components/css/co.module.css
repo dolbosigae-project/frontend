@@ -86,3 +86,19 @@
     margin-right: 70px;
     cursor: pointer;
   }
+
+.co_insert_container{
+  display: flex;
+  margin: auto;
+  width: 120px;
+  height: 25px;
+  background-color: green;
+}
+  
+.co_insert_link{
+  padding-left: 8px;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: white;
+}

@@ -18,7 +18,8 @@ import CO from './components/co_main_components/CO';
 import CoInfoView from './components/co_info_components/CoInfoView';
 import Pharmacy from './components/Pharmacy';
 import PharmacyDetail from './components/PharmacyDetail';
-
+import PlInsert from './components/pl_insert_component/PlInsert';
+import CoInsert from './components/co_insert_component/CoInsert';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -52,9 +53,10 @@ function App() {
           <Route path="/kakao/callback" element={<KakaoLogin onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/pl" element={<PL />} />
           <Route path='/plinfo/:plId' element={<PlInfoView />} />
-          <Route path='/plUpdate' element={<PlInfoView />} />
+          <Route path='/plInsert' element={<PlInsert />} />
           <Route path='/co' element={<CO />} />
           <Route path='/coinfo/:coId' element={<CoInfoView />} />
+          <Route path='/coInsert' element={<CoInsert />} />
           <Route path='/shelter' element={<ShelterList />} />
           <Route path='/animal-medical' element={<Hospital />} />
           <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
