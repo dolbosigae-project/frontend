@@ -29,7 +29,7 @@ export default function AddPharmacy() {
     console.log("jsonData:", jsonData); // JSON 데이터가 올바른지 콘솔에 출력합니다.
 
     try {
-      const response = await axios.post('http://localhost:9999/pharmacies/add', jsonData, {
+      const response = await axios.post('http://localhost:9999/pharmacies', jsonData, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -37,7 +37,7 @@ export default function AddPharmacy() {
 
       if (response.status === 200) {
         console.log(response.data);
-        alert('약국 추가 성공');
+        alert('약국 등록 성공');
         navigate('/'); // 추가 후 리디렉션
       } else {
         console.error('Unexpected response status:', response.status);

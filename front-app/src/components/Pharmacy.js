@@ -76,7 +76,7 @@ const PH = () => {
             <thead>
                 <tr>
                     <th></th>
-                    <th>번호</th>
+                 
                     <th>약국명</th>
                     <th>지역</th>
                     <th>전화번호</th>
@@ -94,7 +94,7 @@ const PH = () => {
                                     onClick={() => deletePharmacy(pharmacy.phId)}>삭제</button>
                             )}
                         </td>
-                        <td>{pharmacy.phId}</td>
+                      
                         <td>{pharmacy.phName}</td>
                         <td>{pharmacy.phRegion}</td>
                         <td>{pharmacy.phTel}</td>

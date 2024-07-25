@@ -77,7 +77,7 @@ const HO = () => {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>번호</th>
+                       
                         <th>병원명</th>
                         <th>지역</th>
                         <th>전화번호</th>
@@ -94,7 +94,7 @@ const HO = () => {
                                         onClick={() => deleteHospital(hospital.hoId)}>삭제</button>
                                 )}
                             </td>
-                            <td>{hospital.hoId}</td>
+                          
                             <td>{hospital.hoName}</td>
                             <td>{hospital.hoRegion}</td>
                             <td>{hospital.hoTel}</td>

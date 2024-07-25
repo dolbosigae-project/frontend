@@ -37,7 +37,7 @@ export default function AddHospital() {
 
       if (response.status === 200) {
         console.log(response.data);
-        alert('병원 추가 성공');
+        alert('병원 등록 성공');
         navigate('/'); // 추가 후 리디렉션
       } else {
         console.error('Unexpected response status:', response.status);
