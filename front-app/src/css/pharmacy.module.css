@@ -78,15 +78,7 @@
   justify-content: center; /* 테이블을 중앙에 배치 */
 }
 
-.hospitalList {
-  width: 100%;
-  margin-top: 20px;
-}
 
-.hospitalItem {
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0;
-}
 
 .footer {
   text-align: center;

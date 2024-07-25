@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import styles from '../css/hospital.module.css';
-import HospitalNumberRing from './HospitalNumberRing';
+import styles from '../css/pharmacy.module.css';
+import PharmacyNumberRing from './PharmacyNumberRing';
 import KakaoMap from './KakaoMap';
 
-const HO = () => {
-    const [hoText, setHoText] = useState('');
+const PH = () => {
+    const [phText, setPhText] = useState('');
     const [error, setError] = useState('');
     const [result, setResult] = useState([]);
     const [page, setPage] = useState(1);
@@ -23,10 +23,10 @@ const HO = () => {
         }
     }, []);
 
-    const fetchHospitalData = async () => {
+    const fetchPharmacyData = async () => {
         try {
-            const response = await axios.get('http://localhost:9999/hospitals/list', {
-                params: { hoText, page, limit }
+            const response = await axios.get('http://localhost:9999/pharmacies/list', {
+                params: { phText, page, limit }
             });
             const contents = response.data.contents || [];
             setResult(contents);
@@ -41,85 +41,80 @@ const HO = () => {
     };
 
     useEffect(() => {
-        fetchHospitalData();
+        fetchPharmacyData();
     }, [page, limit]);
 
-    const searchHospitalClick = async () => {
+    const searchPharmacyClick = async () => {
         setPage(1);
-        fetchHospitalData();
+        fetchPharmacyData();
     };
 
     const onNumberRing = (number) => {
         setPage(Number(number));  // ensure the number is parsed as a number
     };
 
-    const deleteHospital = async (hoId) => {
+    const deletePharmacy = async (phId) => {
         try {
-            const response = await axios.delete(`http://localhost:9999/hospitals/delete/${hoId}`, {
+            const response = await axios.delete(`http://localhost:9999/pharmacies/delete/${phId}`, {
                 headers: {
                     'userRole': user.boardMemberGradeNo === 0 ? 'ADMIN' : ''
                 }
             });
             if (response.data.status === 'success') {
-                fetchHospitalData();  // 삭제 후 목록 갱신
+                fetchPharmacyData();  // 삭제 후 목록 갱신
             } else {
-                setError(response.data.message || 'Error deleting hospital');
+                setError(response.data.message || 'Error deleting pharmacy');
             }
         } catch (error) {
-            console.log('Error deleting hospital:', error);
-            setError('Error deleting hospital');
+            console.log('Error deleting pharmacy:', error);
+            setError('Error deleting pharmacy');
         }
     };
 
     const renderTable = useCallback(() => (
-        <div className={styles.tableContainer}>
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                       
-                        <th>병원명</th>
-                        <th>지역</th>
-                        <th>전화번호</th>
-                        <th>주소</th>
-                        <th>우편번호</th>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>                 
+                    <th>약국명</th>
+                    <th>지역</th>
+                    <th>전화번호</th>
+                    <th>도로명 주소</th>
+                    <th>운영시간</th>
+                </tr>
+            </thead>
+            <tbody>
+                {result.map((pharmacy, index) => (
+                    <tr key={index}>
+                        <td>
+                            {user && user.boardMemberGradeNo === 0 && (
+                                <button
+                                    className={styles.DeleteBtn}
+                                    onClick={() => deletePharmacy(pharmacy.phId)}>삭제</button>
+                            )}
+                        </td>
+                      
+                        <td>{pharmacy.phName}</td>
+                        <td>{pharmacy.phRegion}</td>
+                        <td>{pharmacy.phTel}</td>
+                        <td>{pharmacy.phAddress}</td>
+                        <td>{pharmacy.phHour}</td>
+                        <td>
+                            <Link
+                                to={`/phinfo/${pharmacy.phId}`}
+                                className={styles.linkButton}>이동</Link>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    {result.map((hospital, index) => (
-                        <tr key={index}>
-                            <td>
-                                {user && user.boardMemberGradeNo === 0 && (
-                                    <button className={styles.DeleteBtn}
-                                        onClick={() => deleteHospital(hospital.hoId)}>삭제</button>
-                                )}
-                            </td>
-                          
-                            <td>{hospital.hoName}</td>
-                            <td>{hospital.hoRegion}</td>
-                            <td>{hospital.hoTel}</td>
-                            <td>{hospital.hoAddress}</td>
-                            <td>{hospital.hoPost}</td>
-                            <td>
-                                <Link
-                                    to={`/hoinfo/${hospital.hoId}`}
-                                    className={styles.linkButton}
-                                >
-                                    이동
-                                </Link>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                ))}
+            </tbody>
+        </table>
     ), [result, user]);
 
-    // 병원 위치 데이터를 KakaoMap에 전달할 형태로 변환합니다.
-    const locations = result.map(hospital => ({
-        name: hospital.hoName,
-        lat: parseFloat(hospital.hoLat), // 위도
-        lng: parseFloat(hospital.hoLng)  // 경도
+    // 약국 위치 데이터를 KakaoMap에 전달할 형태로 변환합니다.
+    const locations = result.map(pharmacy => ({
+        name: pharmacy.phName,
+        lat: parseFloat(pharmacy.phLat), // 위도
+        lng: parseFloat(pharmacy.phLng)  // 경도
     }));
 
     return (
@@ -131,16 +126,16 @@ const HO = () => {
                         <div className={styles.searchContainer}>
                             <input
                                 type="text"
-                                value={hoText}
+                                value={phText}
                                 placeholder="주소를 입력해주세요. (예: 기흥, 성남)"
-                                onChange={(e) => setHoText(e.target.value)}
+                                onChange={(e) => setPhText(e.target.value)}
                                 className={styles.searchInput}
                             />
-                            <button onClick={searchHospitalClick} className={styles.searchButton}>조회</button>
+                            <button onClick={searchPharmacyClick} className={styles.searchButton}>조회</button>
                         </div>
                         {user && user.boardMemberGradeNo === 0 && (
                             <div className={styles.addButtonContainer}>
-                                <Link to={`/addHospital`} className={styles.linkButton}> + 병원 추가하기</Link>
+                                <Link to={`/addPharmacy`} className={styles.linkButton}>+ 약국 추가하기</Link>
                             </div>
                         )}
                         {error && <div className={styles.error}>{error}</div>}
@@ -148,7 +143,7 @@ const HO = () => {
                             <>
                                 {renderTable()}
                                 <div className={styles.paginationContainer}>
-                                    <HospitalNumberRing onNumberRing={onNumberRing} pagination={pagination} />
+                                    <PharmacyNumberRing onNumberRing={onNumberRing} pagination={pagination} />
                                 </div>
                             </>
                         )}
@@ -163,4 +158,4 @@ const HO = () => {
     );
 };
 
-export default HO;
+export default PH;
