@@ -18,6 +18,11 @@ import HospitalDetail from './components/HospitalDetail';
 import AdminContact from './components/AdminContact';
 import AdminContactNormalTableDetail from './components/AdminContactNormalTableDetail';
 import AdminContactWrite from './components/AdminContactWrite';
+import Footer from './components/Footer';
+import IoChat from './components/IoChat';
+import ChatIntro from './components/ChatIntro';
+import MateSearch from './components/MateSearch';
+import MatePetProfile from './components/MatePetProfile';
 import Pharmacy from './components/Pharmacy';
 import PharmacyDetail from './components/PharmacyDetail';
 import AddHospital from './components/AddHospital';
@@ -56,6 +61,7 @@ function App() {
           <Route path="/member/register" element={<MemberRegister />} />
           <Route path="/member/mypage" element={<MyPage />} />
           <Route path="/kakao/callback" element={<KakaoLogin onLoginSuccess={handleLoginSuccess} />} />
+
           <Route path="/pl" element={<PL />} />
           <Route path='/plinfo/:plId' element={<PlInfoView />} />
           <Route path='/shelter' element={<ShelterList />} />
@@ -71,6 +77,10 @@ function App() {
           <Route path='/phinfo/:phId' element={<PharmacyDetail />} />
           <Route path="/addHospital" element={<AddHospital />} />
           <Route path="/addPharmacy" element={<AddPharmacy />} />
+          <Route path="/mate/chat" element={<IoChat/>} />
+          <Route path="/mate/intro" element={<ChatIntro/>} />
+          <Route path="/mate/member" element={<MateSearch/>} />
+          <Route path="/mate/petinfo" element={<MatePetProfile/>} />
         </Routes>
         <Footer />
       </div>

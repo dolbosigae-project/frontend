@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from '../css/header.module.css';
 import logo from '../img/logo.png';
 import login from '../img/login.png';
@@ -14,8 +14,13 @@ export default function Header({ isLoggedIn, onLogout }) {
   const [user, setUser] = useState(null);
   const [visibleSubmenu, setVisibleSubmenu] = useState(null);
   let timeout;
+  const location = useLocation();
+  const [isPetInfo, setIsPetInfo] = useState(false);
 
   useEffect(() => {
+    setIsPetInfo(location.pathname === '/mate/petinfo'); // 특정 경로 설정해서 header 안보이게 하는 부분
+    
+
     if (isLoggedIn) {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
@@ -26,7 +31,7 @@ export default function Header({ isLoggedIn, onLogout }) {
     } else {
       setUser(null);
     }
-  }, [isLoggedIn]);
+  }, [location.pathname, isLoggedIn]);
 
   const handleLogout = async (event) => {
     event.preventDefault();
@@ -55,6 +60,9 @@ export default function Header({ isLoggedIn, onLogout }) {
       setVisibleSubmenu(null);
     }, 300); // 0.3초 후 서브메뉴 숨기기
   };
+
+  // 특정 경로에서는 헤더를 렌더링하지 않음
+  if (isPetInfo) return null; // 위에서 설정했던 특정 경로에서 헤더 숨기기
 
   return (
     <div className={styles.headerContainer}>
@@ -118,14 +126,14 @@ export default function Header({ isLoggedIn, onLogout }) {
               <Link className={styles.navLink}>놀이 · 편의</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'play' ? styles.visible : ''}`}>
                 <li className={styles.navSublink}><Link to="/pl">놀이시설 찾기</Link></li>
-                <li className={styles.navSublink}><Link to="/co">편의시설 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/">편의시설 찾기</Link></li>
               </ul>
             </li>
             <li className={styles.navItem}><Link to="/" className={styles.navLink}>자랑 게시판</Link></li>
-            <li className={styles.navItem}><Link to="/" className={styles.navLink}>산책 친구 찾기</Link></li>
-            <li
-              className={styles.navItem}
-              onMouseOver={() => handleMouseOver('protection')}
+            <li className={styles.navItem}><Link to="/mate/member" className={styles.navLink}>산책 친구 찾기</Link></li>
+            <li 
+              className={styles.navItem} 
+              onMouseOver={() => handleMouseOver('protection')} 
               onMouseOut={handleMouseOut}>
               <Link className={styles.navLink}>동물보호</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'protection' ? styles.visible : ''}`}>
