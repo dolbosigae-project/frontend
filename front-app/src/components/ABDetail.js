@@ -1,42 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import styles from '../css/abDetail.module.css';  // 스타일 파일 추가
 
 const ABDetail = () => {
     const { abID } = useParams();
     const [ab, setAb] = useState(null);
     const [shelter, setShelter] = useState(null);
-    const [loading, setLoading] = useState(true);  // 초기 로딩 상태를 true로 설정
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchABDetail = async () => {
             try {
-                const response = await axios.get(`https://localhost:9999/ab/${abID}`);
+                const response = await axios.get(`http://localhost:9999/ab/${abID}`);
                 setAb(response.data);
+                // 데이터가 로드되면 보호소 정보도 가져옵니다
+                if (response.data.shID) {
+                    const shelterResponse = await axios.get(`http://localhost:9999/shelter/${response.data.shID}`);
+                    setShelter(shelterResponse.data);
+                }
             } catch (error) {
                 setError(error);
             } finally {
-                setLoading(false);  // 데이터 로드 완료 후 로딩 상태를 false로 설정
+                setLoading(false);
             }
         };
 
-        const fetchShelterDetail = async () => {
-            try {
-                const response = await axios.get(`http://localhost:9999/shelter/${ab.shID}`);
-                setShelter(response.data);
-            } catch (error) {
-                setError(error);
-            }
-        };
-
-        if (abID) {
-            fetchABDetail();
-        }
-        if (ab && ab.shID) {
-            fetchShelterDetail();
-        }
-    }, [abID, ab?.shID]);
+        fetchABDetail();
+    }, [abID]);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -47,30 +39,65 @@ const ABDetail = () => {
     }
 
     return (
-        <div className="ab-detail">
-            <h1>AB Detail</h1>
-            <div className="ab-image">
+        <div className={styles.main_container}>
+            <h1 className={styles.title}>AB Detail</h1>
+            <div className={styles.image_container}>
                 {/* Assuming ab.abImage contains the URL to the image */}
-                <img src={ab.abImage} alt={ab.abBreed} />
+                <img src={ab.abImage} alt={ab.abBreed} className={styles.ab_image} />
             </div>
-            <div className="ab-info">
-                <p>
-                    센터명: 
-                    <Link to={`/shelter/${ab.shID}`} className="shelter-link">
-                        {shelter?.shName}
-                    </Link>
-                </p>
-                <p>보호 시작일 : {new Date(ab.abDate).toLocaleDateString()}</p>
-                <p>발견 장소 : {ab.abLocation}</p>
-                <p>상태 : {ab.abStatus}</p>
-                <p>보호종 : {ab.abBreed}</p>
-                <p>성별 : {ab.abGender}</p>
-                <p>나이 : {ab.abAge}</p>
-                <p>무게 : {ab.abWeight}</p>
-                <p>색상 : {ab.abColor}</p>
-                <p>발견시 특이사항 : {ab.abRescued}</p>
-                <p>특징 : {ab.abCharacter}</p>
-            </div>
+            <table className={styles.info_table}>
+                <tbody>
+                    <tr className={styles.table_row}>
+                        <td className={styles.table_label}>센터명</td>
+                        <td className={styles.table_data}>
+                            <Link to={`/shelter/${ab.shID}`} className={styles.shelter_link}>
+                                {shelter?.shName || '센터 정보 없음'}
+                            </Link>
+                        </td>
+                    </tr>
+                    <tr className={styles.table_row}>
+                        <td className={styles.table_label}>보호 시작일</td>
+                        <td className={styles.table_data}>{new Date(ab.abDate).toLocaleDateString()}</td>
+                    </tr>
+                    <tr className={styles.table_row}>
+                        <td className={styles.table_label}>발견 장소</td>
+                        <td className={styles.table_data}>{ab.abLocation}</td>
+                    </tr>
+                    <tr className={styles.table_row}>
+                        <td className={styles.table_label}>상태</td>
+                        <td className={styles.table_data}>{ab.abStatus}</td>
+                    </tr>
+                    <tr className={styles.table_row}>
+                        <td className={styles.table_label}>보호종</td>
+                        <td className={styles.table_data}>{ab.abBreed}</td>
+                    </tr>
+                    <tr className={styles.table_row}>
+                        <td className={styles.table_label}>성별</td>
+                        <td className={styles.table_data}>{ab.abGender}</td>
+                    </tr>
+                    <tr className={styles.table_row}>
+                        <td className={styles.table_label}>나이</td>
+                        <td className={styles.table_data}>{ab.abAge}</td>
+                    </tr>
+                    <tr className={styles.table_row}>
+                        <td className={styles.table_label}>무게</td>
+                        <td className={styles.table_data}>{ab.abWeight}</td>
+                    </tr>
+                    <tr className={styles.table_row}>
+                        <td className={styles.table_label}>색상</td>
+                        <td className={styles.table_data}>{ab.abColor}</td>
+                    </tr>
+                    <tr className={styles.table_row}>
+                        <td className={styles.table_label}>발견시 특이사항</td>
+                        <td className={styles.table_data}>{ab.abRescued}</td>
+                    </tr>
+                    <tr className={styles.table_row}>
+                        <td className={styles.table_label}>특징</td>
+                        <td className={styles.table_data}>{ab.abCharacter}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <footer className={styles.footer}></footer>
         </div>
     );
 };

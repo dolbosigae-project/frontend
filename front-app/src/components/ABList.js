@@ -1,24 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import Pagination from './Pagination';
+import ABCardList from './ABCardList';
+import ABFilter from './ABFilter';
+// import styles from '../css/abList.module.css';
 
-const ABList = (shID) =>{
+const ABList = ({ shID }) => {
     const [abList, setAbList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageContentCount, setPageContentCount] = useState(6);
+    const [pageContentCount, setPageContentCount] = useState(6); // 한 페이지에 6개 항목 표시
     const [totalPage, setTotalPage] = useState(1);
-    const PAGE_GROUP_OF_COUNT = 5;
+    const [filter, setFilter] = useState({
+        region: '',
+        centerName: '',
+        startDate: '',
+        endDate: '',
+        breed: ''
+    });
 
     useEffect(() => {
         const fetchABList = async () => {
+            setLoading(true);
             try {
                 const response = await axios.get(`http://localhost:9999/ab`, {
                     params: {
                         shID,
                         pageNo: currentPage,
-                        pageContentEa: pageContentCount
+                        pageContentEa: pageContentCount,
+                        ...filter
                     }
                 });
                 setAbList(response.data.list);
@@ -31,48 +42,11 @@ const ABList = (shID) =>{
         };
 
         fetchABList();
-    }, [currentPage, pageContentCount, shID]);
+    }, [currentPage, pageContentCount, shID, filter]);
 
-    const renderPageNumbers = () => {
-        const totalPageGroup = Math.ceil(totalPage / PAGE_GROUP_OF_COUNT);
-        const currentPageGroupNo = Math.ceil(currentPage / PAGE_GROUP_OF_COUNT);
-        const startPageOfPageGroup = (currentPageGroupNo - 1) * PAGE_GROUP_OF_COUNT + 1;
-        const endPageOfPageGroup = Math.min(currentPageGroupNo * PAGE_GROUP_OF_COUNT, totalPage);
-        const pages = [];
-
-        if (currentPageGroupNo > 1) {
-            pages.push(
-                <button key="prev" onClick={() => setCurrentPage(startPageOfPageGroup - 1)}>
-                    ◀
-                </button>
-            );
-        }
-
-        for (let i = startPageOfPageGroup; i <= endPageOfPageGroup; i++) {
-            pages.push(
-                <button key={i} onClick={() => setCurrentPage(i)} className={i === currentPage ? 'active' : ''}>
-                    {i}
-                </button>
-            );
-        }
-
-        if (currentPageGroupNo < totalPageGroup) {
-            pages.push(
-                <button key="next" onClick={() => setCurrentPage(endPageOfPageGroup + 1)}>
-                    ▶
-                </button>
-            );
-        }
-
-        return pages;
-    };
-
-    const isOverAWeek = (dateString) => {
-        const abDate = new Date(dateString);
-        const currentDate = new Date();
-        const diffTime = Math.abs(currentDate - abDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        return diffDays > 7;
+    const handleFilterChange = (newFilter) => {
+        setFilter(newFilter);
+        setCurrentPage(1); // 검색 조건이 변경되면 첫 페이지로 이동
     };
 
     if (loading) {
@@ -84,29 +58,16 @@ const ABList = (shID) =>{
     }
 
     return (
-        <div className="ab-list">
-            <h1>AB List</h1>
-            <div className="ab-cards">
-                {abList.map((ab) => (
-                    <Link to={`/ab/${ab.abID}`} key={ab.abID} className="ab-card">
-                       <div className="ab-image">
-                            {/* Assuming ab.abImage contains the URL to the image */}
-                            <img src={ab.abImage} alt={ab.abBreed} />
-                        </div>
-                        <div className="ab-info">
-                            <p>보호종 : {ab.abBreed}</p>
-                            <p>발견 장소 : {ab.abLocation}</p>
-                            <p>특징 : {ab.abCharacter}</p>
-                            {isOverAWeek(ab.abDate) && (
-                                <p className="adoptable">입양가능</p>
-                            )}
-                        </div>
-                    </Link>
-                ))}
-            </div>
-            <div className="pagination">
-                {renderPageNumbers()}
-            </div>
+        <div className={styles.ab_list}>
+            <h2>보호 중인 동물 목록</h2>
+            <ABFilter onFilterChange={handleFilterChange} />
+            <ABCardList abList={abList} />
+            <Pagination
+                currentPage={currentPage}
+                totalPage={totalPage}
+                setCurrentPage={setCurrentPage}
+                pageGroupCount={5}
+            />
         </div>
     );
 };
