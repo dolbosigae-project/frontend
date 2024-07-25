@@ -17,8 +17,8 @@
 
 .mySlides {
   position: absolute;
-  top: 40px;
-  left: 250px;
+  top: 7%;
+  left: 20%;
   width: 70%;
   height: 540px;
   border-radius: 50px;
@@ -32,12 +32,13 @@
 }
 
 .whiteBox {
-  width: 78%;
+  width: 90%;
   height: 400px;
   background-color: white;
   position: absolute;
-  top: 180px; 
-  right: 200px;
+  top: 30%;
+  /* right: 200px; */
+  right: 3%;
   z-index: 0;
   border-radius: 50px;
 }
@@ -45,10 +46,10 @@
 .btnContainer {
   position: absolute;
   top: 37%;
-  left: 59%;
+  left: 58%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 60px; /* 좌우 간격 */
+  grid-column-gap: 45px; /* 좌우 간격 */
   grid-row-gap: 50px; /* 상하 간격 */
   z-index: 10; /* z-index 값을 높여서 다른 요소들 위에 배치 */
 }
@@ -69,8 +70,8 @@
 }
 
 .circle {
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   border-radius: 50px;
   background-color: #EAF9F1;
   position: relative; /* 부모 요소에 relative를 설정하여 자식 요소를 절대 위치로 배치할 수 있게 함 */
@@ -81,11 +82,118 @@
   top: 50%; /* 부모 요소의 세로 중앙 */
   left: 50%; /* 부모 요소의 가로 중앙 */
   transform: translate(-50%, -50%); /* 요소의 중앙을 기준으로 배치 */
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
 }
 
 .btnName {
   margin-top: 10px;
   font-size: 20px;
+}
+
+/* 미디어 쿼리 추가 */
+@media (max-width: 1024px) {
+  .container {
+    height: 500px;
+  }
+
+  .imgContainer {
+    width: 80%;
+    height: 500px;
+    top: -10px;
+  }
+
+  .mySlides {
+    top: 5%;
+    left: 10%;
+    width: 80%;
+    height: 440px;
+  }
+
+  .whiteBox {
+    width: 90%;
+    height: 300px;
+    top: 150px;
+    right: 5%;
+  }
+
+  .btnContainer {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    grid-template-columns: repeat(2, 1fr); /* 버튼이 두 개의 열로 배치되도록 변경 */
+    grid-column-gap: 30px;
+    grid-row-gap: 30px;
+  }
+
+  .miniBtn {
+    transform: scale(0.8);
+  }
+
+  .circle {
+    width: 70px;
+    height: 70px;
+  }
+
+  .icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .btnName {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    height: 400px;
+  }
+
+  .imgContainer {
+    width: 90%;
+    height: 400px;
+    top: 0;
+  }
+
+  .mySlides {
+    top: 0;
+    left: 5%;
+    width: 90%;
+    height: 350px;
+  }
+
+  .whiteBox {
+    width: 95%;
+    height: 250px;
+    top: 100px;
+    right: 2.5%;
+  }
+
+  .btnContainer {
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+  }
+
+  .miniBtn {
+    transform: scale(0.7);
+  }
+
+  .circle {
+    width: 60px;
+    height: 60px;
+  }
+
+  .icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .btnName {
+    font-size: 14px;
+  }
 }
