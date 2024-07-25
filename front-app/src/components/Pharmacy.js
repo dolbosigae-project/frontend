@@ -75,13 +75,12 @@ const PH = () => {
         <table>
             <thead>
                 <tr>
-                    <th></th>
-                 
+                    <th></th>                 
                     <th>약국명</th>
                     <th>지역</th>
                     <th>전화번호</th>
                     <th>도로명 주소</th>
-                    <th>상세정보</th>
+                    <th>운영시간</th>
                 </tr>
             </thead>
             <tbody>
