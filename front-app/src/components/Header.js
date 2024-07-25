@@ -20,6 +20,7 @@ export default function Header({ isLoggedIn, onLogout }) {
   useEffect(() => {
     setIsPetInfo(location.pathname === '/mate/petinfo'); // 특정 경로 설정해서 header 안보이게 하는 부분
     
+
     if (isLoggedIn) {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
@@ -108,19 +109,19 @@ export default function Header({ isLoggedIn, onLogout }) {
                 <img src={logo} alt="Logo" className={styles.logo} />
               </Link>
             </li>
-            <li 
-              className={styles.navItem} 
-              onMouseOver={() => handleMouseOver('medical')} 
+            <li
+              className={styles.navItem}
+              onMouseOver={() => handleMouseOver('medical')}
               onMouseOut={handleMouseOut}>
               <Link className={styles.navLink}>동물 의료</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'medical' ? styles.visible : ''}`}>
                 <li className={styles.navSublink}><Link to="/animal-medical">동물병원 찾기</Link></li>
-                <li className={styles.navSublink}><Link to="/">동물약국 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/pharmacies">동물약국 찾기</Link></li>
               </ul>
             </li>
-            <li 
-              className={styles.navItem} 
-              onMouseOver={() => handleMouseOver('play')} 
+            <li
+              className={styles.navItem}
+              onMouseOver={() => handleMouseOver('play')}
               onMouseOut={handleMouseOut}>
               <Link className={styles.navLink}>놀이 · 편의</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'play' ? styles.visible : ''}`}>
@@ -137,7 +138,7 @@ export default function Header({ isLoggedIn, onLogout }) {
               <Link className={styles.navLink}>동물보호</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'protection' ? styles.visible : ''}`}>
                 <li className={styles.navSublink}><Link to="/shelter">동물보호센터 찾기</Link></li>
-                <li className={styles.navSublink}><Link to="/">유기동물 보호현황</Link></li>
+                <li className={styles.navSublink}><Link to="/shelter/animal">유기동물 보호현황</Link></li>
               </ul>
             </li>
             <li className={styles.navItem}><Link to="/admin/contact" className={styles.navLink}>관리자문의</Link></li>

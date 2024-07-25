@@ -9,9 +9,10 @@ import MemberRegister from './components/MemberRegister';
 import MyPage from './components/MyPage';
 import LoginPasswd from './components/LoginPasswd';
 import KakaoLogin from './components/KakaoLogin';
-import PL from './components/pl_main_components/contents/PL'
-import PlInfoView from './components/pl_info_component/PlInfoView'
+import PL from './components/pl_main_components/contents/PL';
+import PlInfoView from './components/pl_info_component/PlInfoView';
 import ShelterList from './components/ShelterList';
+import ShelterAnimalsInfo from './components/ShelterAnimalsInfo';
 import Hospital from './components/Hospital';
 import HospitalDetail from './components/HospitalDetail';
 import AdminContact from './components/AdminContact';
@@ -22,6 +23,13 @@ import IoChat from './components/IoChat';
 import ChatIntro from './components/ChatIntro';
 import MateSearch from './components/MateSearch';
 import MatePetProfile from './components/MatePetProfile';
+import Pharmacy from './components/Pharmacy';
+import PharmacyDetail from './components/PharmacyDetail';
+import AddHospital from './components/AddHospital';
+import AddPharmacy from './components/AddPharmacy';
+import Footer from './components/Footer';
+import CO from './components/co_main_components/CO';
+import CoInfoView from './components/co_info_components/CoInfoView';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,7 +43,7 @@ function App() {
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
-  }
+  };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -53,14 +61,22 @@ function App() {
           <Route path="/member/register" element={<MemberRegister />} />
           <Route path="/member/mypage" element={<MyPage />} />
           <Route path="/kakao/callback" element={<KakaoLogin onLoginSuccess={handleLoginSuccess} />} />
-          <Route path="/pl"  element={<PL/>} />
+
+          <Route path="/pl" element={<PL />} />
           <Route path='/plinfo/:plId' element={<PlInfoView />} />
-          <Route path='/shelter' element={<ShelterList/>} />
+          <Route path='/shelter' element={<ShelterList />} />
+          <Route path='/shelter/animal' element={<ShelterAnimalsInfo />} />
           <Route path='/animal-medical' element={<Hospital />} />
-          <Route path='hospitalDetail' element={<HospitalDetail />}/>
+          <Route path='/hospitalDetail' element={<HospitalDetail />} />
           <Route path='/admin/contact' element={<AdminContact />} />
           <Route path='/admin/contact/detail/:adminNo' element={<AdminContactNormalTableDetail />} />
           <Route path='/admin/write' element={<AdminContactWrite />} />
+          <Route path='/co' element={<CO />} />
+          <Route path='/coinfo/:coId' element={<CoInfoView />} />
+          <Route path='/pharmacies' element={<Pharmacy />} />
+          <Route path='/phinfo/:phId' element={<PharmacyDetail />} />
+          <Route path="/addHospital" element={<AddHospital />} />
+          <Route path="/addPharmacy" element={<AddPharmacy />} />
           <Route path="/mate/chat" element={<IoChat/>} />
           <Route path="/mate/intro" element={<ChatIntro/>} />
           <Route path="/mate/member" element={<MateSearch/>} />

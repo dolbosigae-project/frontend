@@ -1,103 +1,74 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styles from '../css/hospitalDetail.module.css';
-import SubTitleHospital from '../components/SubTitles/SubTitleHospital'
-
-const PAGE_GROUP_SIZE = 5;
+import KakaoMap from './KakaoMap'; // KakaoMap 컴포넌트 import
 
 const HospitalDetail = () => {
-    const [searchResult, setSearchResult] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [pagination, setPagination] = useState();
+    const { hoId } = useParams(); // URL 파라미터에서 병원 ID를 가져옵니다
+    const [hospitalInfo, setHospitalInfo] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetchData();
-    }, [currentPage]);
-
-    const fetchData = async () => {
-        try {
-            const response = await axios.get('http://localhost:9999/hospitals', {
-                params: {
-                    page: currentPage,
-                    limit: 10 // 페이지당 항목 수, Spring에서 설정한 대로
+        const fetchHospitalInfo = async () => {
+            try {
+                const response = await fetch(`http://localhost:9999/hoinfo?hoId=${hoId}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-            });
-            if (response.status === 200) {
-                const { contents, pagination } = response.data;
-                setSearchResult(contents);
-                setTotalPages(pagination.totalPages);
-                setPagination(pagination);
+                const data = await response.json();
+                setHospitalInfo(data);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+                console.error('Error fetching hospital info:', error);
             }
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
+        };
 
-    const handlePageChange = (pageNo) => {
-        setCurrentPage(pageNo);
-    };
+        fetchHospitalInfo();
+    }, [hoId]);
 
-    const pageGroupStart = Math.floor((currentPage - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
-    const pageGroupEnd = Math.min(pageGroupStart + PAGE_GROUP_SIZE - 1, totalPages);
-    const previousPageGroup = pageGroupStart > 1;
-    const nextPageGroup = pageGroupEnd < totalPages;
+    if (loading) {
+        return <div>Loading...</div>; // 데이터 로딩 중 표시
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>; // 에러 발생 시 메시지 표시
+    }
+
+    // 병원 정보에서 위치 정보를 추출
+    const location = {
+        name: hospitalInfo.hoName,
+        lat: parseFloat(hospitalInfo.hoLat), // 위도
+        lng: parseFloat(hospitalInfo.hoLng)  // 경도
+    };
 
     return (
-        <div className={styles.container}>
-            <SubTitleHospital />
-            <h2 className={styles.subTitle}>병원 정보 목록</h2>
-            <div className={styles.infoContainer}>
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>번호</th>
-                            <th>지역</th>
-                            <th>병원명</th>
-                            <th>전화번호</th>
-                            <th>도로명 주소</th>
-                            <th>우편번호</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {searchResult.map((item, idx) => (
-                            <tr key={idx}>
-                                <td>
-                                    <button className={styles.deleteBtn}>삭제</button>
-                                </td>
-                                <td><Link to={`/${item.hoId}`} className={styles.hoName}>{item.hoId}</Link></td>
-                                <td>{item.hoRegion}</td>
-                                <td>{item.hoName}</td>
-                                <td>{item.hoTel}</td>
-                                <td>{item.hoAddress}</td>
-                                <td>{item.hoPost}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-
-            <div className={styles.pagination}>
-                {previousPageGroup && (
-                    <button onClick={() => handlePageChange(pagination.pageOfPageGroup - 1)}>◀</button>
-                )}
-                {pagination && Array.from({ length: pagination.endPageOfPageGroup - pagination.startPageOfPageGroup + 1 }, (_, i) => (
-                    <button
-                        key={i + pagination.startPageOfPageGroup}
-                        onClick={() => handlePageChange(i + pagination.startPageOfPageGroup)}
-                        className={pagination.currentPage === i + pagination.startPageOfPageGroup ? styles.activePage : ''}
-                    >
-                        {i + pagination.startPageOfPageGroup}
-                    </button>
-                ))}
-                {nextPageGroup && (
-                    <button onClick={() => handlePageChange(pagination.endPageOfPageGroup + 1)}>▶</button>
-                )}
-            </div>
-
-            <footer className={styles.footer}>박유영</footer>
+        <div className={styles.main_container}>
+            {/* KakaoMap 컴포넌트 추가 */}
+            <KakaoMap locations={[location]} />
+            <table>
+                <tbody>
+                    <tr className={styles.tr}>
+                        <td className={styles.name_td}><p className={styles.p_Tag}>병원명</p></td>
+                        <td className={styles.data_Td}>{hospitalInfo.hoName}</td>
+                        <td className={styles.name_td}><p className={styles.p_Tag}>연락처</p></td>
+                        <td className={styles.data_Td}>{hospitalInfo.hoTel}</td>
+                    </tr>
+                    <tr className={styles.tr}>
+                        <td className={styles.name_td}><p className={styles.p_Tag}>지역</p></td>
+                        <td className={styles.data_Td}>{hospitalInfo.hoRegion}</td>
+                        <td className={styles.name_td}><p className={styles.p_Tag}>우편번호</p></td>
+                        <td className={styles.data_Td}>{hospitalInfo.hoPost}</td>
+                    </tr>
+                    <tr className={styles.Address_Tr}>
+                        <td className={styles.name_td}><p className={styles.p_Tag}>주소</p></td>
+                        <td className={styles.data_Td} colSpan="4">{hospitalInfo.hoAddress}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <footer className={styles.footer}>박유영0725</footer>
         </div>
     );
 };
