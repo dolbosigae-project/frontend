@@ -116,7 +116,7 @@
   margin-right: 10px;
 }
 
-textarea{
+.form_container textarea{
   width: 600px;
   height: 100px;
   font-size: 20px;
