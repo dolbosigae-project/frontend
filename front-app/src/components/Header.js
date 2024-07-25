@@ -121,8 +121,18 @@ export default function Header({ isLoggedIn, onLogout }) {
                 <li className={styles.navSublink}><Link to="/">편의시설 찾기</Link></li>
               </ul>
             </li>
-            <li className={styles.navItem}><Link to="/" className={styles.navLink}>자랑 게시판</Link></li>
-            <li className={styles.navItem}><Link to="/" className={styles.navLink}>산책 친구 찾기</Link></li>
+            <li 
+              className={styles.navItem} 
+              onMouseOver={() => handleMouseOver('community')} 
+              onMouseOut={handleMouseOut}>
+              <Link className={styles.navLink}>커뮤니티</Link>
+              <ul className={`${styles.submenu} ${visibleSubmenu === 'community' ? styles.visible : ''}`}>
+                <li className={styles.navSublink}><Link to="/">자랑 게시판</Link></li>
+                <li className={styles.navSublink}><Link to="/">산책 친구 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/dog/random/date">랜덤 댕개팅</Link></li>
+                <li className={styles.navSublink}><Link to="/">개상형 월드컵</Link></li>
+              </ul>
+            </li>
             <li 
               className={styles.navItem} 
               onMouseOver={() => handleMouseOver('protection')} 
@@ -130,7 +140,7 @@ export default function Header({ isLoggedIn, onLogout }) {
               <Link className={styles.navLink}>동물보호</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'protection' ? styles.visible : ''}`}>
                 <li className={styles.navSublink}><Link to="/shelter">동물보호센터 찾기</Link></li>
-                <li className={styles.navSublink}><Link to="/shelter/animal">유기동물 보호현황</Link></li>
+                <li className={styles.navSublink}><Link to="/">유기동물 보호현황</Link></li>
               </ul>
             </li>
             <li className={styles.navItem}><Link to="/admin/contact" className={styles.navLink}>관리자문의</Link></li>

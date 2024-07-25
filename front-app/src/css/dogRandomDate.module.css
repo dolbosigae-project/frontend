@@ -1,0 +1,17 @@
+.sentence {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 50px;
+  margin-top: 20px;
+}
+
+.sentence img {
+  width: 50px;
+}
+
+.sentenceSub{
+  display: flex;
+  flex-flow: column;
+  margin-left: 10px;
+}

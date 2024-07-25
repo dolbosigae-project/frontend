@@ -19,6 +19,7 @@ import AdminContact from './components/AdminContact';
 import AdminContactNormalTableDetail from './components/AdminContactNormalTableDetail';
 import AdminContactWrite from './components/AdminContactWrite';
 import Footer from './components/Footer';
+import DogRandomDate from './components/DogRandomDate';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -53,12 +54,13 @@ function App() {
           <Route path="/pl"  element={<PL/>} />
           <Route path='/plinfo/:plId' element={<PlInfoView />} />
           <Route path='/shelter' element={<ShelterList/>} />
-          <Route path='/shelter/animal' element={<ShelterAnimalsInfo/>} />
           <Route path='/animal-medical' element={<Hospital />} />
           <Route path='hospitalDetail' element={<HospitalDetail />}/>
           <Route path='/admin/contact' element={<AdminContact />} />
           <Route path='/admin/contact/detail/:adminNo' element={<AdminContactNormalTableDetail />} />
           <Route path='/admin/write' element={<AdminContactWrite />} />
+          <Route path='/dog/random/date' element={<DogRandomDate/>} />
+
         </Routes>
         <Footer />
       </div>
