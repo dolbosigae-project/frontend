@@ -101,31 +101,31 @@ export default function Header({ isLoggedIn, onLogout }) {
                 <img src={logo} alt="Logo" className={styles.logo} />
               </Link>
             </li>
-            <li 
-              className={styles.navItem} 
-              onMouseOver={() => handleMouseOver('medical')} 
+            <li
+              className={styles.navItem}
+              onMouseOver={() => handleMouseOver('medical')}
               onMouseOut={handleMouseOut}>
               <Link className={styles.navLink}>동물 의료</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'medical' ? styles.visible : ''}`}>
                 <li className={styles.navSublink}><Link to="/animal-medical">동물병원 찾기</Link></li>
-                <li className={styles.navSublink}><Link to="/">동물약국 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/pharmacies">동물약국 찾기</Link></li>
               </ul>
             </li>
-            <li 
-              className={styles.navItem} 
-              onMouseOver={() => handleMouseOver('play')} 
+            <li
+              className={styles.navItem}
+              onMouseOver={() => handleMouseOver('play')}
               onMouseOut={handleMouseOut}>
               <Link className={styles.navLink}>놀이 · 편의</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'play' ? styles.visible : ''}`}>
                 <li className={styles.navSublink}><Link to="/pl">놀이시설 찾기</Link></li>
-                <li className={styles.navSublink}><Link to="/">편의시설 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/co">편의시설 찾기</Link></li>
               </ul>
             </li>
             <li className={styles.navItem}><Link to="/" className={styles.navLink}>자랑 게시판</Link></li>
             <li className={styles.navItem}><Link to="/" className={styles.navLink}>산책 친구 찾기</Link></li>
-            <li 
-              className={styles.navItem} 
-              onMouseOver={() => handleMouseOver('protection')} 
+            <li
+              className={styles.navItem}
+              onMouseOver={() => handleMouseOver('protection')}
               onMouseOut={handleMouseOut}>
               <Link className={styles.navLink}>동물보호</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'protection' ? styles.visible : ''}`}>

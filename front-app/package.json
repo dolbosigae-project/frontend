@@ -62,6 +62,8 @@
     "babel-plugin-inline-react-svg": "^2.0.2",
     "customize-cra": "^1.0.0",
     "react-app-rewired": "^2.2.1",
-    "svg-url-loader": "^8.0.0"
+    "svg-url-loader": "^8.0.0",
+    "webpack": "^5.93.0",
+    "webpack-dev-server": "^5.0.4"
   }
 }
