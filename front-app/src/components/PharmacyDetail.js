@@ -68,7 +68,7 @@ const PharmacyDetail = () => {
                     </tr>
                 </tbody>
             </table>
-            <footer className={styles.footer}>박유영0723</footer>
+            <footer className={styles.footer}>박유영0725</footer>
         </div>
     );
 };

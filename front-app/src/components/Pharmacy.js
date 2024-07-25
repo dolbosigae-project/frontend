@@ -89,13 +89,9 @@ const PH = () => {
                     <tr key={index}>
                         <td>
                             {user && user.boardMemberGradeNo === 0 && (
-                               <>
-                               <button
+                                <button
                                     className={styles.DeleteBtn}
-                                    onClick={() => deletePharmacy(pharmacy.phId)} >삭제</button>
-                                <Link to={`/addPharmacy`}
-                                            className={styles.linkButton}> 추가 </Link>
-</>
+                                    onClick={() => deletePharmacy(pharmacy.phId)}>삭제</button>
                             )}
                         </td>
                         <td>{pharmacy.phId}</td>
@@ -107,7 +103,7 @@ const PH = () => {
                         <td>
                             <Link
                                 to={`/phinfo/${pharmacy.phId}`}
-                                className={styles.linkButton} >이동</Link>
+                                className={styles.linkButton}>이동</Link>
                         </td>
                     </tr>
                 ))}
@@ -138,6 +134,11 @@ const PH = () => {
                             />
                             <button onClick={searchPharmacyClick} className={styles.searchButton}>조회</button>
                         </div>
+                        {user && user.boardMemberGradeNo === 0 && (
+                            <div className={styles.addButtonContainer}>
+                                <Link to={`/addPharmacy`} className={styles.linkButton}>+ 약국 추가하기</Link>
+                            </div>
+                        )}
                         {error && <div className={styles.error}>{error}</div>}
                         {result.length > 0 && (
                             <>
@@ -152,7 +153,7 @@ const PH = () => {
                         <KakaoMap locations={locations} />
                     </div>
                 </div>
-                <footer className={styles.footer}>박유영0724</footer>
+                <footer className={styles.footer}>박유영0725</footer>
             </div>
         </>
     );
