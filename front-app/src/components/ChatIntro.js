@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactDOM from 'react-dom'; // ReactDOM 임포트 추가
-import IoChat from './IoChat'; // IoChat 임포트 추가
+import IoChat from './Chat'; // IoChat 임포트 추가
 import styles from '../css/IoChat.module.css';
 
 function ChatIntro() {
