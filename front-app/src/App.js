@@ -25,11 +25,15 @@ import MateSearch from './components/MateSearch';
 import MatePetProfile from './components/MatePetProfile';
 import Pharmacy from './components/Pharmacy';
 import PharmacyDetail from './components/PharmacyDetail';
+import PlInsert from './components/pl_insert_component/PlInsert';
+import CoInsert from './components/co_insert_component/CoInsert';
+import DogWorldCup from './components/dog_worldCup_components/DogWorldCup';
 import AddHospital from './components/AddHospital';
 import AddPharmacy from './components/AddPharmacy';
 import Footer from './components/Footer';
 import CO from './components/co_main_components/CO';
 import CoInfoView from './components/co_info_components/CoInfoView';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -61,12 +65,19 @@ function App() {
           <Route path="/member/register" element={<MemberRegister />} />
           <Route path="/member/mypage" element={<MyPage />} />
           <Route path="/kakao/callback" element={<KakaoLogin onLoginSuccess={handleLoginSuccess} />} />
-
           <Route path="/pl" element={<PL />} />
           <Route path='/plinfo/:plId' element={<PlInfoView />} />
+          <Route path='/plInsert' element={<PlInsert />} />
+          <Route path='/co' element={<CO />} />
+          <Route path='/coinfo/:coId' element={<CoInfoView />} />
+          <Route path='/coInsert' element={<CoInsert />} />
           <Route path='/shelter' element={<ShelterList />} />
           <Route path='/shelter/animal' element={<ShelterAnimalsInfo />} />
           <Route path='/animal-medical' element={<Hospital />} />
+          <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
+          <Route path="/pharmacies" element={<Pharmacy />} />
+          <Route path="/phinfo/:phId" element={<PharmacyDetail />} />
+          <Route path='/dwc' element={<DogWorldCup />} />
           <Route path='/hospitalDetail' element={<HospitalDetail />} />
           <Route path='/admin/contact' element={<AdminContact />} />
           <Route path='/admin/contact/detail/:adminNo' element={<AdminContactNormalTableDetail />} />

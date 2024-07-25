@@ -129,11 +129,22 @@ export default function Header({ isLoggedIn, onLogout }) {
                 <li className={styles.navSublink}><Link to="/">편의시설 찾기</Link></li>
               </ul>
             </li>
-            <li className={styles.navItem}><Link to="/" className={styles.navLink}>자랑 게시판</Link></li>
-            <li className={styles.navItem}><Link to="/mate/member" className={styles.navLink}>산책 친구 찾기</Link></li>
-            <li 
-              className={styles.navItem} 
-              onMouseOver={() => handleMouseOver('protection')} 
+
+            <li
+              className={styles.navItem}
+              onMouseOver={() => handleMouseOver('community')}
+              onMouseOut={handleMouseOut}>
+              <Link className={styles.navLink}>커뮤니티</Link>
+              <ul className={`${styles.submenu} ${visibleSubmenu === 'community' ? styles.visible : ''}`}>
+                <li className={styles.navSublink}><Link to="/">자랑 게시판</Link></li>
+                <li className={styles.navSublink}><Link to="/">산책 친구 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/dog/random/date">랜덤 댕개팅</Link></li>
+                <li className={styles.navSublink}><Link to="/dwc">개상형 월드컵</Link></li>
+              </ul>
+            </li>
+            <li
+              className={styles.navItem}
+              onMouseOver={() => handleMouseOver('protection')}
               onMouseOut={handleMouseOut}>
               <Link className={styles.navLink}>동물보호</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'protection' ? styles.visible : ''}`}>
