@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import SubTitleMemberRegister from "./SubTitleMemberRegister";
+import SubTitleMemberRegister from "./SubTitles/SubTitleMemberRegister";
 import styles from '../css/memberRegister.module.css';
 import logo_small from '../img/logo_small.png';
 import { Link, useNavigate } from 'react-router-dom';
@@ -79,6 +79,11 @@ export default function MemberRegister() {
     const formData = new FormData(formRef.current);
     const data = Object.fromEntries(formData.entries());
 
+    if (data.boardMemberPasswd !== data.checkPasswd) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
     let profileImageBase64 = null;
     if (profileImage) {
       profileImageBase64 = await getBase64(profileImage);
@@ -113,6 +118,7 @@ export default function MemberRegister() {
       });
 
       if (response.status === 200) {
+        console.log(response.data);
         alert('회원가입 성공');
         navigate('/');
       } else {
@@ -135,7 +141,7 @@ export default function MemberRegister() {
       </div>
       <div className={styles.form_container}>
         <form ref={formRef} onSubmit={handleSubmit}>
-          <table className={styles.form_table}>
+          <table className={styles.form_table_00}>
             <tbody>
               <tr>
                 <td><label>회원이름 *</label></td>
@@ -152,6 +158,12 @@ export default function MemberRegister() {
               <tr>
                 <td><label>비밀번호 *</label></td>
                 <td><input type="password" name="boardMemberPasswd" required /></td>
+              </tr>
+              <tr>
+                <td><label>비밀번호 확인 *</label></td>
+                <td>
+                  <input type="password" name="checkPasswd" required />
+                </td>
               </tr>
               <tr>
                 <td><label>사는지역 *</label></td>
@@ -245,7 +257,7 @@ export default function MemberRegister() {
                   </tr>
                   <tr>
                     <td><label>반려동물 소개</label></td>
-                    <td><input type="text" name="petInfo" placeholder='산책 프로필에 노출됩니다'/></td>
+                    <td><textarea name="petInfo" placeholder='산책 프로필에 노출됩니다'/></td>
                   </tr>
                   <tr>
                     <td><label>반려동물 사진</label></td>
@@ -257,7 +269,7 @@ export default function MemberRegister() {
                         style={{
                           width: '100px',
                           height: '100px',
-                          border: '1px solid black',
+                          border: '1px solid #CCCCCC',
                           backgroundImage: profileImage ? `url(${URL.createObjectURL(profileImage)})` : 'none',
                           backgroundRepeat: 'no-repeat',
                           backgroundPosition: 'center',
@@ -272,7 +284,7 @@ export default function MemberRegister() {
               )}
             </tbody>
           </table>
-          <div className={styles.checkbox_container}>
+          <div className={styles.checkbox_container_00}>
             <input type='checkbox' id='check' required/>
             <label htmlFor='check'>개인정보 제공에 동의합니다.</label>
           </div>
