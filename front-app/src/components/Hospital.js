@@ -77,7 +77,7 @@ const HO = () => {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>번호</th>
+                       
                         <th>병원명</th>
                         <th>지역</th>
                         <th>전화번호</th>
@@ -90,15 +90,11 @@ const HO = () => {
                         <tr key={index}>
                             <td>
                                 {user && user.boardMemberGradeNo === 0 && (
-                                    <button
-                                        className={styles.DeleteBtn}
-                                        onClick={() => deleteHospital(hospital.hoId)}
-                                    >
-                                        삭제
-                                    </button>
+                                    <button className={styles.DeleteBtn}
+                                        onClick={() => deleteHospital(hospital.hoId)}>삭제</button>
                                 )}
                             </td>
-                            <td>{hospital.hoId}</td>
+                          
                             <td>{hospital.hoName}</td>
                             <td>{hospital.hoRegion}</td>
                             <td>{hospital.hoTel}</td>
@@ -142,6 +138,11 @@ const HO = () => {
                             />
                             <button onClick={searchHospitalClick} className={styles.searchButton}>조회</button>
                         </div>
+                        {user && user.boardMemberGradeNo === 0 && (
+                            <div className={styles.addButtonContainer}>
+                                <Link to={`/addHospital`} className={styles.linkButton}> + 병원 추가하기</Link>
+                            </div>
+                        )}
                         {error && <div className={styles.error}>{error}</div>}
                         {result.length > 0 && (
                             <>
@@ -156,7 +157,7 @@ const HO = () => {
                         <KakaoMap locations={locations} />
                     </div>
                 </div>
-                <footer className={styles.footer}>박유영0724</footer>
+                <footer className={styles.footer}>박유영0725</footer>
             </div>
         </>
     );
