@@ -17,6 +17,7 @@ import HospitalDetail from './components/HospitalDetail';
 import AdminContact from './components/AdminContact';
 import AdminContactNormalTableDetail from './components/AdminContactNormalTableDetail';
 import AdminContactWrite from './components/AdminContactWrite';
+import Footer from './components/Footer';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -57,6 +58,7 @@ function App() {
           <Route path='/admin/contact/detail/:adminNo' element={<AdminContactNormalTableDetail />} />
           <Route path='/admin/write' element={<AdminContactWrite />} />
         </Routes>
+        <Footer />
       </div>
     </Router>
   );
