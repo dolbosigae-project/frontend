@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../css/adminContactNormalTable.module.css';
 
 export default function AdminSearchResultsTable({ adminBoardList, user, deleteClick }) {
+  const [sortedAdminBoardList, setSortedAdminBoardList] = useState([]);
+
+  useEffect(() => {
+    // 날짜 내림차순, 날짜가 동일하면 글번호 내림차순으로 정렬
+    const sortedList = [...adminBoardList].sort((a, b) => {
+      const dateA = new Date(a.adminDate);
+      const dateB = new Date(b.adminDate);
+
+      if (dateA > dateB) return -1;
+      if (dateA < dateB) return 1;
+      return b.adminNo - a.adminNo; // 날짜가 동일하면 글번호 내림차순
+    });
+    setSortedAdminBoardList(sortedList);
+  }, [adminBoardList]);
+
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
@@ -27,7 +42,7 @@ export default function AdminSearchResultsTable({ adminBoardList, user, deleteCl
           </tr>
         </thead>
         <tbody>
-          {adminBoardList.map((item, index) => (
+          {sortedAdminBoardList.map((item, index) => (
             <React.Fragment key={index}>
               <tr>
                 <td>

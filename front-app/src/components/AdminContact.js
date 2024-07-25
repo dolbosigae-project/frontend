@@ -46,13 +46,17 @@ export default function AdminContact() {
     console.log('Search Pagination:', pagination);
     if (results && pagination) {
       setSearchResults(results);
-      setSearchPagination(pagination);
+      setSearchPagination({
+        ...pagination,
+        totalPages: Math.ceil(pagination.totalItems / 10), // 페이지당 10개의 항목이 있다고 가정
+      });
     } else {
       console.error("Invalid search results or pagination:", results, pagination);
     }
   };
 
   const handlePageChange = (pageNo) => {
+    console.log("페이지내용 : " + pageNo);
     if (searchResults) {
       // 검색 결과의 페이지 변경 로직
       const fetchPageData = async () => {
@@ -67,7 +71,10 @@ export default function AdminContact() {
           });
           console.log('Page change search response:', response.data);
           setSearchResults(response.data.admin);
-          setSearchPagination(response.data.pagination);
+          setSearchPagination({
+            ...response.data.pagination,
+            totalPages: Math.ceil(response.data.pagination.totalItems / 10),
+          });
         } catch (error) {
           console.error("There was an error fetching the search page data!", error);
         }
@@ -106,7 +113,10 @@ export default function AdminContact() {
               }
             });
             setSearchResults(response.data.admin);
-            setSearchPagination(response.data.pagination);
+            setSearchPagination({
+              ...response.data.pagination,
+              totalPages: Math.ceil(response.data.pagination.totalItems / 10),
+            });
           } catch (error) {
             console.error("There was an error fetching the search data!", error);
           }
