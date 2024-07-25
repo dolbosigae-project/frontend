@@ -12,6 +12,7 @@ import KakaoLogin from './components/KakaoLogin';
 import PL from './components/pl_main_components/contents/PL'
 import PlInfoView from './components/pl_info_component/PlInfoView'
 import ShelterList from './components/ShelterList';
+import ShelterAnimalsInfo from './components/ShelterAnimalsInfo';
 import Hospital from './components/Hospital';
 import HospitalDetail from './components/HospitalDetail';
 import AdminContact from './components/AdminContact';
@@ -52,6 +53,7 @@ function App() {
           <Route path="/pl"  element={<PL/>} />
           <Route path='/plinfo/:plId' element={<PlInfoView />} />
           <Route path='/shelter' element={<ShelterList/>} />
+          <Route path='/shelter/animal' element={<ShelterAnimalsInfo/>} />
           <Route path='/animal-medical' element={<Hospital />} />
           <Route path='hospitalDetail' element={<HospitalDetail />}/>
           <Route path='/admin/contact' element={<AdminContact />} />
