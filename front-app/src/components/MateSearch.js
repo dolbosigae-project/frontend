@@ -2,7 +2,7 @@ import styles from '../css/mateSearch.module.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import default_img from '../img/default_img.png';
-import SubTitleMateSearch from './SubTitleMateSearch';
+import SubTitleMateSearch from './SubTitles/SubTitleMateSearch';
 
 export default function MateSearch() {
   const [mateList, setMateList] = useState([]); // 빈 배열로 초기화

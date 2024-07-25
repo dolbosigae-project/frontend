@@ -90,7 +90,7 @@
 }
 
 input {
-  width: 150px; 
+  width: 150px; /* 입력 필드의 고정된 너비 */
   height: 35px;
   border: 1px solid #BEB4B4;
   border-radius: 10px;
@@ -130,13 +130,13 @@ input.petInfo {
   height: 100%;
 }
 
-/* button {
+button {
   width: 60px;
   height: 57px;
   border: none;
   border-radius: 10px;
   margin-bottom: 10px;
-} */
+}
 
 button.update {
   background-color: #00823E;

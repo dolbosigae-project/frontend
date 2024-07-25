@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
 import styles from '../css/header.module.css';
 import logo from '../img/logo.png';
 import login from '../img/login.png';
@@ -12,12 +12,14 @@ import { useState, useEffect } from 'react';
 export default function Header({ isLoggedIn, onLogout }) {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [visibleSubmenu, setVisibleSubmenu] = useState(null);
+  let timeout;
   const location = useLocation();
   const [isPetInfo, setIsPetInfo] = useState(false);
 
   useEffect(() => {
     setIsPetInfo(location.pathname === '/mate/petinfo'); // 특정 경로 설정해서 header 안보이게 하는 부분
-
+    
     if (isLoggedIn) {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
@@ -28,7 +30,7 @@ export default function Header({ isLoggedIn, onLogout }) {
     } else {
       setUser(null);
     }
-  }, [location.pathname, isLoggedIn]); //  기존 종속성 배열에 isLoggedIn가 있었는데 location.pathname도 추가한거 pathname header없애려고
+  }, [location.pathname, isLoggedIn]);
 
   const handleLogout = async (event) => {
     event.preventDefault();
@@ -46,6 +48,17 @@ export default function Header({ isLoggedIn, onLogout }) {
       console.error('Logout failed:', error);
     }
   }
+
+  const handleMouseOver = (menu) => {
+    clearTimeout(timeout);
+    setVisibleSubmenu(menu);
+  };
+
+  const handleMouseOut = () => {
+    timeout = setTimeout(() => {
+      setVisibleSubmenu(null);
+    }, 300); // 0.3초 후 서브메뉴 숨기기
+  };
 
   // 특정 경로에서는 헤더를 렌더링하지 않음
   if (isPetInfo) return null; // 위에서 설정했던 특정 경로에서 헤더 숨기기
@@ -67,8 +80,7 @@ export default function Header({ isLoggedIn, onLogout }) {
                     <Link to="/member/view" className={styles.authItem}>
                       <img src={memberView} alt="MemberView" className={styles.memberView} />회원관리
                     </Link>
-                  </li>
-                )}
+                  </li>)}
                 <li>
                   <button onClick={handleLogout} className={styles.authItem}>로그아웃</button>
                 </li>
@@ -96,12 +108,39 @@ export default function Header({ isLoggedIn, onLogout }) {
                 <img src={logo} alt="Logo" className={styles.logo} />
               </Link>
             </li>
-            <li className={styles.navItem}><Link to="/">동물 의료</Link></li>
-            <li className={styles.navItem}><Link to="/">놀이 · 편의</Link></li>
-            <li className={styles.navItem}><Link to="/">자랑 게시판</Link></li>
-            <li className={styles.navItem}><Link to="/mate/member">산책 친구 찾기</Link></li>
-            <li className={styles.navItem}><Link to="/">동물보호</Link></li>
-            <li className={styles.navItem}><Link to="/">관리자문의</Link></li>
+            <li 
+              className={styles.navItem} 
+              onMouseOver={() => handleMouseOver('medical')} 
+              onMouseOut={handleMouseOut}>
+              <Link className={styles.navLink}>동물 의료</Link>
+              <ul className={`${styles.submenu} ${visibleSubmenu === 'medical' ? styles.visible : ''}`}>
+                <li className={styles.navSublink}><Link to="/animal-medical">동물병원 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/">동물약국 찾기</Link></li>
+              </ul>
+            </li>
+            <li 
+              className={styles.navItem} 
+              onMouseOver={() => handleMouseOver('play')} 
+              onMouseOut={handleMouseOut}>
+              <Link className={styles.navLink}>놀이 · 편의</Link>
+              <ul className={`${styles.submenu} ${visibleSubmenu === 'play' ? styles.visible : ''}`}>
+                <li className={styles.navSublink}><Link to="/pl">놀이시설 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/">편의시설 찾기</Link></li>
+              </ul>
+            </li>
+            <li className={styles.navItem}><Link to="/" className={styles.navLink}>자랑 게시판</Link></li>
+            <li className={styles.navItem}><Link to="/mate/member" className={styles.navLink}>산책 친구 찾기</Link></li>
+            <li 
+              className={styles.navItem} 
+              onMouseOver={() => handleMouseOver('protection')} 
+              onMouseOut={handleMouseOut}>
+              <Link className={styles.navLink}>동물보호</Link>
+              <ul className={`${styles.submenu} ${visibleSubmenu === 'protection' ? styles.visible : ''}`}>
+                <li className={styles.navSublink}><Link to="/shelter">동물보호센터 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/">유기동물 보호현황</Link></li>
+              </ul>
+            </li>
+            <li className={styles.navItem}><Link to="/admin/contact" className={styles.navLink}>관리자문의</Link></li>
           </ul>
         </nav>
       </header>
