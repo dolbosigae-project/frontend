@@ -15,21 +15,25 @@ const ABDetail = () => {
         const fetchABDetail = async () => {
             try {
                 const response = await axios.get(`http://localhost:9999/ab/detail/${abID}`);
+                console.log("AB Detail Response:", response.data); // 추가
                 setAb(response.data);
-
+    
                 if (response.data.shID) {
                     const shelterResponse = await axios.get(`http://localhost:9999/shelters/detail/${response.data.shID}`);
+                    console.log("Shelter Response:", shelterResponse.data); // 추가
                     setShelter(shelterResponse.data);
                 }
             } catch (error) {
+                console.error("Error fetching data:", error); // 추가
                 setError(error);
             } finally {
                 setLoading(false);
             }
         };
-
+    
         fetchABDetail();
     }, [abID]);
+    
 
     if (loading) {
         return <div>Loading...</div>;
