@@ -15,6 +15,7 @@ import ShelterList from './components/ShelterList';
 import ShelterDetail from './components/ShelterDetail';  // ShelterDetail import 추가
 import Hospital from './components/Hospital';
 import HospitalDetail from './components/HospitalDetail';
+import ABList from './components/ABList';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,6 +41,7 @@ function App() {
         <Routes>
           <Route path='/shelters' element={<ShelterList />} />
           <Route path='/shelters/:shID' element={<ShelterDetail />} /> 
+          <Route path='/ab' element={<ABList />} />
         </Routes>
       </div>
     </Router>

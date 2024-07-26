@@ -5,7 +5,6 @@ const Pagination = ({ currentPage, totalPage, onPageChange }) => {
     const totalPageGroup = Math.ceil(totalPage / PAGE_GROUP_OF_COUNT);
     const currentPageGroupNo = Math.ceil(currentPage / PAGE_GROUP_OF_COUNT);
 
-    // 페이지 그룹의 시작 페이지와 끝 페이지
     const startPageOfPageGroup = (currentPageGroupNo - 1) * PAGE_GROUP_OF_COUNT + 1;
     const endPageOfPageGroup = Math.min(currentPageGroupNo * PAGE_GROUP_OF_COUNT, totalPage);
 
@@ -15,7 +14,7 @@ const Pagination = ({ currentPage, totalPage, onPageChange }) => {
     if (currentPageGroupNo > 1) {
         pages.push(
             <button
-                key="prev"
+                key="prev-group"
                 onClick={() => onPageChange(startPageOfPageGroup - PAGE_GROUP_OF_COUNT)}
                 disabled={currentPageGroupNo === 1}
             >
@@ -41,7 +40,7 @@ const Pagination = ({ currentPage, totalPage, onPageChange }) => {
     if (currentPageGroupNo < totalPageGroup) {
         pages.push(
             <button
-                key="next"
+                key="next-group"
                 onClick={() => onPageChange(endPageOfPageGroup + 1)}
                 disabled={currentPageGroupNo === totalPageGroup}
             >

@@ -14,7 +14,7 @@ const ShelterDetail = () => {
         const fetchShelterDetail = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:9999/shelters/${shID}`);
+                const response = await axios.get(`http://localhost:9999/shelters/detail/${shID}`);
                 setShelter(response.data);
             } catch (error) {
                 setError(error);
@@ -39,10 +39,11 @@ const ShelterDetail = () => {
             <h1>셸터 상세 정보</h1>
             <div className={styles.shelter_info}>
                 <p><strong>센터명:</strong> {shelter?.shName}</p>
+                <p><strong>연락처:</strong> {shelter?.shTel}</p>
+                <p><strong>해당지역:</strong> {shelter?.shRegion}</p>
                 <p><strong>주소:</strong> {shelter?.shAddress}</p>
-                <p><strong>연락처:</strong> {shelter?.shPhone}</p>
-                <p><strong>운영시간:</strong> {shelter?.shHours}</p>
-                <p><strong>기타 정보:</strong> {shelter?.shInfo}</p>
+                <p><strong>운영시간:</strong> {shelter?.shHour}</p>
+                <p><strong>보호동물종:</strong> {shelter?.shAnimalType}</p>
             </div>
             <h2>보호 동물 목록</h2>
             <ABList shID={shID} />

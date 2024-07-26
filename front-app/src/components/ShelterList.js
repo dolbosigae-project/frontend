@@ -16,21 +16,24 @@ const ShelterList = () => {
 
     useEffect(() => {
         fetchShelters(currentPage);
-    }, [currentPage]);
+    }, [currentPage, selectedRegion, searchKeyword]);
 
     const fetchShelters = async (page) => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:9999/shelters', {
+            const response = await axios.get('http://localhost:9999/shelters/search', {
                 params: {
                     pageNo: page,
-                    pageContentEa: pageOfContentCount
+                    pageContentEa: pageOfContentCount,
+                    region: selectedRegion !== '선택' ? selectedRegion : null,
+                    centerName: searchKeyword || null
                 }
             });
-            console.log('Response Data:', response.data);
+            console.log('Response Data (Filtered Shelters):', response.data);
             setShelters(response.data.list);
             setTotalPage(response.data.totalPage);
         } catch (error) {
+            console.error('Error fetching shelters:', error);
             setError(error);
         } finally {
             setLoading(false);
@@ -55,20 +58,6 @@ const ShelterList = () => {
         return <div>Error: {error.message}</div>;
     }
 
-    // 필터링된 데이터
-    const filteredShelters = shelters.filter(shelter => {
-        return (selectedRegion === '선택' || shelter.shRegion === selectedRegion) &&
-               (searchKeyword === '' || shelter.shName.includes(searchKeyword));
-    });
-
-    // 현재 페이지의 데이터 계산
-    const startIdx = (currentPage - 1) * pageOfContentCount;
-    const endIdx = startIdx + pageOfContentCount;
-    const currentPageShelters = filteredShelters.slice(startIdx, endIdx);
-
-    console.log('Filtered Shelters:', filteredShelters);
-    console.log('Current Page Shelters:', currentPageShelters);
-
     return (
         <div className="shelter-list">
             <h1>Shelter List</h1>
@@ -83,12 +72,12 @@ const ShelterList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentPageShelters.length > 0 ? (
-                        currentPageShelters.map((shelter) => (
+                    {shelters.length > 0 ? (
+                        shelters.map((shelter) => (
                             <tr key={shelter.shID}>
                                 <td>{shelter.shRegion}</td>
                                 <td>
-                                    <Link to={`/shelters/${shelter.shID}`}>
+                                    <Link to={`/shelters/detail/${shelter.shID}`}>
                                         {shelter.shName}
                                     </Link>
                                 </td>
@@ -106,7 +95,6 @@ const ShelterList = () => {
             <Pagination 
                 currentPage={currentPage}
                 totalPage={totalPage}
-                pageOfContentCount={pageOfContentCount}
                 onPageChange={handlePageChange}
             />
         </div>
