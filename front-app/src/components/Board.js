@@ -1,26 +1,33 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // useNavigate 추가
 import styles from '../css/board.module.css';
 import SubTitleBoard from './SubTitles/SubTitleBoard';
 
-export default function AdminContactNormalTable({ adminBoardList = [], pagination, handlePageChange, user, deleteClick }) {
+export default function Board({ boardList = [], pagination, handlePageChange, user, deleteClick }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchCategory, setSearchCategory] = useState('제목');
-  const [filteredBoardList, setFilteredBoardList] = useState(adminBoardList);
+  const [filteredBoardList, setFilteredBoardList] = useState(boardList);
+
+  const navigate = useNavigate(); // useNavigate 훅 사용
 
   // Search handler
   const handleSearch = () => {
-    const filteredList = adminBoardList.filter(item => {
+    const filteredList = boardList.filter(item => {
       const target = item[searchCategory];
       return target && target.toLowerCase().includes(searchTerm.toLowerCase());
     });
     setFilteredBoardList(filteredList);
   };
 
-  // Effect to reset filtered list when the adminBoardList prop changes
-  React.useEffect(() => {
-    setFilteredBoardList(adminBoardList);
-  }, [adminBoardList]);
+  // Effect to reset filtered list when the boardList prop changes
+  useEffect(() => {
+    setFilteredBoardList(boardList);
+  }, [boardList]);
+
+  // Navigate to the write page
+  const handleWriteClick = () => {
+    navigate('/board/write');
+  };
 
   return (
     <div className={styles.container}>
@@ -41,6 +48,8 @@ export default function AdminContactNormalTable({ adminBoardList = [], paginatio
             className={styles.searchInput}
           />
           <button onClick={handleSearch} className={styles.searchButton}>검색</button>
+          {/* 글쓰기 버튼 클릭 시 /board/write로 이동 */}
+          <button onClick={handleWriteClick} className={styles.searchButton}>글쓰기</button>
         </div>
       </div>
       
@@ -60,7 +69,7 @@ export default function AdminContactNormalTable({ adminBoardList = [], paginatio
               <th></th>
               <th>글번호</th>
               <th>제목</th>
-              <th>작성자ID</th>
+              <th>작성자ID</th>   
               <th>작성자 닉네임</th>
               <th>작성일</th>
               <th>조회수</th>
@@ -72,27 +81,27 @@ export default function AdminContactNormalTable({ adminBoardList = [], paginatio
                 <React.Fragment key={index}>
                   <tr>
                     <td>
-                      {user && (user.boardMemberGradeNo === 0 || user.boardMemberId === item.adminMemberId) && (
-                        <button className={styles.deleteButton} onClick={() => deleteClick(item.adminNo, item.adminCommentCount)}>삭제</button>
+                      {user && (user.boardMemberGradeNo === 0 || user.boardMemberId === item.memberId) && (
+                        <button className={styles.deleteButton} onClick={() => deleteClick(item.no, item.commentCount)}>삭제</button>
                       )}
                       {user && user.boardMemberGradeNo === 0 && (
                         <button
-                          className={`${styles.unansweredButton} ${item.adminCommentCount > 0 ? styles.answered : styles.unanswered}`}
+                          className={`${styles.unansweredButton} ${item.commentCount > 0 ? styles.answered : styles.unanswered}`}
                         >
-                          {item.adminCommentCount > 0 ? '답변완료' : '미답변'}
+                          {item.commentCount > 0 ? '답변완료' : '미답변'}
                         </button>
                       )}
                     </td>
-                    <td>{item.adminNo}</td>
+                    <td>{item.no}</td>
                     <td>
-                      <Link to={`/admin/contact/detail/${item.adminNo}`} className={styles.link}>
-                        {item.adminTitle}
+                      <Link to={`/board/detail/${item.no}`} className={styles.link}>
+                        {item.title}
                       </Link>
                     </td>
-                    <td>{item.adminMemberId}</td>
-                    <td>{item.adminNick}</td>
-                    <td>{item.adminDate}</td>
-                    <td>{item.adminCommentCount}</td>
+                    <td>{item.boardmemberId}</td>
+                    <td>{item.boardmembernick}</td>
+                    <td>{item.date}</td>
+                    <td>{item.commentCount}</td>
                   </tr>
                 </React.Fragment>
               ))

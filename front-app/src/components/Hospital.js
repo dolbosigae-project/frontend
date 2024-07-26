@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from '../css/hospital.module.css';
 import HospitalNumberRing from './HospitalNumberRing';
 import KakaoMap from './KakaoMap';
+import SubTitleHospital from './SubTitles/SubTitleHospital';
 
 const HO = () => {
     const [hoText, setHoText] = useState('');
@@ -103,10 +104,7 @@ const HO = () => {
                             <td>
                                 <Link
                                     to={`/hoinfo/${hospital.hoId}`}
-                                    className={styles.linkButton}
-                                >
-                                    이동
-                                </Link>
+                                    className={styles.linkButton} > 이동 </Link>
                             </td>
                         </tr>
                     ))}
@@ -124,7 +122,8 @@ const HO = () => {
 
     return (
         <>
-            <div className={styles.banner}></div>
+            {/* <div className={styles.banner}></div> */}
+            <SubTitleHospital />
             <div className={styles.container}>
                 <div className={styles.mainContent}>
                     <div className={styles.searchAndTableContainer}>
@@ -157,7 +156,7 @@ const HO = () => {
                         <KakaoMap locations={locations} />
                     </div>
                 </div>
-                <footer className={styles.footer}>박유영0725</footer>
+              
             </div>
         </>
     );
