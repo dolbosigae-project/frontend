@@ -19,10 +19,13 @@
 }
 
 .adminCommentWrite button{
-  height: 90px;
+  height: 100px;
   width: 100px;
   background-color: #595959;
   color: white;
+  border: none;
+  box-sizing: border-box;
+  border-radius: 10px;
 }
 
 .adminCommentWrite button:hover{
