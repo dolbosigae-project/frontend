@@ -40,7 +40,7 @@ function App() {
       <div>
         <Routes>
           <Route path='/shelters' element={<ShelterList />} />
-          <Route path='/shelters/:shID' element={<ShelterDetail />} /> 
+          <Route path='/shelters/detail/:shID' element={<ShelterDetail />} /> 
           <Route path='/ab' element={<ABList />} />
         </Routes>
       </div>
