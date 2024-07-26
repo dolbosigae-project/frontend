@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ReactDOM from 'react-dom'; // ReactDOM 임포트 추가
-import Chat from './ChatCreatedRoom'; // IoChat 임포트 추가
-import styles from '../css/chatRoom.module.css';
+import { createRoot } from 'react-dom/client'; // React 18에서 createRoot 사용
+import ChatCreatedRoom from './ChatCreatedRoom'; // 컴포넌트 경로 수정
+import styles from '../css/chatRoom.module.css'; // CSS 파일 경로 수정
 
 function ChatIntro() {
   const [recipientId, setRecipientId] = useState('');
@@ -10,14 +10,16 @@ function ChatIntro() {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [userId, setUserId] = useState('');
+  const [userNick, setUserNick] = useState(''); // 사용자 닉네임 추가
 
   // localStorage에서 사용자 정보를 가져와 설정하는 부분
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
-      if (parsedUser && parsedUser.boardMemberId) {
+      if (parsedUser && parsedUser.boardMemberId && parsedUser.boardMemberNick) {
         setUserId(parsedUser.boardMemberId);
+        setUserNick(parsedUser.boardMemberNick); // 사용자 닉네임 설정
       }
     } else {
       console.error('로그인된 사용자가 없습니다.');
@@ -41,7 +43,7 @@ function ChatIntro() {
         },
       });
       setSearchResults(response.data);
-      console.log('검색 결과:', response.data); // 검색 결과 로그 추가
+      console.log("--------검색 결과:", response.data); // 디버그: 검색 결과 로그
     } catch (error) {
       console.error('회원 검색 실패:', error.response ? error.response.data : error.message);
     }
@@ -51,19 +53,20 @@ function ChatIntro() {
     const chatWindow = window.open('', '_blank', 'width=600,height=800');
     chatWindow.document.write('<div id="chat-root"></div>');
     chatWindow.document.close();
-    // 새로운 창에 ReactDOM을 사용하여 IoChat 컴포넌트 렌더링
     setTimeout(() => {
-      ReactDOM.render(<Chat roomId={roomId} nickname={nickname} />, chatWindow.document.getElementById('chat-root'));
+      const root = createRoot(chatWindow.document.getElementById('chat-root'));
+      root.render(<ChatCreatedRoom roomId={roomId} nickname={nickname} />);
     }, 100);
   };
 
   const createRoom = () => {
     if (selectedUser) {
-      const newRoomId = generateRoomId(userId, selectedUser.id);
-      console.log(`이 아이디로 방이 생성됨: ${newRoomId}`); // 방 생성 콘솔 로그 추가
-      openChatRoom(newRoomId, selectedUser.nickname);
+      const newRoomId = generateRoomId(userId, selectedUser.boardMemberId); // selectedUser.boardMemberId 사용
+      console.log("--------방 생성 아이디:", newRoomId); // 중복된 로그 제거
+      openChatRoom(newRoomId, userNick); // 로그인된 사용자 닉네임 전달
     } else {
       alert('회원 선택 후 방을 생성하세요.');
+      console.log("--------회원 선택 안됨"); // 디버그: 회원 선택 안됨 로그
     }
   };
 
@@ -90,10 +93,11 @@ function ChatIntro() {
       </div>
       <div className={styles.searchResults}>
         {searchResults.map((user) => (
-          <div key={user.id} onClick={() => {
+          <div key={user.boardMemberId} onClick={() => {
             setSelectedUser(user);
+            console.log("--------선택된 회원:", user); // 디버그: 선택된 회원 로그
           }}>
-            {user.nickname} ({user.id})
+            {user.boardMemberNick} ({user.boardMemberId})
           </div>
         ))}
       </div>

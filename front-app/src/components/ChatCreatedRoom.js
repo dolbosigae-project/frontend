@@ -3,7 +3,7 @@ import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
 import styles from '../css/chatRoom.module.css';
 
-function IoChat({ roomId, nickname }) {
+function ChatCreatedRoom({ roomId, nickname }) {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [stompClient, setStompClient] = useState(null);
@@ -36,17 +36,20 @@ function IoChat({ roomId, nickname }) {
         connectHeaders: {},
         webSocketFactory: () => new SockJS('http://localhost:9999/ws'),
         onConnect: (frame) => {
-          console.log(`생성된 방 이름 ${roomId} 닉네임은  ${nickname}`); // 연결 로그 추가
+          console.log("--------WebSocket 연결 완료, 방 이름:", roomId, "닉네임:", nickname); // 디버그: WebSocket 연결 완료 로그
+
           setStompClient(client);
           client.subscribe(`/topic/${roomId}`, (messageOutput) => {
             const message = JSON.parse(messageOutput.body);
-            console.log('받은 메시지:', message);  // 수신된 메시지 콘솔 출력
+            console.log("--------받은 메시지:", message); // 디버그: 받은 메시지 로그
+
             setMessages((prevMessages) => [...prevMessages, message]);
           });
           resolve(client);
         },
         onStompError: (frame) => {
           reject(frame.body);
+          console.log("--------WebSocket 연결 에러:", frame.body); // 디버그: WebSocket 연결 에러 로그
         },
       });
       client.activate();
@@ -54,7 +57,7 @@ function IoChat({ roomId, nickname }) {
       window.addEventListener('beforeunload', () => {
         if (client.active) {
           client.publish({
-            destination: `/IoChat/chat.removeUser/${roomId}`,
+            destination: `/chat.removeUser/${roomId}`,
             body: JSON.stringify({ sender: nickname, type: 'LEAVE' }),
           });
           client.deactivate();
@@ -71,15 +74,17 @@ function IoChat({ roomId, nickname }) {
         type: 'CHAT',
         roomId: roomId,
       };
-      console.log('보낸 메시지:', chatMessage);  // 전송할 메시지 콘솔 출력
+      console.log("--------보낸 메시지:", chatMessage); // 디버그: 보낸 메시지 로그
+
       stompClient.publish({
-        destination: `/IoChat/chat/${roomId}`,
+        destination: `/chat/${roomId}`,
         body: JSON.stringify(chatMessage),
       });
       setMessages((prevMessages) => [...prevMessages, chatMessage]);
       setMessage('');
     } else {
       console.error('stomp 연결 또는 방 ID 없음');
+      console.log("--------stomp 연결 또는 방 ID 없음"); // 디버그: stomp 연결 또는 방 ID 없음 로그
     }
   };
 
@@ -108,4 +113,4 @@ function IoChat({ roomId, nickname }) {
   );
 }
 
-export default IoChat;
+export default ChatCreatedRoom;
