@@ -21,4 +21,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-"front-app/node_modules/.cache/" 
+
+# ESLint cache
+.eslintcache
+
+# Webpack cache
+*.pack
+
+# Cache files
+node_modules/.cache/
+

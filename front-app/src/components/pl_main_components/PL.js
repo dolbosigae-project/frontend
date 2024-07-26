@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import styles from './css/pl.module.css';
 import SubTitlePL from './../SubTitles/SubTitlePL';
 import PlNumberRing from '../pl_numberring_component/PlNumberRing';
+import PlInsert from '../pl_insert_component/PlInsert';
 
 const PL = () => {
     const [plText, setPlText] = useState('');
@@ -125,6 +126,11 @@ const PL = () => {
                 <div className={styles.searchResult_container}>
                     {result.length > 0 && renderTable()}
                 </div>
+                {user && user.boardMemberGradeNo === 0 ? (
+                    <div className={styles.pl_insert_container}>
+                        <Link to="/plInsert" className={styles.pl_insert_link}>놀이시설 등록</Link>
+                    </div>
+                ) : null}
             </div>
             <div>
                 <PlNumberRing onNumberRing={onNumberRing} pagination={pagination} />

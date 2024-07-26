@@ -53,7 +53,7 @@
 
 .searchButton {
   padding: 10px 25px; /* 버튼의 여백을 조정 */
-  background-color: #4CAF50; /* 기본 배경색 설정 */
+  background-color: #00823E; /* 기본 배경색 설정 */
   color: white; /* 텍스트 색상 */
   border: none;
   border-radius: 4px; /* 모서리 둥글게 설정 */
@@ -61,7 +61,7 @@
 }
 
 .DeleteBtn {
-  background-color: #f44336;
+  background-color: #CF1E1E;
   color: white;
   border: none;
   padding: 5px 10px;
@@ -69,7 +69,7 @@
 }
 
 .searchButton:hover {
-  background-color: #45a049; /* 마우스 오버 시 배경색 변경 */
+  opacity: 0.8;
 }
 
 .tableContainer {
@@ -90,7 +90,7 @@
 }
 
 .linkButton {
-  background-color: #4CAF50;
+  background-color: #00823E;
   color: white;
   border: none;
   padding: 5px 10px;
@@ -103,7 +103,7 @@
 }
 
 .linkButton:hover {
-  background-color: #45a049;
+  opacity: 0.8;
 }
 
 .mapContainer {
