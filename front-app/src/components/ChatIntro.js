@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { createRoot } from 'react-dom/client'; // React 18에서 createRoot 사용
-import ChatCreatedRoom from './ChatCreatedRoom'; // 컴포넌트 경로 수정
-import styles from '../css/chatRoom.module.css'; // CSS 파일 경로 수정
+import ChatCreatedRoom from './ChatCreatedRoom'; 
+import styles from '../css/chatRoom.module.css'; 
 
 function ChatIntro() {
   const [recipientId, setRecipientId] = useState('');
@@ -10,7 +10,7 @@ function ChatIntro() {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [userId, setUserId] = useState('');
-  const [userNick, setUserNick] = useState(''); // 사용자 닉네임 추가
+  const [userNick, setUserNick] = useState(''); // 사용자 닉네임 추가 (강아지 이름)
 
   // localStorage에서 사용자 정보를 가져와 설정하는 부분
   useEffect(() => {
@@ -19,7 +19,7 @@ function ChatIntro() {
       const parsedUser = JSON.parse(storedUser);
       if (parsedUser && parsedUser.boardMemberId && parsedUser.boardMemberNick) {
         setUserId(parsedUser.boardMemberId);
-        setUserNick(parsedUser.boardMemberNick); // 사용자 닉네임 설정
+        setUserNick(parsedUser.boardMemberNick); // 사용자 닉네임 설정 (역시 강아지 이름)
       }
     } else {
       console.error('로그인된 사용자가 없습니다.');
@@ -62,8 +62,8 @@ function ChatIntro() {
   const createRoom = () => {
     if (selectedUser) {
       const newRoomId = generateRoomId(userId, selectedUser.boardMemberId); // selectedUser.boardMemberId 사용
-      console.log("--------방 생성 아이디:", newRoomId); // 중복된 로그 제거
-      openChatRoom(newRoomId, userNick); // 로그인된 사용자 닉네임 전달
+      console.log("--------방 생성 아이디:", newRoomId); 
+      openChatRoom(newRoomId, userNick); // 로그인된 사용자 닉네임 전달 <- 여기 제대로 작동해야 console에서 닉네임 확인가능
     } else {
       alert('회원 선택 후 방을 생성하세요.');
       console.log("--------회원 선택 안됨"); // 디버그: 회원 선택 안됨 로그
