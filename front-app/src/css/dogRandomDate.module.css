@@ -90,6 +90,16 @@
   width: 60%;
 }
 
+.randomDogText:first-child{
+  font-size: 28px;
+}
+
+.randomDogText:nth-child(3) {
+  font-size: 28px; 
+  font-weight: bold;
+  color: #0F3C3C;
+}
+
 .messageButton {
   background-color: #00823E;
   color: white;

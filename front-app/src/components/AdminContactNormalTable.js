@@ -43,11 +43,16 @@ export default function AdminContactNormalTable({ adminBoardList, pagination, ha
                   )}
                 </td>
                 <td>{item.adminNo}</td>
-                <td>
-                  <Link to={`/admin/contact/detail/${item.adminNo}`} className={styles.link}>
-                    {item.adminTitle}
-                  </Link>
-                </td>
+                {user && (user.boardMemberGradeNo === 0 || user.boardMemberId === item.adminMemberId) && (
+                  <td>
+                    <Link to={`/admin/contact/detail/${item.adminNo}`} className={styles.link}>
+                      {item.adminTitle}
+                    </Link>
+                  </td>
+                )}
+                {user && user.boardMemberId != item.adminMemberId &&(
+                  <td>{item.adminTitle}</td>
+                )}
                 <td>{item.adminMemberId}</td>
                 <td>{item.adminNick}</td>
                 <td>{item.adminDate}</td>
