@@ -38,8 +38,8 @@ function App() {
     <Router>
       <div>
         <Routes>
-          <Route path='/shelter' element={<ShelterList />} />
-          <Route path='/shelter/:shID' element={<ShelterDetail />} /> 
+          <Route path='/shelters' element={<ShelterList />} />
+          <Route path='/shelters/:shID' element={<ShelterDetail />} /> 
         </Routes>
       </div>
     </Router>

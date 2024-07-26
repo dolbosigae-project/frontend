@@ -1,0 +1,34 @@
+.shelter-list {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.shelter-list h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.shelter-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.shelter-list th, .shelter-list td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.shelter-list th {
+    background-color: #f4f4f4;
+}
+
+.shelter-list td a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.shelter-list td a:hover {
+    text-decoration: underline;
+}

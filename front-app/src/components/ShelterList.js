@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ShelterFilter from './ShelterFilter';
 import Pagination from './Pagination';
 
 const ShelterList = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
     const [shelters, setShelters] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -16,23 +14,20 @@ const ShelterList = () => {
     const [pageOfContentCount, setPageOfContentCount] = useState(10);
     const [totalPage, setTotalPage] = useState(1);
 
-    const query = new URLSearchParams(location.search);
-    const queryPageNo = parseInt(query.get('pageNo')) || 1;
-    const queryPageCount = parseInt(query.get('pageContentEa')) || 10;
-
     useEffect(() => {
-        setCurrentPage(queryPageNo);
-        setPageOfContentCount(queryPageCount);
-    }, [location.search]);
+        fetchShelters(currentPage);
+    }, [currentPage]);
 
-    useEffect(() => {
-        fetchShelters(currentPage, pageOfContentCount);
-    }, [currentPage, pageOfContentCount]);
-
-    const fetchShelters = async (pageNo, pageCount) => {
+    const fetchShelters = async (page) => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:9999/shelter?pageNo=${pageNo}&pageContentEa=${pageCount}`);
+            const response = await axios.get('http://localhost:9999/shelters', {
+                params: {
+                    pageNo: page,
+                    pageContentEa: pageOfContentCount
+                }
+            });
+            console.log('Response Data:', response.data);
             setShelters(response.data.list);
             setTotalPage(response.data.totalPage);
         } catch (error) {
@@ -45,11 +40,11 @@ const ShelterList = () => {
     const handleFilterChange = (region, keyword) => {
         setSelectedRegion(region);
         setSearchKeyword(keyword);
+        setCurrentPage(1); // 필터 변경 시 페이지를 1로 리셋
     };
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
-        navigate(`?pageNo=${page}&pageContentEa=${pageOfContentCount}`);
     };
 
     if (loading) {
@@ -60,14 +55,19 @@ const ShelterList = () => {
         return <div>Error: {error.message}</div>;
     }
 
+    // 필터링된 데이터
     const filteredShelters = shelters.filter(shelter => {
         return (selectedRegion === '선택' || shelter.shRegion === selectedRegion) &&
                (searchKeyword === '' || shelter.shName.includes(searchKeyword));
     });
 
+    // 현재 페이지의 데이터 계산
     const startIdx = (currentPage - 1) * pageOfContentCount;
     const endIdx = startIdx + pageOfContentCount;
     const currentPageShelters = filteredShelters.slice(startIdx, endIdx);
+
+    console.log('Filtered Shelters:', filteredShelters);
+    console.log('Current Page Shelters:', currentPageShelters);
 
     return (
         <div className="shelter-list">
@@ -83,18 +83,24 @@ const ShelterList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentPageShelters.map((shelter) => (
-                        <tr key={shelter.shID}>
-                            <td>{shelter.shRegion}</td>
-                            <td>
-                                <Link to={`/shelter/${shelter.shID}`}>
-                                    {shelter.shName}
-                                </Link>
-                            </td>
-                            <td>{shelter.shTel}</td>
-                            <td>{shelter.shAddress}</td>
+                    {currentPageShelters.length > 0 ? (
+                        currentPageShelters.map((shelter) => (
+                            <tr key={shelter.shID}>
+                                <td>{shelter.shRegion}</td>
+                                <td>
+                                    <Link to={`/shelter/${shelter.shID}`}>
+                                        {shelter.shName}
+                                    </Link>
+                                </td>
+                                <td>{shelter.shTel}</td>
+                                <td>{shelter.shAddress}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="4">No shelters available</td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
             <Pagination 

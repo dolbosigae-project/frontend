@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import ABList from './ABList'; // ABList 컴포넌트 import
-import styles from '../css/shelterDetail.module.css'; // CSS 모듈 import
+// import styles from '../css/shelterDetail.module.css'; // CSS 모듈 import
 
 const ShelterDetail = () => {
     const { shID } = useParams(); // 셸터 ID 가져오기
