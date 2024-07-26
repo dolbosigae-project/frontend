@@ -1,90 +1,119 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css';
-import Header from './components/Header';
-import Home from './components/Home';
-import Login from './components/Login';
-import MemberView from './components/MemberView';
-import MemberRegister from './components/MemberRegister';
-import MyPage from './components/MyPage';
-import LoginPasswd from './components/LoginPasswd';
-import KakaoLogin from './components/KakaoLogin';
-import PL from './components/pl_main_components/contents/PL';
-import PlInfoView from './components/pl_info_component/PlInfoView';
-import ShelterList from './components/ShelterList';
-import ShelterAnimalsInfo from './components/ShelterAnimalsInfo';
-import Hospital from './components/Hospital';
-import HospitalDetail from './components/HospitalDetail';
-import AdminContact from './components/AdminContact';
-import AdminContactNormalTableDetail from './components/AdminContactNormalTableDetail';
-import AdminContactWrite from './components/AdminContactWrite';
-import Footer from './components/Footer';
-import Chat from './components/Chat';
-import ChatIntro from './components/ChatIntro';
-import MateSearch from './components/MateSearch';
-import MatePetProfile from './components/MatePetProfile';
-import Pharmacy from './components/Pharmacy';
-import PharmacyDetail from './components/PharmacyDetail';
-import AddHospital from './components/AddHospital';
-import AddPharmacy from './components/AddPharmacy';
-import CO from './components/co_main_components/CO';
-import CoInfoView from './components/co_info_components/CoInfoView';
+import axios from 'axios';
+import ReactDOM from 'react-dom'; // ReactDOM 임포트 추가
+import ChatCreatedRoom from './ChatCreatedRoom'; // ChatCreatedRoom 임포트 추가
+import styles from '../css/chatRoom.module.css';
 
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+function ChatIntro() {
+  const [recipientId, setRecipientId] = useState('');
+  const [searchCategory, setSearchCategory] = useState('id'); // 검색 기준 상태 변수, 기본값을 'id'로 설정
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [userId, setUserId] = useState('');
 
+  // localStorage에서 사용자 정보를 가져와 설정하는 부분
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      setIsLoggedIn(true);
+      const parsedUser = JSON.parse(storedUser);
+      if (parsedUser && parsedUser.boardMemberId) {
+        setUserId(parsedUser.boardMemberId);
+      }
+    } else {
+      console.error('로그인된 사용자가 없습니다.');
     }
   }, []);
 
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
+  const handleRecipientChange = (event) => {
+    setRecipientId(event.target.value);
   };
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
+  const handleCategoryChange = (event) => {
+    setSearchCategory(event.target.value);
+  };
+
+  const searchUsers = async () => {
+    try {
+      const response = await axios.get('http://localhost:9999/member/search', {
+        params: {
+          category: searchCategory === 'nickname' ? '회원이름' : '회원ID',
+          term: recipientId,
+        },
+      });
+      setSearchResults(response.data);
+      console.log('검색 결과:', response.data); // 검색 결과 로그 추가
+      // ---------
+      console.log("--------검색 결과:", response.data);
+    } catch (error) {
+      console.error('회원 검색 실패:', error.response ? error.response.data : error.message);
+      // ---------
+      console.log("--------회원 검색 실패:", error.response ? error.response.data : error.message);
+    }
+  };
+
+  const openChatRoom = (roomId, nickname) => {
+    const chatWindow = window.open('', '_blank', 'width=600,height=800');
+    chatWindow.document.write('<div id="chat-root"></div>');
+    chatWindow.document.close();
+    // 새로운 창에 ReactDOM을 사용하여 ChatCreatedRoom 컴포넌트 렌더링
+    setTimeout(() => {
+      ReactDOM.render(<ChatCreatedRoom roomId={roomId} nickname={nickname} />, chatWindow.document.getElementById('chat-root'));
+    }, 100);
+  };
+
+  const createRoom = () => {
+    if (selectedUser) {
+      const newRoomId = generateRoomId(userId, selectedUser.id);
+      console.log(`이 아이디로 방이 생성됨: ${newRoomId}`); // 방 생성 콘솔 로그 추가
+      // ---------
+      console.log("--------방 생성:", newRoomId);
+      openChatRoom(newRoomId, selectedUser.nickname);
+    } else {
+      alert('회원 선택 후 방을 생성하세요.');
+      // ---------
+      console.log("--------회원 선택 안됨");
+    }
+  };
+
+  const generateRoomId = (userA, userB) => {
+    return userA.localeCompare(userB) < 0 ? `${userA}-${userB}` : `${userB}-${userA}`;
   };
 
   return (
-    <Router>
+    <div>
       <div>
-        <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-          <Route path="/login/passwd" element={<LoginPasswd />} />
-          <Route path="/member/view" element={<MemberView />} />
-          <Route path="/member/register" element={<MemberRegister />} />
-          <Route path="/member/mypage" element={<MyPage />} />
-          <Route path="/kakao/callback" element={<KakaoLogin onLoginSuccess={handleLoginSuccess} />} />
-
-          <Route path="/pl" element={<PL />} />
-          <Route path='/plinfo/:plId' element={<PlInfoView />} />
-          <Route path='/shelter' element={<ShelterList />} />
-          <Route path='/shelter/animal' element={<ShelterAnimalsInfo />} />
-          <Route path='/animal-medical' element={<Hospital />} />
-          <Route path='/hospitalDetail' element={<HospitalDetail />} />
-          <Route path='/admin/contact' element={<AdminContact />} />
-          <Route path='/admin/contact/detail/:adminNo' element={<AdminContactNormalTableDetail />} />
-          <Route path='/admin/write' element={<AdminContactWrite />} />
-          <Route path='/co' element={<CO />} />
-          <Route path='/coinfo/:coId' element={<CoInfoView />} />
-          <Route path='/pharmacies' element={<Pharmacy />} />
-          <Route path='/phinfo/:phId' element={<PharmacyDetail />} />
-          <Route path="/addHospital" element={<AddHospital />} />
-          <Route path="/addPharmacy" element={<AddPharmacy />} />
-          <Route path="/mate/chat" element={<Chat/>} />
-          <Route path="/mate/intro" element={<ChatIntro/>} />
-          <Route path="/mate/member" element={<MateSearch/>} />
-          <Route path="/mate/petinfo" element={<MatePetProfile/>} />
-        </Routes>
-        <Footer />
+        <input
+          type="text"
+          placeholder="수신자 ID 또는 닉네임 입력"
+          value={recipientId}
+          onChange={handleRecipientChange}
+        />
+        <select value={searchCategory} onChange={handleCategoryChange}>
+          <option value="id">ID</option> 
+          <option value="nickname">닉네임</option>
+        </select>
+        <button className={styles.chatSearchBtn} onClick={searchUsers}>
+          회원 검색
+        </button>
       </div>
-    </Router>
+      <div className={styles.searchResults}>
+        {searchResults.map((user) => (
+          <div key={user.id} onClick={() => {
+            setSelectedUser(user);
+            // ---------
+            console.log("--------선택된 회원:", user);
+          }}>
+            {user.nickname} ({user.id})
+          </div>
+        ))}
+      </div>
+      <div>
+        <button className={styles.chatRequestBtn} onClick={createRoom}>
+          상대방과 채팅하기
+        </button>
+      </div>
+    </div>
   );
 }
 
-export default App;
+export default ChatIntro;

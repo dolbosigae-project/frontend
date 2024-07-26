@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { Client } from '@stomp/stompjs';
-import styles from '../css/IoChat.module.css';
+import styles from '../css/chatRoom.module.css';
 
 function IoChat({ roomId, nickname }) {
   const [messages, setMessages] = useState([]);

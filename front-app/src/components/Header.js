@@ -16,10 +16,11 @@ export default function Header({ isLoggedIn, onLogout }) {
   let timeout;
   const location = useLocation();
   const [isPetInfo, setIsPetInfo] = useState(false);
+  const [toChat, setToChat] = useState(false);
 
   useEffect(() => {
     setIsPetInfo(location.pathname === '/mate/petinfo'); // 특정 경로 설정해서 header 안보이게 하는 부분
-    
+    setToChat(location.pathname === '/mate/intro');     //이것도
 
     if (isLoggedIn) {
       const storedUser = localStorage.getItem('user');
@@ -62,8 +63,8 @@ export default function Header({ isLoggedIn, onLogout }) {
   };
 
   // 특정 경로에서는 헤더를 렌더링하지 않음
-  if (isPetInfo) return null; // 위에서 설정했던 특정 경로에서 헤더 숨기기
-
+  if (isPetInfo, toChat) return null; // 위에서 설정했던 특정 경로에서 헤더 숨기기
+  
   return (
     <div className={styles.headerContainer}>
       <header className={styles.header}>

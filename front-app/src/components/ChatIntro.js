@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactDOM from 'react-dom'; // ReactDOM 임포트 추가
-import IoChat from './Chat'; // IoChat 임포트 추가
-import styles from '../css/IoChat.module.css';
+import Chat from './ChatCreatedRoom'; // IoChat 임포트 추가
+import styles from '../css/chatRoom.module.css';
 
 function ChatIntro() {
   const [recipientId, setRecipientId] = useState('');
@@ -48,12 +48,12 @@ function ChatIntro() {
   };
 
   const openChatRoom = (roomId, nickname) => {
-    const chatWindow = window.open('', '_blank');
+    const chatWindow = window.open('', '_blank', 'width=600,height=800');
     chatWindow.document.write('<div id="chat-root"></div>');
     chatWindow.document.close();
     // 새로운 창에 ReactDOM을 사용하여 IoChat 컴포넌트 렌더링
     setTimeout(() => {
-      ReactDOM.render(<IoChat roomId={roomId} nickname={nickname} />, chatWindow.document.getElementById('chat-root'));
+      ReactDOM.render(<Chat roomId={roomId} nickname={nickname} />, chatWindow.document.getElementById('chat-root'));
     }, 100);
   };
 
