@@ -1,9 +1,10 @@
 import SubTitleDogRandomDate from "./SubTitles/SubTitleDogRandomDate";
 import styles from '../css/dogRandomDate.module.css';
 import logo_small from '../img/logo_small.png';
+import speech_bubble from '../img/speech_bubble.png';
 import { useRef, useState } from "react";
 import axios from 'axios';
-import default_img from '../img/default_img.png';
+import defaultImgYellow from '../img/default_img_yellow.png';
 
 export default function DogRandomDate() {
   const formRef = useRef();
@@ -105,8 +106,13 @@ export default function DogRandomDate() {
         </form>
         {randomDog && (
           <div className={styles.randomDogContainer}>
-            <p className={styles.randomDogText}>"저랑 산책 한 번 어때요?"</p>
-            <img src={randomDog.petImagePath || default_img} className={styles.randomDogImage} />
+            <div className={styles.imgBox}>
+              <div className={styles.speechBox}>
+                <p>"저랑 산책 한 번 어때요?"</p>
+                <img src={speech_bubble} />
+              </div>
+              <img src={randomDog.petImagePath || defaultImgYellow} className={styles.randomDogImage} />
+            </div>
             <p className={styles.randomDogText}>{randomDog.boardMemberNick}</p>
             <p className={styles.randomDogText}>
               {randomDog.petBirth} / {getPetGender(randomDog.petGender)} / {randomDog.petSize} / {randomDog.petWeight}kg
