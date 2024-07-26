@@ -1,3 +1,35 @@
 .homeAdminContainer{
   display: flex;
+  width: 100%;
+  margin-top: 30px;
+  padding-left: 30px;
+  box-sizing: border-box;
+}
+
+.homeAdminContainer ul{
+  list-style-type: none;
+}
+
+.oftenAdmin{
+  width: 400px;
+  display: flex;
+  flex-flow: column;
+}
+
+.latestAdmin {
+  width: 400px;
+  display: flex;
+  flex-flow: column;
+}
+
+.latestAdmin ul{
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+}
+
+.ellipsis {
+  white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 말줄임표(...)를 추가 */
 }

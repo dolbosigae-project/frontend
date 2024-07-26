@@ -35,7 +35,8 @@ export default function HomeAdmin() {
         {latestAdminBoardList.map((item, index) => (
           <React.Fragment key={index}>
             <ul>
-              <li><a href={`/admin/contact/detail/${item.adminNo}`}>{item.adminTitle}</a></li>
+              <li className={styles.ellipsis}>{item.adminTitle}</li>
+              <li>{item.adminMemberId}</li>
             </ul>
           </React.Fragment>
         ))}
