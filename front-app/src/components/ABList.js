@@ -1,11 +1,12 @@
+// ABList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Pagination from './Pagination';
 import ABCardList from './ABCardList';
 import ABFilter from './ABFilter';
-// import styles from '../css/abList.module.css';
+import styles from '../css/ABList.module.css';  // 스타일 파일
 
-const ABList = ({ shID }) => {
+const ABList = () => {
     const [abList, setAbList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -24,9 +25,8 @@ const ABList = ({ shID }) => {
         const fetchABList = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:9999/ab`, {
+                const response = await axios.get('http://localhost:9999/ab', {
                     params: {
-                        shID,
                         pageNo: currentPage,
                         pageContentEa: pageContentCount,
                         ...filter
@@ -42,11 +42,11 @@ const ABList = ({ shID }) => {
         };
 
         fetchABList();
-    }, [currentPage, pageContentCount, shID, filter]);
+    }, [currentPage, pageContentCount, filter]);
 
     const handleFilterChange = (newFilter) => {
         setFilter(newFilter);
-        setCurrentPage(1); // 검색 조건이 변경되면 첫 페이지로 이동
+        setCurrentPage(1); // 필터 변경 시 페이지를 1로 리셋
     };
 
     if (loading) {
@@ -65,8 +65,7 @@ const ABList = ({ shID }) => {
             <Pagination
                 currentPage={currentPage}
                 totalPage={totalPage}
-                setCurrentPage={setCurrentPage}
-                pageGroupCount={5}
+                onPageChange={setCurrentPage}
             />
         </div>
     );

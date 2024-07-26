@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import styles from '../css/abList.module.css';
+import styles from '../css/ABCardList.module.css';
 
 const isOverAWeek = (dateString) => {
     const abDate = new Date(dateString);
@@ -14,7 +14,7 @@ const ABCardList = ({ abList }) => {
     return (
         <div className={styles.ab_cards}>
             {abList.map((ab) => (
-                <Link to={`/ab/${ab.abID}`} key={ab.abID} className={styles.ab_card}>
+                <Link to={`/ab/detail/${ab.abID}`} key={ab.abID} className={styles.ab_card}>
                     <div className={styles.ab_image}>
                         <img src={ab.abImage} alt={ab.abBreed} />
                     </div>

@@ -1,7 +1,8 @@
+// ABDetail.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
-import styles from '../css/abDetail.module.css';  // 스타일 파일 추가
+import styles from '../css/ABDetail.module.css';  // 스타일 파일
 
 const ABDetail = () => {
     const { abID } = useParams();
@@ -13,11 +14,11 @@ const ABDetail = () => {
     useEffect(() => {
         const fetchABDetail = async () => {
             try {
-                const response = await axios.get(`http://localhost:9999/ab/${abID}`);
+                const response = await axios.get(`http://localhost:9999/ab/detail/${abID}`);
                 setAb(response.data);
-                // 데이터가 로드되면 보호소 정보도 가져옵니다
+
                 if (response.data.shID) {
-                    const shelterResponse = await axios.get(`http://localhost:9999/shelter/${response.data.shID}`);
+                    const shelterResponse = await axios.get(`http://localhost:9999/shelters/detail/${response.data.shID}`);
                     setShelter(shelterResponse.data);
                 }
             } catch (error) {
@@ -42,7 +43,6 @@ const ABDetail = () => {
         <div className={styles.main_container}>
             <h1 className={styles.title}>AB Detail</h1>
             <div className={styles.image_container}>
-                {/* Assuming ab.abImage contains the URL to the image */}
                 <img src={ab.abImage} alt={ab.abBreed} className={styles.ab_image} />
             </div>
             <table className={styles.info_table}>
@@ -50,7 +50,7 @@ const ABDetail = () => {
                     <tr className={styles.table_row}>
                         <td className={styles.table_label}>센터명</td>
                         <td className={styles.table_data}>
-                            <Link to={`/shelter/${ab.shID}`} className={styles.shelter_link}>
+                            <Link to={`/shelters/detail/${ab.shID}`} className={styles.shelter_link}>
                                 {shelter?.shName || '센터 정보 없음'}
                             </Link>
                         </td>

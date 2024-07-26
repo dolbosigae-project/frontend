@@ -16,6 +16,7 @@ import ShelterDetail from './components/ShelterDetail';  // ShelterDetail import
 import Hospital from './components/Hospital';
 import HospitalDetail from './components/HospitalDetail';
 import ABList from './components/ABList';
+import ABDetail from './components/ABDetail';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -42,6 +43,7 @@ function App() {
           <Route path='/shelters' element={<ShelterList />} />
           <Route path='/shelters/detail/:shID' element={<ShelterDetail />} /> 
           <Route path='/ab' element={<ABList />} />
+          <Route path='/ab/detail/:abID' element={<ABDetail/>} />
         </Routes>
       </div>
     </Router>

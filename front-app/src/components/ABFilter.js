@@ -27,7 +27,7 @@ const ABFilter = ({ onFilterChange }) => {
         setBreed(event.target.value);
     };
 
-    const handleFilterSubmit = () => {
+    const handleApplyFilter = () => {
         onFilterChange({
             region,
             centerName,
@@ -39,40 +39,51 @@ const ABFilter = ({ onFilterChange }) => {
 
     return (
         <div className="filter">
-            <select value={region} onChange={handleRegionChange}>
-                <option>선택</option>
-                {['가평군', '고양시', '과천시', '광명시', '광주시', '구리시', '남양주시', '동두천시', '부천시', '성남시', '수원시', '시흥시',
+            <label>
+                지역:
+                <select value={region} onChange={handleRegionChange}>
+                    <option value="선택">선택</option>
+                    {['가평군', '고양시', '과천시', '광명시', '광주시', '구리시', '남양주시', '동두천시', '부천시', '성남시', '수원시', '시흥시',
                     '안산시', '양주시', '양평군', '연천군', '용인시', '의왕시', '의정부시', '평택시', '하남시', '화성시'].map(region => (
                         <option key={region} value={region}>{region}</option>
                     ))}
-            </select>
-            <input
-                type="text"
-                value={centerName}
-                onChange={handleCenterNameChange}
-                placeholder="센터명을 입력하세요"
-            />
-            <div className="date-picker">
+                </select>
+            </label>
+            <label>
+                센터명:
+                <input
+                    type="text"
+                    value={centerName}
+                    onChange={handleCenterNameChange}
+                    placeholder="센터명을 입력하세요"
+                />
+            </label>
+            <label>
+                시작일:
                 <input
                     type="date"
                     value={startDate}
                     onChange={handleStartDateChange}
-                    placeholder="시작 날짜"
                 />
+            </label>
+            <label>
+                종료일:
                 <input
                     type="date"
                     value={endDate}
                     onChange={handleEndDateChange}
-                    placeholder="종료 날짜"
                 />
-            </div>
-            <input
-                type="text"
-                value={breed}
-                onChange={handleBreedChange}
-                placeholder="품종을 입력하세요"
-            />
-            <button onClick={handleFilterSubmit}>조회</button>
+            </label>
+            <label>
+                품종:
+                <input
+                    type="text"
+                    value={breed}
+                    onChange={handleBreedChange}
+                    placeholder="품종을 입력하세요"
+                />
+            </label>
+            <button onClick={handleApplyFilter}>조회</button>
         </div>
     );
 };
