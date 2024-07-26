@@ -88,7 +88,7 @@ const ShelterList = () => {
                             <tr key={shelter.shID}>
                                 <td>{shelter.shRegion}</td>
                                 <td>
-                                    <Link to={`/shelter/${shelter.shID}`}>
+                                    <Link to={`/shelters/${shelter.shID}`}>
                                         {shelter.shName}
                                     </Link>
                                 </td>

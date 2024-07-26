@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import ABList from './ABList'; // ABList 컴포넌트 import
-// import styles from '../css/shelterDetail.module.css'; // CSS 모듈 import
+import styles from '../css/ShelterDetail.module.css';
 
 const ShelterDetail = () => {
     const { shID } = useParams(); // 셸터 ID 가져오기
@@ -14,7 +14,7 @@ const ShelterDetail = () => {
         const fetchShelterDetail = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:9999/shelter/${shID}`);
+                const response = await axios.get(`http://localhost:9999/shelters/${shID}`);
                 setShelter(response.data);
             } catch (error) {
                 setError(error);
