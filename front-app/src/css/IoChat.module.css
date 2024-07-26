@@ -1,0 +1,39 @@
+/* IoChat.module.css */
+.chatcontainer {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+}
+
+.chatbox {
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.myMessage {
+  text-align: right;
+  background-color: #DCF8C6;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin: 5px 0;
+  color: #000;
+  word-wrap: break-word;
+}
+
+.theirMessage {
+  text-align: left;
+  background-color: #a9dcff;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin: 5px 0;
+  color: #000;
+  word-wrap: break-word;
+}

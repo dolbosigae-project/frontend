@@ -86,3 +86,17 @@
   margin-right: 70px;
   cursor: pointer;
 }
+
+.pl_insert_container{
+  width: 120px;
+  height: 25px;
+  background-color: green;
+}
+
+.pl_insert_link{
+  padding-left: 8px;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: white;
+}

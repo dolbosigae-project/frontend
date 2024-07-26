@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from '../css/pharmacy.module.css';
 import PharmacyNumberRing from './PharmacyNumberRing';
 import KakaoMap from './KakaoMap';
+import SubTitlePharmacy from './SubTitles/SubTitlePharmacy';
 
 const PH = () => {
     const [phText, setPhText] = useState('');
@@ -119,7 +120,8 @@ const PH = () => {
 
     return (
         <>
-            <div className={styles.banner}></div>
+            {/* <div className={styles.banner}></div> */}
+            <SubTitlePharmacy />
             <div className={styles.container}>
                 <div className={styles.mainContent}>
                     <div className={styles.searchAndTableContainer}>
@@ -152,7 +154,7 @@ const PH = () => {
                         <KakaoMap locations={locations} />
                     </div>
                 </div>
-                <footer className={styles.footer}>박유영0725</footer>
+                {/* <footer className={styles.footer}>박유영0725</footer> */}
             </div>
         </>
     );

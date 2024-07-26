@@ -173,7 +173,7 @@ export default function AdminContact() {
         <button
           style={{
             width: '200px', height: '40px', backgroundColor: '#595959',
-            color: 'white', marginBottom: '100px'
+            color: 'white', marginBottom: '100px', border: 'none', borderRadius: '5px'
           }}
           onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'}
           onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
