@@ -34,6 +34,9 @@ import CoInfoView from './components/co_info_components/CoInfoView';
 import DogRandomDate from './components/DogRandomDate';
 import ChatCreatedRoom from './components/ChatCreatedRoom';
 import Board from './components/Board';
+import ShelterDetail from './components/ShelterDetail';
+import ABList from './components/ABList';
+import ABDetail from './components/ABDetail';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -72,8 +75,10 @@ function App() {
             <Route path='/co' element={<CO />} />
             <Route path='/coinfo/:coId' element={<CoInfoView />} />
             <Route path='/coInsert' element={<CoInsert />} />
-            <Route path='/shelter' element={<ShelterList />} />
-            <Route path='/shelter/animal' element={<ShelterAnimalsInfo />} />
+            <Route path="/shelters" element={<ShelterList />} />
+            <Route path='/shelters/detail/:sh_id' element={<ShelterDetail />} />
+            <Route path='/ab' element={<ABList/>} />
+            <Route path='/ab/detail/:ab_id' element={<ABDetail/>} />
             <Route path='/animal-medical' element={<Hospital />} />
             <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
             <Route path="/pharmacies" element={<Pharmacy />} />
