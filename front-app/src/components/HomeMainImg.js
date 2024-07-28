@@ -75,7 +75,7 @@ export default function HomeMainImg() {
           </div>
           <label className={styles.btnName}>놀이시설 찾기</label>
         </Link>
-        <Link to='/' className={styles.miniBtn}>
+        <Link to='/co' className={styles.miniBtn}>
           <div className={styles.circle}>
             <img src={amenities} alt="amenities" className={styles.icon} />
           </div>

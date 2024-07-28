@@ -19,7 +19,6 @@ import AdminContact from './components/AdminContact';
 import AdminContactNormalTableDetail from './components/AdminContactNormalTableDetail';
 import AdminContactWrite from './components/AdminContactWrite';
 import Footer from './components/Footer';
-import IoChat from './components/IoChat';
 import ChatIntro from './components/ChatIntro';
 import MateSearch from './components/MateSearch';
 import MatePetProfile from './components/MatePetProfile';
@@ -33,6 +32,7 @@ import AddPharmacy from './components/AddPharmacy';
 import CO from './components/co_main_components/CO';
 import CoInfoView from './components/co_info_components/CoInfoView';
 import DogRandomDate from './components/DogRandomDate';
+import ChatCreatedRoom from './components/ChatCreatedRoom';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -89,7 +89,7 @@ function App() {
             <Route path='/phinfo/:phId' element={<PharmacyDetail />} />
             <Route path="/addHospital" element={<AddHospital />} />
             <Route path="/addPharmacy" element={<AddPharmacy />} />
-            <Route path="/mate/chat" element={<IoChat/>} />
+            <Route path="/mate/chat" element={<ChatCreatedRoom/>} />
             <Route path="/mate/intro" element={<ChatIntro/>} />
             <Route path="/mate/member" element={<MateSearch/>} />
             <Route path="/mate/petinfo" element={<MatePetProfile/>} />

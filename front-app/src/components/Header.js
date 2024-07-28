@@ -126,7 +126,7 @@ export default function Header({ isLoggedIn, onLogout }) {
               <Link className={styles.navLink}>놀이 · 편의</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'play' ? styles.visible : ''}`}>
                 <li className={styles.navSublink}><Link to="/pl">놀이시설 찾기</Link></li>
-                <li className={styles.navSublink}><Link to="/">편의시설 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/co">편의시설 찾기</Link></li>
               </ul>
             </li>
 
