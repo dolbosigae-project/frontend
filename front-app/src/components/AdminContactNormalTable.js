@@ -44,9 +44,18 @@ export default function AdminContactNormalTable({ adminBoardList, pagination, ha
                 </td>
                 <td>{item.adminNo}</td>
                 <td>
-                  <Link to={`/admin/contact/detail/${item.adminNo}`} className={styles.link}>
-                    {item.adminTitle}
-                  </Link>
+                  {user && (user.boardMemberGradeNo === 0 || user.boardMemberId === item.adminMemberId) ? (
+                    <Link to={`/admin/contact/detail/${item.adminNo}`} className={styles.link}>
+                      {item.adminTitle}
+                    </Link>
+                  ) : (
+                    <span className={styles.tooltip}>
+                      {item.adminTitle}
+                      <span className={styles.tooltiptext}>
+                        본인이 작성한 글만 확인할 수 있습니다
+                      </span>
+                    </span>
+                  )}
                 </td>
                 <td>{item.adminMemberId}</td>
                 <td>{item.adminNick}</td>

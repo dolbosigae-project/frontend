@@ -104,10 +104,7 @@ const HO = () => {
                             <td>
                                 <Link
                                     to={`/hoinfo/${hospital.hoId}`}
-                                    className={styles.linkButton}
-                                >
-                                    이동
-                                </Link>
+                                    className={styles.linkButton} > 이동 </Link>
                             </td>
                         </tr>
                     ))}
@@ -159,7 +156,7 @@ const HO = () => {
                         <KakaoMap locations={locations} />
                     </div>
                 </div>
-                {/* <footer className={styles.footer}>박유영0725</footer> */}
+              
             </div>
         </>
     );
