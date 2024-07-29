@@ -35,7 +35,7 @@ function MsgBox() {
           </div>
         </div>
         {activeTab === 'received' ? <MsgBoxReceive /> : <MsgBoxSend />}
-        <button onClick={sendMsgClick}>쪽지 보내기</button> 
+        <button className={styles.msgBoxsendPagebtn} onClick={sendMsgClick}>쪽지 보내기</button> 
       </div>
     </div>
   );

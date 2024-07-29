@@ -29,14 +29,17 @@
   padding: 10px 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #f4f4f4;
+  background-color: #69c16c;
   cursor: pointer;
   font-size: 16px;
   margin-right: 10px;
+  color: white;
 }
 
+
+
 .activeTab {
-  background-color: #e0e0e0;
+  background-color: #318033;
 }
 
 .deleteSelectedButton {
@@ -81,9 +84,18 @@
   font-size: 14px;
 }
 
-.msgBoxReplyButton {
+.msgBoxReplyButton, .msgBoxsendPagebtn {
   background-color: #4CAF50;
   color: white;
+}
+
+.msgBoxsendPagebtn{
+   margin-left: 5%;
+   border-radius: 5px;
+   cursor: pointer;
+   font-size: 14px;
+   padding: 5px 10px;
+   border: none;
 }
 
 .msgBoxDeleteButton {
@@ -91,6 +103,10 @@
   color: white;
 }
 
-.msgBoxReplyButton:hover, .msgBoxDeleteButton:hover {
+.msgBoxReplyButton:hover, .msgBoxDeleteButton:hover, .msgBoxsendPagebtn:hover {
   opacity: 0.8;
+}
+
+.msgBoxsendPagebtn{
+
 }
