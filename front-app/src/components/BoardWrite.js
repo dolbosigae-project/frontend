@@ -6,7 +6,7 @@ import styles from '../css/adminContactWrite.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-export default function AdminContactWrite() {
+export default function BoardWrite() {
     const [isLayoutReady, setIsLayoutReady] = useState(false);
     const title = useRef();
     const [myEditor, setMyEditor] = useState(null);
@@ -51,28 +51,28 @@ export default function AdminContactWrite() {
             alert('제목을 입력하세요.');
             return;
         }
-
+    
         if (myEditor) {
             const rawContent = myEditor.getData();
             const strippedContent = stripHtmlTags(rawContent); // HTML 태그 제거
             const jsonData = {
-                adminMemberId: user?.boardMemberId,
-                adminTitle: title.current.value,
-                adminContent: strippedContent
+                mID: user?.boardMemberId,
+                SHOW_TITLE: title.current.value,
+                SHOW_CONTENT: strippedContent
             };
             console.log("jsonData:", jsonData);
-
+    
             try {
-                const response = await axios.post('http://localhost:9999/admin/write', jsonData, {
+                const response = await axios.post('http://localhost:9999/shows', jsonData, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
-
+    
                 if (response.status === 200) {
                     console.log(response.data);
                     alert('문의글을 업로드하였습니다.');
-                    navigate('/admin/contact');
+                    navigate('/addboard'); // '글쓰기' 버튼 클릭 후 이동할 페이지
                 } else {
                     console.error('Unexpected response status:', response.status);
                 }

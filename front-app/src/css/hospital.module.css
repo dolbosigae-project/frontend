@@ -1,12 +1,3 @@
-/* .banner {
-  background-image: url('../img/ho_default.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 150px;
-  margin-bottom: 20px;
-} */
 
 .container {
   display: flex;
