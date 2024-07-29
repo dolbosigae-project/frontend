@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from '../css/hospital.module.css';
 import HospitalNumberRing from './HospitalNumberRing';
 import KakaoMap from './KakaoMap';
+import SubTitleHospital from './SubTitles/SubTitleHospital';
 
 const HO = () => {
     const [hoText, setHoText] = useState('');
@@ -77,7 +78,7 @@ const HO = () => {
                 <thead>
                     <tr>
                         <th></th>
-                        <th>번호</th>
+                       
                         <th>병원명</th>
                         <th>지역</th>
                         <th>전화번호</th>
@@ -90,15 +91,11 @@ const HO = () => {
                         <tr key={index}>
                             <td>
                                 {user && user.boardMemberGradeNo === 0 && (
-                                    <button
-                                        className={styles.DeleteBtn}
-                                        onClick={() => deleteHospital(hospital.hoId)}
-                                    >
-                                        삭제
-                                    </button>
+                                    <button className={styles.DeleteBtn}
+                                        onClick={() => deleteHospital(hospital.hoId)}>삭제</button>
                                 )}
                             </td>
-                            <td>{hospital.hoId}</td>
+                          
                             <td>{hospital.hoName}</td>
                             <td>{hospital.hoRegion}</td>
                             <td>{hospital.hoTel}</td>
@@ -107,10 +104,7 @@ const HO = () => {
                             <td>
                                 <Link
                                     to={`/hoinfo/${hospital.hoId}`}
-                                    className={styles.linkButton}
-                                >
-                                    이동
-                                </Link>
+                                    className={styles.linkButton} > 이동 </Link>
                             </td>
                         </tr>
                     ))}
@@ -128,7 +122,8 @@ const HO = () => {
 
     return (
         <>
-            <div className={styles.banner}></div>
+            {/* <div className={styles.banner}></div> */}
+            <SubTitleHospital />
             <div className={styles.container}>
                 <div className={styles.mainContent}>
                     <div className={styles.searchAndTableContainer}>
@@ -142,6 +137,11 @@ const HO = () => {
                             />
                             <button onClick={searchHospitalClick} className={styles.searchButton}>조회</button>
                         </div>
+                        {user && user.boardMemberGradeNo === 0 && (
+                            <div className={styles.addButtonContainer}>
+                                <Link to={`/addHospital`} className={styles.linkButton}> + 병원 추가하기</Link>
+                            </div>
+                        )}
                         {error && <div className={styles.error}>{error}</div>}
                         {result.length > 0 && (
                             <>
@@ -156,7 +156,7 @@ const HO = () => {
                         <KakaoMap locations={locations} />
                     </div>
                 </div>
-                <footer className={styles.footer}>박유영0724</footer>
+              
             </div>
         </>
     );

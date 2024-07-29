@@ -6,7 +6,7 @@
   font-size: 48px;
   font-weight: 600; /* 세미볼드 */
   color: #0F3C3C;
-  margin: 0; /* 기본 여백 제거 */
+  margin: 0; 
   position: absolute; /* 절대 위치 설정 */
   left: 50%;
   transform: translateX(-60%);

@@ -5,28 +5,30 @@ import styles from '../css/loginPasswd.module.css';
 
 export default function LoginPasswd() {
   const txtId = useRef();
+  const txtName = useRef();
   const newPassword = useRef();
   const confirmPassword = useRef();
-  const [isIdDuplicate, setIsIdDuplicate] = useState(false);
+  const [idCheck, setIdCheck] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const isDuplicate = async () => {
+  const checkId = async () => {
     const idValue = txtId.current.value;
+    const nameValue = txtName.current.value;
     try {
-      const response = await axios.get(`http://localhost:9999/member/duplicate`, {
-        params: { idValue: idValue }
+      const response = await axios.post(`http://localhost:9999/member/check/id`, {
+        idValue: idValue,
+        nameValue: nameValue
       });
       console.log(response.data);
       if (response.data === 0) {
-        alert('해당 아이디가 없습니다.\n회원가입 페이지로 이동합니다.');
+        alert('해당 아이디가 없거나 이름이 일치하지 않습니다.\n회원가입 페이지로 이동합니다.');
         window.location.href = '/member/register';
       } else {
         console.log('아이디가 존재합니다.');
-        setIsIdDuplicate(true);
+        setIdCheck(true);
       }
     } catch (error) {
-      console.error("중복 확인 에러 발생", error);
-      setErrorMessage("회원정보 중복 조회 중 오류가 발생했습니다.");
+      console.error(error);
     }
   };
 
@@ -60,11 +62,11 @@ export default function LoginPasswd() {
     <div>
       <SubTitleLoginPasswd />
       <div className={styles.container}>
-        <p>아이디를 입력해주세요</p>
-        <input type="text" name="boardMemberId" ref={txtId} required />
-        <button type="button" onClick={isDuplicate}>아이디 확인</button>
+        <input type="text" name="boardMemberId" ref={txtId} required placeholder="아이디 입력"/>
+        <input type="text" name="boardMemberName" ref={txtName} required placeholder="회원 이름 입력" />
+        <button type="button" onClick={checkId}>아이디 확인</button>
         {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
-        {isIdDuplicate && (
+        {idCheck && (
           <>
             <br/>
             <p>새로 설정할 비밀번호를 입력해주세요</p>

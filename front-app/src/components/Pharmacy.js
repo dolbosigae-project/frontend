@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styles from '../css/pharmacy.module.css';
 import PharmacyNumberRing from './PharmacyNumberRing';
 import KakaoMap from './KakaoMap';
+import SubTitlePharmacy from './SubTitles/SubTitlePharmacy';
 
 const PH = () => {
     const [phText, setPhText] = useState('');
@@ -75,13 +76,12 @@ const PH = () => {
         <table>
             <thead>
                 <tr>
-                    <th></th>
-                    <th>번호</th>
+                    <th></th>                 
                     <th>약국명</th>
                     <th>지역</th>
                     <th>전화번호</th>
                     <th>도로명 주소</th>
-                    <th>상세정보</th>
+                    <th>운영시간</th>
                 </tr>
             </thead>
             <tbody>
@@ -91,13 +91,10 @@ const PH = () => {
                             {user && user.boardMemberGradeNo === 0 && (
                                 <button
                                     className={styles.DeleteBtn}
-                                    onClick={() => deletePharmacy(pharmacy.phId)}
-                                >
-                                    삭제
-                                </button>
+                                    onClick={() => deletePharmacy(pharmacy.phId)}>삭제</button>
                             )}
                         </td>
-                        <td>{pharmacy.phId}</td>
+                      
                         <td>{pharmacy.phName}</td>
                         <td>{pharmacy.phRegion}</td>
                         <td>{pharmacy.phTel}</td>
@@ -106,10 +103,7 @@ const PH = () => {
                         <td>
                             <Link
                                 to={`/phinfo/${pharmacy.phId}`}
-                                className={styles.linkButton}
-                            >
-                                이동
-                            </Link>
+                                className={styles.linkButton}>이동</Link>
                         </td>
                     </tr>
                 ))}
@@ -126,7 +120,8 @@ const PH = () => {
 
     return (
         <>
-            <div className={styles.banner}></div>
+            {/* <div className={styles.banner}></div> */}
+            <SubTitlePharmacy />
             <div className={styles.container}>
                 <div className={styles.mainContent}>
                     <div className={styles.searchAndTableContainer}>
@@ -140,6 +135,11 @@ const PH = () => {
                             />
                             <button onClick={searchPharmacyClick} className={styles.searchButton}>조회</button>
                         </div>
+                        {user && user.boardMemberGradeNo === 0 && (
+                            <div className={styles.addButtonContainer}>
+                                <Link to={`/addPharmacy`} className={styles.linkButton}>+ 약국 추가하기</Link>
+                            </div>
+                        )}
                         {error && <div className={styles.error}>{error}</div>}
                         {result.length > 0 && (
                             <>
@@ -154,7 +154,7 @@ const PH = () => {
                         <KakaoMap locations={locations} />
                     </div>
                 </div>
-                <footer className={styles.footer}>박유영0724</footer>
+             
             </div>
         </>
     );

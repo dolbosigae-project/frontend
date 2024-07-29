@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom'; // Link 컴포넌트 추가
 import styles from '../css/hospitalDetail.module.css';
 import KakaoMap from './KakaoMap'; // KakaoMap 컴포넌트 import
 
@@ -68,7 +68,10 @@ const HospitalDetail = () => {
                     </tr>
                 </tbody>
             </table>
-            <footer className={styles.footer}>박유영0723</footer>
+            {/* 글 목록으로 이동하는 버튼 추가 */}
+            <div className={styles.buttonContainer}>
+                <Link to={`/animal-medical`} className={styles.linkButton}>글 목록</Link>
+            </div>
         </div>
     );
 };
