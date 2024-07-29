@@ -18,6 +18,11 @@ const CoInsert = () => {
             }
             const data = Object.fromEntries(formData.entries());
 
+            if (!data.coName.trim()) {
+                alert('놀이시설 이름, 도로명 주소, 가격, 휴일은 필수 기재사항입니다.');
+                return;
+            }
+
             const coNewData = {
                 coDistinction: data.coDistinction,
                 coName: data.coName,
@@ -73,8 +78,8 @@ const CoInsert = () => {
                         onDrop={handleFileDrop}
                         onDragOver={handleDragOver}
                         style={{
-                            width: '200px',
-                            height: '90px',
+                            width: '400px',
+                            height: '200px',
                             border: '1px solid #CCCCCC',
                             backgroundImage: profileImage ? `url(${URL.createObjectURL(profileImage)})` : 'none',
                             backgroundRepeat: 'no-repeat',
@@ -120,6 +125,7 @@ const CoInsert = () => {
                             <td className={styles.co_insert_td}><input type='text' name='coDay' placeholder='휴일을 입력해주세요.' className={styles.co_insert_input} /></td>
                         </tr>
                     </table>
+                    <p className={styles.co_insert_conditions}>※놀이시설 이름, 도로명 주소, 가격, 휴일은 필수 기재사항입니다.※</p>
                     <div className={styles.co_insert_footer}>
                         <button className={styles.co_insertBtn} onClick={CoInsertClick}>등록</button>
                         <p>　　　　　　</p>
