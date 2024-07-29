@@ -33,6 +33,8 @@ import AddPharmacy from './components/AddPharmacy';
 import CO from './components/co_main_components/CO';
 import CoInfoView from './components/co_info_components/CoInfoView';
 import DogRandomDate from './components/DogRandomDate';
+import MsgBox from './components/MsgBox';
+import MsgSend from './components/MsgSend';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -93,6 +95,8 @@ function App() {
             <Route path="/mate/intro" element={<ChatIntro/>} />
             <Route path="/mate/member" element={<MateSearch/>} />
             <Route path="/mate/petinfo" element={<MatePetProfile/>} />
+            <Route path="/mate/msg" element={<MsgBox/>} />
+            <Route path="/mate/sendMsg" element={<MsgSend/>} />
           </Routes>
         </main>
         <Footer />

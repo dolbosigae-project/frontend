@@ -72,6 +72,12 @@ export default function MateSearch() {
     window.open(url, '_blank', windowFeatures); // 특정 크기와 위치로 새로운 창 열기
   };
 
+  // '쪽지함(임시)' 클릭 핸들러 추가
+  const handleMsgClick = () => {
+    const url = '/mate/msg'; // 쪽지함 페이지의 URL
+    window.open(url, '_blank'); // 새로운 탭에서 열기
+  };
+
   return (
     <div>
       <SubTitleMateSearch />
@@ -79,6 +85,7 @@ export default function MateSearch() {
         <input value={searchRegion} onChange={(e) => setSearchRegion(e.target.value)} placeholder="지역으로 검색" />
         <button onClick={handleSearch}>검색</button>
         <button onClick={handleChatClick}>채팅하러가기(임시버튼)</button> {/* 채팅하러가기(임시버튼) 추가 */}
+        <button onClick={handleMsgClick}>쪽지함(임시)</button> {/* 쪽지함(임시) 추가 */}
       </div>
       {mateList.length === 0 ? (
         <div>해당 데이터가 없습니다.</div>

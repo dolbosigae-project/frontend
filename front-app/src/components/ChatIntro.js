@@ -89,7 +89,6 @@ function ChatIntro() {
         />
         <select value={searchCategory} onChange={handleCategoryChange}>
           <option value="id">ID</option>
-          <option value="nickname">닉네임</option>
         </select>
         <button className={styles.chatSearchBtn} onClick={searchUsers}>
           회원 검색
