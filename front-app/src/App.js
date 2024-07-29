@@ -37,6 +37,8 @@ import Board from './components/Board';
 import ShelterDetail from './components/ShelterDetail';
 import ABList from './components/ABList';
 import ABDetail from './components/ABDetail';
+import Semifinals from './components/dog_worldCup_components/dog_worldCup_semifinals.component/Semifinals';
+import RoundOf16 from './components/dog_worldCup_components/dov_worldCup_16.component/RoundOf16';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -69,12 +71,17 @@ function App() {
             <Route path="/member/register" element={<MemberRegister />} />
             <Route path="/member/mypage" element={<MyPage />} />
             <Route path="/kakao/callback" element={<KakaoLogin onLoginSuccess={handleLoginSuccess} />} />
+            {/* 놀이시설 이동경로 */}
             <Route path="/pl" element={<PL />} />
             <Route path='/plinfo/:plId' element={<PlInfoView />} />
             <Route path='/plInsert' element={<PlInsert />} />
+            {/* 놀이시설 이동경로 */}
+
+            {/* 편의시설 이동경로 */}
             <Route path='/co' element={<CO />} />
             <Route path='/coinfo/:coId' element={<CoInfoView />} />
             <Route path='/coInsert' element={<CoInsert />} />
+            {/* 편의시설 이동경로 */}
             <Route path="/shelters" element={<ShelterList />} />
             <Route path='/shelters/detail/:sh_id' element={<ShelterDetail />} />
             <Route path='/ab' element={<ABList />} />
@@ -83,7 +90,6 @@ function App() {
             <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
             <Route path="/pharmacies" element={<Pharmacy />} />
             <Route path="/phinfo/:phId" element={<PharmacyDetail />} />
-            <Route path='/dwc' element={<DogWorldCup />} />
             <Route path='/hospitalDetail' element={<HospitalDetail />} />
             <Route path='/admin/contact' element={<AdminContact />} />
             <Route path='/admin/contact/detail/:adminNo' element={<AdminContactNormalTableDetail />} />
@@ -100,6 +106,11 @@ function App() {
             <Route path="/mate/member" element={<MateSearch />} />
             <Route path="/mate/petinfo" element={<MatePetProfile />} />
             <Route path='/board' element={<Board />} />
+            {/* 개상형 월드컵 이동경로 */}
+            <Route path='/dwc' element={<DogWorldCup />} />
+            <Route path='/4' element={<Semifinals />} />
+            <Route path='/16' element={<RoundOf16 />} />
+
           </Routes>
         </main>
         <Footer />
