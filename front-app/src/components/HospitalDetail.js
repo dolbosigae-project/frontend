@@ -68,7 +68,7 @@ const HospitalDetail = () => {
                     </tr>
                 </tbody>
             </table>
-            <footer className={styles.footer}>박유영0725</footer>
+            {/* <footer className={styles.footer}>박유영0725</footer> */}
         </div>
     );
 };

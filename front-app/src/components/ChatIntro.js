@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { createRoot } from 'react-dom/client'; // React 18에서 createRoot 사용
-import ChatCreatedRoom from './ChatCreatedRoom'; 
-import styles from '../css/chatRoom.module.css'; 
+import ReactDOM from 'react-dom';
+import ChatCreatedRoom from './ChatCreatedRoom';
+import styles from '../css/chatRoom.module.css';
 
 function ChatIntro() {
   const [recipientId, setRecipientId] = useState('');
-  const [searchCategory, setSearchCategory] = useState('id'); // 검색 기준 상태 변수, 기본값을 'id'로 설정
+  const [searchCategory, setSearchCategory] = useState('id');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [userId, setUserId] = useState('');
-  const [userNick, setUserNick] = useState(''); // 사용자 닉네임 추가 (강아지 이름)
 
-  // localStorage에서 사용자 정보를 가져와 설정하는 부분
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
-      if (parsedUser && parsedUser.boardMemberId && parsedUser.boardMemberNick) {
+      if (parsedUser && parsedUser.boardMemberId) {
         setUserId(parsedUser.boardMemberId);
-        setUserNick(parsedUser.boardMemberNick); // 사용자 닉네임 설정 (역시 강아지 이름)
       }
     } else {
       console.error('로그인된 사용자가 없습니다.');
@@ -43,30 +40,37 @@ function ChatIntro() {
         },
       });
       setSearchResults(response.data);
-      console.log("--------검색 결과:", response.data); // 디버그: 검색 결과 로그
+      console.log("--------검색 결과:", response.data);
     } catch (error) {
       console.error('회원 검색 실패:', error.response ? error.response.data : error.message);
     }
   };
 
   const openChatRoom = (roomId, nickname) => {
-    const chatWindow = window.open('', '_blank', 'width=600,height=800');
+    const url = `/chatRoom?roomId=${roomId}&nickname=${nickname}`; //새 창에서 열릴 ulr 경로
+    const chatWindow = window.open(url, '_blank', 'width=600,height=800');
     chatWindow.document.write('<div id="chat-root"></div>');
     chatWindow.document.close();
+
+    // 새로운 창에 CSS를 동적으로 추가
+    const linkElement = chatWindow.document.createElement('link');
+    linkElement.rel = 'stylesheet';
+    linkElement.href = '/static/css/chatRoom.module.css'; // CSS 파일 경로를 맞춰주세요.
+    chatWindow.document.head.appendChild(linkElement);
+    
     setTimeout(() => {
-      const root = createRoot(chatWindow.document.getElementById('chat-root'));
-      root.render(<ChatCreatedRoom roomId={roomId} nickname={nickname} />);
+      ReactDOM.render(<ChatCreatedRoom roomId={roomId} nickname={nickname} />, chatWindow.document.getElementById('chat-root'));
     }, 100);
   };
 
   const createRoom = () => {
     if (selectedUser) {
-      const newRoomId = generateRoomId(userId, selectedUser.boardMemberId); // selectedUser.boardMemberId 사용
-      console.log("--------방 생성 아이디:", newRoomId); 
-      openChatRoom(newRoomId, userNick); // 로그인된 사용자 닉네임 전달 <- 여기 제대로 작동해야 console에서 닉네임 확인가능
+      const newRoomId = generateRoomId(userId, selectedUser.boardMemberId);
+      console.log(`이 아이디로 방이 생성됨: ${newRoomId}`);
+      console.log("--------방 생성:", newRoomId);
+      openChatRoom(newRoomId, selectedUser.boardMemberNick);
     } else {
       alert('회원 선택 후 방을 생성하세요.');
-      console.log("--------회원 선택 안됨"); // 디버그: 회원 선택 안됨 로그
     }
   };
 
@@ -84,7 +88,7 @@ function ChatIntro() {
           onChange={handleRecipientChange}
         />
         <select value={searchCategory} onChange={handleCategoryChange}>
-          <option value="id">ID</option> 
+          <option value="id">ID</option>
           <option value="nickname">닉네임</option>
         </select>
         <button className={styles.chatSearchBtn} onClick={searchUsers}>
@@ -93,10 +97,7 @@ function ChatIntro() {
       </div>
       <div className={styles.searchResults}>
         {searchResults.map((user) => (
-          <div key={user.boardMemberId} onClick={() => {
-            setSelectedUser(user);
-            console.log("--------선택된 회원:", user); // 디버그: 선택된 회원 로그
-          }}>
+          <div key={user.boardMemberId} onClick={() => setSelectedUser(user)}>
             {user.boardMemberNick} ({user.boardMemberId})
           </div>
         ))}

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styles from '../css/adminContactDefaultTable.module.css';
 import axios from 'axios';
 import logo_small from '../img/logo_small.png';
-import AdminCommentWrite from './AdminCommentWrite'; // AdminCommentWrite 컴포넌트 임포트
 
 export default function AdminContactDefaultTable() {
   const [adminDefaultList, setAdminDefaultList] = useState([]); // FAQ 목록 상태 관리
@@ -25,7 +24,7 @@ export default function AdminContactDefaultTable() {
   const toggleContent = (index) => {
     setOpenIndexes((prev) => ({
       ...prev,
-      [index]: !prev[index],
+      [index]: !prev[index], // 클릭할 때마다 상태를 반전시킴
     }));
   };
 
@@ -62,8 +61,8 @@ export default function AdminContactDefaultTable() {
                 <td>{item.faqdate}</td>
               </tr>
               {openIndexes[index] && (
-                <tr className={`${styles.contentRow} ${styles.show}`}>
-                  <td colSpan="3">
+                <tr className={`${styles.contentRow} ${styles.show}`} onClick={() => toggleContent(index)}>
+                  <td colSpan="3" className={`${styles.show}`}>
                     <div dangerouslySetInnerHTML={formatContent(item.faqcontent)} />
                   </td>
                 </tr>

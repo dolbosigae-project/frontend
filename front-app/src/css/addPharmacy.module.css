@@ -116,7 +116,7 @@
   margin-right: 10px;
 }
 
-textarea{
+/* textarea{
   width: 600px;
   height: 100px;
   font-size: 20px;
@@ -124,7 +124,7 @@ textarea{
   padding: 10px;
   border: 1px solid #CCCCCC;
 }
-
+ */
 .notice{
   font-style: italic; 
   color: #595959;
