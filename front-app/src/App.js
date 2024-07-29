@@ -33,6 +33,8 @@ import AddPharmacy from './components/AddPharmacy';
 import CO from './components/co_main_components/CO';
 import CoInfoView from './components/co_info_components/CoInfoView';
 import DogRandomDate from './components/DogRandomDate';
+import Board from './components/Board';
+import BoardWrite from './components/BoardWrite';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -78,21 +80,18 @@ function App() {
             <Route path="/pharmacies" element={<Pharmacy />} />
             <Route path="/phinfo/:phId" element={<PharmacyDetail />} />
             <Route path='/dwc' element={<DogWorldCup />} />
-            <Route path='/hospitalDetail' element={<HospitalDetail />} />
+            <Route path="/addHospital" element={<AddHospital />} />
+            <Route path="/addPharmacy" element={<AddPharmacy />} />
+            <Route path="/mate/chat" element={<IoChat />} />
+            <Route path="/mate/intro" element={<ChatIntro />} />
+            <Route path="/mate/member" element={<MateSearch />} />
+            <Route path="/mate/petinfo" element={<MatePetProfile />} />
+            <Route path="/board" element={<Board />} />
+            <Route path="/board/write" element={<BoardWrite />} />
             <Route path='/admin/contact' element={<AdminContact />} />
             <Route path='/admin/contact/detail/:adminNo' element={<AdminContactNormalTableDetail />} />
             <Route path='/admin/write' element={<AdminContactWrite />} />
             <Route path='/dog/random/date' element={<DogRandomDate />} />
-            <Route path='/co' element={<CO />} />
-            <Route path='/coinfo/:coId' element={<CoInfoView />} />
-            <Route path='/pharmacies' element={<Pharmacy />} />
-            <Route path='/phinfo/:phId' element={<PharmacyDetail />} />
-            <Route path="/addHospital" element={<AddHospital />} />
-            <Route path="/addPharmacy" element={<AddPharmacy />} />
-            <Route path="/mate/chat" element={<IoChat/>} />
-            <Route path="/mate/intro" element={<ChatIntro/>} />
-            <Route path="/mate/member" element={<MateSearch/>} />
-            <Route path="/mate/petinfo" element={<MatePetProfile/>} />
           </Routes>
         </main>
         <Footer />

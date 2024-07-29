@@ -30,9 +30,8 @@ export default function Board({ boardList = [], pagination, handlePageChange, us
   };
 
   return (
-    <div className={styles.container}>
+    <>
       <SubTitleBoard />
-      {/* 검색 바 및 옵션 */}
       <div className={styles.searchContainer}>
         <div className={styles.searchBox}>
           <select value={searchCategory} onChange={(e) => setSearchCategory(e.target.value)} className={styles.searchSelect}>
@@ -136,6 +135,6 @@ export default function Board({ boardList = [], pagination, handlePageChange, us
           </tfoot>
         </table>
       </div>
-    </div>
+      </>
   );
-}
+};
