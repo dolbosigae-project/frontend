@@ -1,10 +1,26 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import axios from "axios";
 import SubTitleDogWorldCup from "../SubTitles/SubTitleDogWorldCup";
 import styles from './css/dogWorldCup.module.css';
 
 const DogWorldCup = () => {
     const [hiddenText, setHiddenText] = useState('');
+    const [dogs, setDogs] = useState([]);
+    const roundNumbers = [4, 16, 32, 64];
+
+    useEffect(() => {
+        const fetchRandomDog = async () => {
+            try {
+                const response = await axios.get('http://localhost:9999/RandomDog');
+                const shuffledDogs = response.data.sort(() => Math.random() - 0.5).slice(0, 4);
+                setDogs(shuffledDogs);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchRandomDog();
+    }, []);
 
     const dwcExplanation = (round) => {
         let text;
@@ -23,55 +39,37 @@ const DogWorldCup = () => {
                 break;
             default:
                 text = "";
-        }
+        };
         setHiddenText(text);
     }
 
     const dwcMouseLeave = () => {
         setHiddenText('');
-    }
+    };
 
     return (
         <div className={styles.dwc_main_container}>
             <SubTitleDogWorldCup />
             <div className={styles.dwc_explanation_container}>
-                <p className={styles.dwc_explanation}>총 라운드를 선택해주세요!!</p>
+                <p className={styles.dwc_explanation}>※ 라운드를 선택해주세요!! ※</p>
             </div>
-            <form >
-                <div className={styles.dwc_option_container}>
-                    <div className={styles.dwc_link_container}>
-                        <Link to='/4' className={styles.dwc_link}
-                            onMouseEnter={() => dwcExplanation(4)}
+            <div className={styles.dwc_img_container}>
+                {dogs.map((dog, index) => (
+                    <div key={index} className={styles.dwc_img_button_container}>
+                        <img src={dog.dogImg} alt={`dog-${dog.dogId}`} className={styles.dwc_image} />
+                        <Link className={styles.dwc_link}
+                            to={`/dwc/round/${roundNumbers[index]}`}
+                            onMouseEnter={() => dwcExplanation(roundNumbers[index])}
                             onMouseLeave={dwcMouseLeave}
                         >
-                            <label className={styles.dwc_label}>4강</label>
-                        </Link>
-                        <Link to='/16' className={styles.dwc_link}
-                            onMouseEnter={() => dwcExplanation(16)}
-                            onMouseLeave={dwcMouseLeave}
-                        >
-                            <label className={styles.dwc_label}>16강</label>
-                        </Link>
-                        <Link to='/32' className={styles.dwc_link}
-                            onMouseEnter={() => dwcExplanation(32)}
-                            onMouseLeave={dwcMouseLeave}
-                        >
-                            <label className={styles.dwc_label}>32강</label>
-                        </Link>
-                        <Link to='/64' className={styles.dwc_link}
-                            onMouseEnter={() => dwcExplanation(64)}
-                            onMouseLeave={dwcMouseLeave}
-                        >
-                            <label className={styles.dwc_label}>64강</label>
+                            <label className={styles.dwc_label}>{roundNumbers[index]}강</label>
                         </Link>
                     </div>
-                    <div className={styles.dwc_info}>
-                        <span className={styles.dwc_span}>{hiddenText}</span>
-                    </div>
-                </div>
-            </form>
+                ))}
+            </div>
             <hr className={styles.dwc_hr} />
         </div>
     )
 }
+
 export default DogWorldCup;

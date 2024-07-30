@@ -37,8 +37,8 @@ import Board from './components/Board';
 import ShelterDetail from './components/ShelterDetail';
 import ABList from './components/ABList';
 import ABDetail from './components/ABDetail';
-import Semifinals from './components/dog_worldCup_components/dog_worldCup_semifinals.component/Semifinals';
-import RoundOf16 from './components/dog_worldCup_components/dov_worldCup_16.component/RoundOf16';
+import DogWorldCupPage from './components/dog_worldCup_components/dog_worldCup_Page.component/DogWorldCupPage';
+import WinnerPage from './components/dog_worldCup_components/winnerPage_components/WinnerPage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -108,8 +108,8 @@ function App() {
             <Route path='/board' element={<Board />} />
             {/* 개상형 월드컵 이동경로 */}
             <Route path='/dwc' element={<DogWorldCup />} />
-            <Route path='/4' element={<Semifinals />} />
-            <Route path='/16' element={<RoundOf16 />} />
+            <Route path="/dwc/round/:round" element={<DogWorldCupPage />} />
+            <Route path="/wp" element={<WinnerPage />} />
 
           </Routes>
         </main>
