@@ -59,7 +59,7 @@
   color: white;
   border: none;
   padding: 5px 10px;
-  cursor: pointer;
+
   font-size: 14px; /* 버튼 텍스트 크기 조정 */
 }
 
@@ -74,7 +74,7 @@
   display: inline-block;
   font-size: 14px;
   border-radius: 5px;
-  cursor: pointer;
+
 }
 
 .linkButton:hover {

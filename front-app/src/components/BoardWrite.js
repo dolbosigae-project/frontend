@@ -6,10 +6,14 @@ import styles from '../css/adminContactWrite.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+
+
+
+
 export default function BoardWrite() {
-    const [isLayoutReady, setIsLayoutReady] = useState(false);
-    const title = useRef();
     const [myEditor, setMyEditor] = useState(null);
+    const title = useRef();
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
 
@@ -20,11 +24,6 @@ export default function BoardWrite() {
             const parsedUser = JSON.parse(storedUser);
             setUser(parsedUser);
         }
-    }, []);
-
-    useEffect(() => {
-        setIsLayoutReady(true);
-        return () => setIsLayoutReady(false);
     }, []);
 
     const editorConfig = {
@@ -45,40 +44,47 @@ export default function BoardWrite() {
         return str.replace(/<[^>]*>?/gm, '');
     };
 
-    // 글쓰기 버튼
+    // 글쓰기 버튼 클릭 핸들러
     const writeClick = async () => {
         if (!title.current.value.trim()) {
             alert('제목을 입력하세요.');
             return;
         }
-    
+
+        if (!user) {
+            alert('사용자 정보를 확인할 수 없습니다. 로그인 후 다시 시도해 주세요.');
+            return;
+        }
+
         if (myEditor) {
             const rawContent = myEditor.getData();
             const strippedContent = stripHtmlTags(rawContent); // HTML 태그 제거
+
             const jsonData = {
-                mID: user?.boardMemberId,
-                SHOW_TITLE: title.current.value,
-                SHOW_CONTENT: strippedContent
+                pNick: user ? user.pNick : null,
+                showTitle: title.current.value,
+                showContent: strippedContent,
             };
+
             console.log("jsonData:", jsonData);
-    
+
             try {
                 const response = await axios.post('http://localhost:9999/shows', jsonData, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
-    
+
                 if (response.status === 200) {
                     console.log(response.data);
-                    alert('문의글을 업로드하였습니다.');
-                    navigate('/addboard'); // '글쓰기' 버튼 클릭 후 이동할 페이지
+                    alert('자랑글을 업로드하였습니다.');
+                    navigate('/board'); // '글쓰기' 버튼 클릭 후 이동할 페이지
                 } else {
                     console.error('Unexpected response status:', response.status);
                 }
             } catch (error) {
-                console.error('문의작성 에러 발생', error);
-                alert('문의작성 중 오류가 발생했습니다.');
+                console.error('글 작성 에러 발생', error);
+                alert('글 작성 중 오류가 발생했습니다.');
             }
         }
     };
