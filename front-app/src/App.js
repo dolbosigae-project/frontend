@@ -80,8 +80,8 @@ function App() {
             <Route path='/shelter/animal' element={<ShelterAnimalsInfo />} />
             <Route path="/shelters" element={<ShelterList />} />
             <Route path='/shelterdetail/:shID' element={<ShelterDetail />} />
-            <Route path='/ab' element={<ABList />} />
-            <Route path='/ab/detail/:ab_id' element={<ABDetail />} />
+            <Route path='/abs' element={<ABList />} />
+            <Route path='/abdetail/:abID' element={<ABDetail />} />
             <Route path='/animal-medical' element={<Hospital />} />
             <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
             <Route path="/pharmacies" element={<Pharmacy />} />

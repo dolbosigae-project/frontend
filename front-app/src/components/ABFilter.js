@@ -1,118 +1,52 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom'; // Link 컴포넌트 추가
-import Pagination from './Pagination';
-import ABFilter from './ABFilter';
-import styles from '../css/ABList.module.css'; // 스타일 파일
+import React, { useState } from 'react';
 
-const ABList = () => {
-    const [abList, setAbList] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageContentCount, setPageContentCount] = useState(6); // 한 페이지에 6개 항목 표시
-    const [totalPage, setTotalPage] = useState(1);
-    const [filter, setFilter] = useState({
-        region: '',
-        centerName: '',
-        startDate: '',
-        endDate: '',
-        breed: ''
-    });
+const ABFilter = ({ onFilterChange }) => {
+    const [region, setRegion] = useState('');
+    const [centerName, setCenterName] = useState('');
+    const [breed, setBreed] = useState('');
 
-    const fetchABList = useCallback(async () => {
-        setLoading(true);
-        try {
-            const response = await axios.get('http://localhost:9999/abs/list', {
-                params: {
-                    page: currentPage,
-                    limit: pageContentCount,
-                    ...filter
-                }
-            });
-
-            console.log('응답 데이터:', response.data); // 확인
-
-            if (response.data && response.data.contents) {
-                setAbList(response.data.contents); // `contents` 배열을 상태로 설정
-                setTotalPage(Math.ceil(response.data.pagination.count / pageContentCount)); // 전체 페이지 수 계산
-            } else {
-                setAbList([]);
-                setTotalPage(1);
-            }
-        } catch (error) {
-            console.error('데이터를 가져오는 중 오류 발생:', error);
-            setError(error);
-        } finally {
-            setLoading(false);
-        }
-    }, [currentPage, pageContentCount, filter]);
-
-    useEffect(() => {
-        fetchABList();
-    }, [fetchABList]);
-
-    const handleFilterChange = (newFilter) => {
-        setFilter(newFilter);
-        setCurrentPage(1); // 필터 변경 시 페이지를 1로 리셋
+    const handleRegionChange = (event) => {
+        setRegion(event.target.value);
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    const handleCenterNameChange = (event) => {
+        setCenterName(event.target.value);
+    };
 
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
+    const handleBreedChange = (event) => {
+        setBreed(event.target.value);
+    };
+
+    const handleApplyFilter = () => {
+        // 필터가 비어있을 경우 해당 필드는 제외합니다.
+        const newFilter = {
+            region: region || undefined,
+            centerName: centerName || undefined,
+            breed: breed || undefined,
+        };
+
+        // onFilterChange 콜백을 호출하여 필터 변경 사항을 상위 컴포넌트에 전달합니다.
+        onFilterChange(newFilter);
+    };
 
     return (
-        <div className={styles.container}>
-            <h2>보호 중인 동물 목록</h2>
-            <ABFilter onFilterChange={handleFilterChange} />
-            <div className={styles.ab_list}>
-                {abList.length > 0 ? (
-                    <div className={styles.ab_card_list}>
-                        {abList.map((ab) => (
-                            <div key={ab.abID} className={styles.ab_card}>
-                                <Link to={`/ab/detail/${ab.abID}`} className={styles.ab_card_link}>
-                                    <div className={styles.ab_image}>
-                                        <img src={ab.abImg} alt={ab.abBreed} />
-                                    </div>
-                                    <div className={styles.ab_info}>
-                                        <p>보호종: {ab.abBreed}</p>
-                                        <p>발견 장소: {ab.abLocation}</p>
-                                        <p>특징: {ab.abCharacter}</p>
-                                        {/* 예를 들어, 1주일 이상된 경우 입양 가능 표시 */}
-                                        {isOverAWeek(ab.abDate) && (
-                                            <p className={styles.adoptable}>입양가능</p>
-                                        )}
-                                    </div>
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div>No animals found</div>
-                )}
-            </div>
-            <div className={styles.paginationContainer}>
-                <Pagination
-                    currentPage={currentPage}
-                    totalPage={totalPage}
-                    onPageChange={setCurrentPage}
-                />
-            </div>
+        <div className="filter">
+            <select value={region} onChange={handleRegionChange}>
+                <option value="">지역 선택</option>
+                {['가평군', '고양시', '과천시', '광명시', '광주시', '구리시', '남양주시', '동두천시', '부천시', '성남시', '수원시', '시흥시', 
+                '안산시', '양주시', '양평군', '연천군', '용인시', '의왕시', '의정부시', '평택시', '하남시', '화성시'].map(region => (
+                    <option key={region} value={region}>{region}</option>
+                ))}
+            </select>
+            <input
+                type="text"
+                value={breed}
+                onChange={handleBreedChange}
+                placeholder="보호종을 입력하세요"
+            />
+            <button onClick={handleApplyFilter}>조회</button>
         </div>
     );
 };
 
-// 날짜가 1주일 이상 되었는지 확인하는 유틸리티 함수
-const isOverAWeek = (dateString) => {
-    const abDate = new Date(dateString);
-    const currentDate = new Date();
-    const diffTime = Math.abs(currentDate - abDate);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays > 7;
-};
-
-export default ABList;
+export default ABFilter;

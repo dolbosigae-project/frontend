@@ -75,6 +75,10 @@ const ABDetail = () => {
                         <td className={styles.table_data}>{ab.abLocation}</td>
                     </tr>
                     <tr className={styles.table_row}>
+                        <td className={styles.table_label}>관할지역</td>
+                        <td className={styles.table_data}>{ab.abRegion}</td>
+                    </tr>
+                    <tr className={styles.table_row}>
                         <td className={styles.table_label}>상태</td>
                         <td className={styles.table_data}>{ab.abStatus}</td>
                     </tr>

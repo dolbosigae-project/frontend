@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'; // Link 컴포넌트 추가
 import Pagination from './Pagination';
 import ABFilter from './ABFilter';
 import styles from '../css/ABList.module.css'; // 스타일 파일
+import ABCardList from './ABCardList';
 
 const ABList = () => {
     const [abList, setAbList] = useState([]);
@@ -15,8 +16,6 @@ const ABList = () => {
     const [filter, setFilter] = useState({
         region: '',
         centerName: '',
-        startDate: '',
-        endDate: '',
         breed: ''
     });
 
@@ -31,7 +30,7 @@ const ABList = () => {
                 }
             });
 
-            console.log('응답 데이터:', response.data); // 확인
+            console.log('Response Data:', response.data); // 응답 데이터 확인
 
             if (response.data && response.data.contents) {
                 setAbList(response.data.contents); // `contents` 배열을 상태로 설정
@@ -53,8 +52,17 @@ const ABList = () => {
     }, [fetchABList]);
 
     const handleFilterChange = (newFilter) => {
+        console.log('새 필터:', newFilter); // 필터 확인
         setFilter(newFilter);
         setCurrentPage(1); // 필터 변경 시 페이지를 1로 리셋
+    };
+
+    const isOverAWeek = (dateString) => {
+        const abDate = new Date(dateString);
+        const currentDate = new Date();
+        const diffTime = Math.abs(currentDate - abDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays > 7;
     };
 
     if (loading) {
@@ -69,32 +77,7 @@ const ABList = () => {
         <div className={styles.container}>
             <h2>보호 중인 동물 목록</h2>
             <ABFilter onFilterChange={handleFilterChange} />
-            <div className={styles.ab_list}>
-                {abList.length > 0 ? (
-                    <div className={styles.ab_card_list}>
-                        {abList.map((ab) => (
-                            <div key={ab.abID} className={styles.ab_card}>
-                                <Link to={`/ab/detail/${ab.abID}`} className={styles.ab_card_link}>
-                                    <div className={styles.ab_image}>
-                                        <img src={ab.abImg} alt={ab.abBreed} />
-                                    </div>
-                                    <div className={styles.ab_info}>
-                                        <p>보호종: {ab.abBreed}</p>
-                                        <p>발견 장소: {ab.abLocation}</p>
-                                        <p>특징: {ab.abCharacter}</p>
-                                        {/* 예를 들어, 1주일 이상된 경우 입양 가능 표시 */}
-                                        {isOverAWeek(ab.abDate) && (
-                                            <p className={styles.adoptable}>입양가능</p>
-                                        )}
-                                    </div>
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div>No animals found</div>
-                )}
-            </div>
+            <ABCardList abList={abList} />
             <div className={styles.paginationContainer}>
                 <Pagination
                     currentPage={currentPage}
@@ -104,15 +87,6 @@ const ABList = () => {
             </div>
         </div>
     );
-};
-
-// 날짜가 1주일 이상 되었는지 확인하는 유틸리티 함수
-const isOverAWeek = (dateString) => {
-    const abDate = new Date(dateString);
-    const currentDate = new Date();
-    const diffTime = Math.abs(currentDate - abDate);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays > 7;
 };
 
 export default ABList;
