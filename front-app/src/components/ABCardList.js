@@ -35,5 +35,4 @@ const ABCardList = ({ abList }) => {
         </div>
     );
 };
-
 export default ABCardList;
