@@ -1,3 +1,76 @@
+.chatIntroContainer{
+  margin: 0 auto;
+  padding: 0;
+  margin-top: 5%;
+}
+.searchInput{
+  width: 300px;
+  height: 57px;
+  margin-left: 5%;
+  font-size: 20px;
+  text-align: center;
+}
+.searchSelect{
+  width: 100px;
+  height: 57px;
+  font-size: 20px;
+  text-align: center;
+}
+.chatIntroOption{
+  font-size: 20px;
+}
+.chatSearchBtn{
+  border: none;
+  width: 100px;
+  height: 57px;
+  background-color: #00823E;
+  color: white;
+  font-size: 20px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin-left: 2%;
+}
+
+.chatRequestBtn{
+  border: none;
+  width: 100px;
+  height: 57px;
+  background-color: #00823E;
+  color: white;
+  font-size: 15px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  margin-left: 5%;
+  margin-top: 2%;
+}
+
+.chatSearchBtn:hover, .chatRequestBtn:hover{
+  cursor: pointer;
+}
+
+.chatIntroResultString{
+  border-radius: 10px;
+  background-color: wheat;
+  width: 150px;
+  margin-left: 5%;
+  margin-top: 2%;
+  padding: 5px;
+  text-align: center;
+}
+
+.chatIntroResultString:hover{
+  cursor: pointer;
+}
+
+.chatIntroResultString.active{
+  background-color: rgb(124, 110, 84);
+  color: white;
+}
+
+/* -------------------------- */
+/* 밑으로 chatcreatedroom */
+
 .chatcontainer {
   width: 100%;
   max-width: 600px;
@@ -35,4 +108,9 @@
   margin: 5px 0;
   color: #000;
   word-wrap: break-word;
+}
+
+.chatMsgSendBtn{
+  background-color: #4caf50;
+  color: white;
 }

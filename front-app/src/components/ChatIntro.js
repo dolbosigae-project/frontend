@@ -10,6 +10,7 @@ function ChatIntro() {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [userId, setUserId] = useState('');
+  const [clickToggleActive, setClickToggleActive] = useState(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -78,17 +79,23 @@ function ChatIntro() {
     return userA.localeCompare(userB) < 0 ? `${userA}-${userB}` : `${userB}-${userA}`;
   };
 
+  const toggleActive = (userId) => {
+    setClickToggleActive(clickToggleActive === userId ? null : userId);
+    setSelectedUser(searchResults.find(user => user.boardMemberId === userId));
+  }
+
   return (
-    <div>
-      <div>
+    <div className={styles.chatIntroContainer}>
+      <div >
         <input
           type="text"
           placeholder="수신자 ID 또는 닉네임 입력"
           value={recipientId}
           onChange={handleRecipientChange}
+          className={styles.searchInput}
         />
-        <select value={searchCategory} onChange={handleCategoryChange}>
-          <option value="id">ID</option>
+        <select value={searchCategory} onChange={handleCategoryChange} className={styles.searchSelect}>
+          <option value="id" className={styles.chatIntroOption}>ID</option>
         </select>
         <button className={styles.chatSearchBtn} onClick={searchUsers}>
           회원 검색
@@ -96,7 +103,11 @@ function ChatIntro() {
       </div>
       <div className={styles.searchResults}>
         {searchResults.map((user) => (
-          <div key={user.boardMemberId} onClick={() => setSelectedUser(user)}>
+          <div 
+            key={user.boardMemberId} 
+            onClick={() => toggleActive(user.boardMemberId)} 
+            className={`${styles.chatIntroResultString} ${clickToggleActive === user.boardMemberId ? styles.active : ''}`}
+          >
             {user.boardMemberNick} ({user.boardMemberId})
           </div>
         ))}

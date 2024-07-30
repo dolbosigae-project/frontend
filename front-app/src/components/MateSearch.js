@@ -68,7 +68,7 @@ export default function MateSearch() {
   // '채팅하러가기(임시버튼)' 클릭 핸들러 추가 (새 창에서 열리도록 수정)
   const handleChatClick = () => {
     const url = '/mate/intro'; // ChatIntro 페이지의 URL
-    const windowFeatures = 'width=500,height=650,left=100,top=100,toolbar=no'; // 창의 크기와 위치 지정 및 UI 요소 숨김
+    const windowFeatures = 'width=500,height=350,left=100,top=100,toolbar=no'; // 창의 크기와 위치 지정 및 UI 요소 숨김
     window.open(url, '_blank', windowFeatures); // 특정 크기와 위치로 새로운 창 열기
   };
 
