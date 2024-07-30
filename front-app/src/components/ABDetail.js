@@ -116,5 +116,4 @@ const ABDetail = () => {
         </div>
     );
 };
-
 export default ABDetail;
