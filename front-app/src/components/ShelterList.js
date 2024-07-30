@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import styles from '../css/shelter.module.css';
+import styles from '../css/ShelterList.module.css';
 import ShelterFilter from './ShelterFilter';
 import Pagination from './Pagination';
 
