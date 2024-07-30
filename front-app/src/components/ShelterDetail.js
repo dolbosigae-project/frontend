@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom'; // Link 컴포넌트 추가
-import ABList from './ABList';
+import { useParams, Link } from 'react-router-dom';
 import styles from '../css/ShelterDetail.module.css';
 
 const ShelterDetail = () => {
-    const { shID } = useParams(); // 셸터 ID 가져오기
+    const { shID } = useParams(); // URL 파라미터에서 ID 추출
+    console.log("shID:", shID);
     const [shelter, setShelter] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ const ShelterDetail = () => {
         const fetchShelterDetail = async () => {
             setLoading(true);
             try {
-                // 경로 파라미터를 사용한 URL 요청
+                // URL 경로에 ID를 포함시켜 요청
                 const response = await axios.get(`http://localhost:9999/shelterdetail/${shID}`);
                 console.log("Shelter Response:", response.data);
                 setShelter(response.data);
@@ -28,7 +28,7 @@ const ShelterDetail = () => {
 
         fetchShelterDetail();
     }, [shID]);
-    
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -68,9 +68,6 @@ const ShelterDetail = () => {
                     </tr>
                 </tbody>
             </table>
-            <h2>보호 동물 목록</h2>
-            <ABList shID={shID} />
-            {/* 글 목록으로 이동하는 버튼 추가 */}
             <div className={styles.buttonContainer}>
                 <Link to="/animal-medical" className={styles.linkButton}>글 목록</Link>
             </div>

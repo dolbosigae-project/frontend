@@ -9,7 +9,7 @@ import MemberRegister from './components/MemberRegister';
 import MyPage from './components/MyPage';
 import LoginPasswd from './components/LoginPasswd';
 import KakaoLogin from './components/KakaoLogin';
-import PL from './components/pl_main_components/contents/PL';
+import PL from './components/pl_main_components/PL';
 import PlInfoView from './components/pl_info_component/PlInfoView';
 import ShelterList from './components/ShelterList';
 import ShelterAnimalsInfo from './components/ShelterAnimalsInfo';
@@ -32,6 +32,8 @@ import AddPharmacy from './components/AddPharmacy';
 import CO from './components/co_main_components/CO';
 import CoInfoView from './components/co_info_components/CoInfoView';
 import DogRandomDate from './components/DogRandomDate';
+import MsgBox from './components/MsgBox';
+import MsgSend from './components/MsgSend';
 import ChatCreatedRoom from './components/ChatCreatedRoom';
 import Board from './components/Board';
 import ShelterDetail from './components/ShelterDetail';
@@ -75,10 +77,11 @@ function App() {
             <Route path='/co' element={<CO />} />
             <Route path='/coinfo/:coId' element={<CoInfoView />} />
             <Route path='/coInsert' element={<CoInsert />} />
+            <Route path='/shelter/animal' element={<ShelterAnimalsInfo />} />
             <Route path="/shelters" element={<ShelterList />} />
             <Route path='/shelterdetail/:shID' element={<ShelterDetail />} />
-            <Route path='/ab' element={<ABList/>} />
-            <Route path='/ab/detail/:abID' element={<ABDetail/>} />
+            <Route path='/ab' element={<ABList />} />
+            <Route path='/ab/detail/:ab_id' element={<ABDetail />} />
             <Route path='/animal-medical' element={<Hospital />} />
             <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
             <Route path="/pharmacies" element={<Pharmacy />} />
@@ -95,11 +98,13 @@ function App() {
             <Route path='/phinfo/:phId' element={<PharmacyDetail />} />
             <Route path="/addHospital" element={<AddHospital />} />
             <Route path="/addPharmacy" element={<AddPharmacy />} />
-            <Route path="/mate/chat" element={<ChatCreatedRoom/>} />
-            <Route path="/mate/intro" element={<ChatIntro/>} />
-            <Route path="/mate/member" element={<MateSearch/>} />
-            <Route path="/mate/petinfo" element={<MatePetProfile/>} />
-            <Route path='/board' element={<Board/>} />
+            <Route path="/mate/msg" element={<MsgBox/>} />
+            <Route path="/mate/sendMsg" element={<MsgSend/>} />
+            <Route path="/mate/chat" element={<ChatCreatedRoom />} />
+            <Route path="/mate/intro" element={<ChatIntro />} />
+            <Route path="/mate/member" element={<MateSearch />} />
+            <Route path="/mate/petinfo" element={<MatePetProfile />} />
+            <Route path='/board' element={<Board />} />
           </Routes>
         </main>
         <Footer />

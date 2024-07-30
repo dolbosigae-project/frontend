@@ -18,8 +18,8 @@ const ShelterList = () => {
         try {
             const response = await axios.get('http://localhost:9999/shelters/list', {
                 params: {
-                    page,   // pageNo -> page로 수정
-                    limit,  // pageContentEa -> limit로 수정
+                    page,
+                    limit,
                     region: selectedRegion !== '선택' ? selectedRegion : null,
                     centerName: searchKeyword || null
                 }
@@ -49,6 +49,12 @@ const ShelterList = () => {
 
     const onPageChange = (number) => {
         setPage(number);
+    };
+
+    const handleFilterChange = (region, keyword) => {
+        setSelectedRegion(region);
+        setSearchKeyword(keyword);
+        setPage(1);  // 필터를 적용하면 페이지를 1로 리셋
     };
 
     const renderTable = useCallback(() => (
@@ -88,17 +94,7 @@ const ShelterList = () => {
         <div className={styles.container}>
             <div className={styles.mainContent}>
                 <div className={styles.searchAndTableContainer}>
-                    <div className={styles.searchContainer}>
-                        <input
-                            type="text"
-                            value={searchKeyword}
-                            placeholder="보호소 이름을 입력해주세요."
-                            onChange={(e) => setSearchKeyword(e.target.value)}
-                            className={styles.searchInput}
-                        />
-                        <button onClick={searchShelterClick} className={styles.searchButton}>조회</button>
-                    </div>
-                    <ShelterFilter onFilterChange={(region) => setSelectedRegion(region)} />
+                    <ShelterFilter onFilterChange={handleFilterChange} />
                     {error && <div className={styles.error}>{error}</div>}
                     {renderTable()}
                     <div className={styles.paginationContainer}>
