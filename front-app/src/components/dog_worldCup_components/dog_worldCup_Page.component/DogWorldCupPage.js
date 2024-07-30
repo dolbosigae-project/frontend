@@ -4,16 +4,15 @@ import axios from 'axios';
 import styles from './css/dogWorldCupPage.module.css'
 
 // 강아지 정보 띄워주는 함수
-const DogCard = ({ dog, onClick, currentRound, displayRound }) => (
-    <div onClick={onClick} className={styles.dwcp_choose_image}>
-        <p>현재 진행중인 라운드 {currentRound} / {displayRound}</p>
+const DogCard = ({ dog, onClick }) => (
+    <div className={styles.dwcp_choose_container}>
         <div className={styles.dwcp_choose_image}>
             <img className={styles.dwcp_choose_img} src={dog.dogImg} alt={`dog-${dog.dogId}`} />
         </div>
         <div className={styles.dwcp_choose_text}>
             <p className={styles.dwcp_choose_infoText}>{dog.dogTypeInfo}</p>
         </div>
-        <div className={styles.dwcp_choose_btn}>
+        <div onClick={onClick} className={styles.dwcp_choose_btn}>
             <button className={styles.dwcp_choose_button}>선택</button>
         </div>
     </div>
@@ -86,12 +85,17 @@ const DogWorldCupPage = () => {
             <div className={styles.dwcp_info}>
                 <p className={styles.dwcp_pTag}>마음에 드는 강아지를 선택해주세요!</p>
             </div>
-            <div className={styles.dwcp_title_container}>
-                <h2 className={styles.dwcp_title}>개상형 월드컵</h2>
+            <div className={styles.dwcp_allInfo}>
+                <div className={styles.dwcp_title_container}>
+                    <h2 className={styles.dwcp_title}>[{round}강] 개상형 월드컵</h2>
+                    <h2 className={styles.dwcp_Round}>현재 진행중인 <span className={styles.dwcp_RoundSpan}>라운드 {currentTurn} / {displayRound}</span></h2>
+                </div>
+                <div className={styles.dwcp_dogInfo}>
+                    {displays.map((dog, index) => (
+                        <DogCard key={index} dog={dog} onClick={chooseDog(dog)} />
+                    ))}
+                </div>
             </div>
-            {displays.map((dog, index) => (
-                <DogCard key={index} dog={dog} onClick={chooseDog(dog)} currentRound={currentTurn} displayRound={displayRound} />
-            ))}
         </div>
     );
 };
