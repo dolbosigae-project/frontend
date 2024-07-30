@@ -14,12 +14,12 @@ const ShelterDetail = () => {
         const fetchShelterDetail = async () => {
             setLoading(true);
             try {
-                // Axios를 사용하여 서버에서 셸터 상세 정보 가져오기
-                const response = await axios.get(`http://localhost:9999/shelterdetail`, {
-                    params: { id: shID }
-                });
+                // 경로 파라미터를 사용한 URL 요청
+                const response = await axios.get(`http://localhost:9999/shelterdetail/${shID}`);
+                console.log("Shelter Response:", response.data);
                 setShelter(response.data);
             } catch (error) {
+                console.error("Error fetching shelter detail:", error);
                 setError(error);
             } finally {
                 setLoading(false);
@@ -34,7 +34,7 @@ const ShelterDetail = () => {
     }
 
     if (error) {
-        return <div>Error: {error.message}</div>;
+        return <div>Error: {error.message || 'An unknown error occurred'}</div>;
     }
 
     return (
@@ -44,27 +44,27 @@ const ShelterDetail = () => {
                 <tbody>
                     <tr>
                         <td className={styles.label}><strong>센터명:</strong></td>
-                        <td className={styles.data}>{shelter?.shName}</td>
+                        <td className={styles.data}>{shelter?.shName || 'N/A'}</td>
                     </tr>
                     <tr>
                         <td className={styles.label}><strong>연락처:</strong></td>
-                        <td className={styles.data}>{shelter?.shTel}</td>
+                        <td className={styles.data}>{shelter?.shTel || 'N/A'}</td>
                     </tr>
                     <tr>
                         <td className={styles.label}><strong>해당지역:</strong></td>
-                        <td className={styles.data}>{shelter?.shRegion}</td>
+                        <td className={styles.data}>{shelter?.shRegion || 'N/A'}</td>
                     </tr>
                     <tr>
                         <td className={styles.label}><strong>주소:</strong></td>
-                        <td className={styles.data}>{shelter?.shAddress}</td>
+                        <td className={styles.data}>{shelter?.shAddress || 'N/A'}</td>
                     </tr>
                     <tr>
                         <td className={styles.label}><strong>운영시간:</strong></td>
-                        <td className={styles.data}>{shelter?.shHour}</td>
+                        <td className={styles.data}>{shelter?.shHour || 'N/A'}</td>
                     </tr>
                     <tr>
                         <td className={styles.label}><strong>보호동물종:</strong></td>
-                        <td className={styles.data}>{shelter?.shAnimalType}</td>
+                        <td className={styles.data}>{shelter?.shAnimalType || 'N/A'}</td>
                     </tr>
                 </tbody>
             </table>

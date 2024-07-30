@@ -76,9 +76,9 @@ function App() {
             <Route path='/coinfo/:coId' element={<CoInfoView />} />
             <Route path='/coInsert' element={<CoInsert />} />
             <Route path="/shelters" element={<ShelterList />} />
-            <Route path='/shelters/detail/:sh_id' element={<ShelterDetail />} />
+            <Route path='/shelterdetail/:shID' element={<ShelterDetail />} />
             <Route path='/ab' element={<ABList/>} />
-            <Route path='/ab/detail/:ab_id' element={<ABDetail/>} />
+            <Route path='/ab/detail/:abID' element={<ABDetail/>} />
             <Route path='/animal-medical' element={<Hospital />} />
             <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
             <Route path="/pharmacies" element={<Pharmacy />} />
