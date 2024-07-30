@@ -1,7 +1,8 @@
+// ABDetail.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
-import styles from '../css/ABDetail.module.css';
+import styles from '../css/ABDetail.module.css';  // 스타일 파일
 
 const ABDetail = () => {
     const { abID } = useParams();
@@ -13,30 +14,26 @@ const ABDetail = () => {
     useEffect(() => {
         const fetchABDetail = async () => {
             try {
-                const response = await axios.get(`http://localhost:9999/abdetail/${abID}`);
-                console.log("AB Detail Response:", response.data);
-                if (response.data && response.data.abID) {
-                    setAb(response.data);
-
-                    if (response.data.shID) {
-                        const shelterResponse = await axios.get(`http://localhost:9999/shelterdetail/${response.data.shID}`);
-                        console.log("Shelter Response:", shelterResponse.data);
-                        setShelter(shelterResponse.data);
-                    }
-                } else {
-                    console.error("No AB detail found");
-                    setAb(null);
+                const response = await axios.get(`http://localhost:9999/ab/detail/${abID}`);
+                console.log("AB Detail Response:", response.data); // 추가
+                setAb(response.data);
+    
+                if (response.data.shID) {
+                    const shelterResponse = await axios.get(`http://localhost:9999/shelters/detail/${response.data.shID}`);
+                    console.log("Shelter Response:", shelterResponse.data); // 추가
+                    setShelter(shelterResponse.data);
                 }
             } catch (error) {
-                console.error("Error fetching data:", error);
+                console.error("Error fetching data:", error); // 추가
                 setError(error);
             } finally {
                 setLoading(false);
             }
         };
-
+    
         fetchABDetail();
     }, [abID]);
+    
 
     if (loading) {
         return <div>Loading...</div>;
@@ -46,22 +43,18 @@ const ABDetail = () => {
         return <div>Error: {error.message}</div>;
     }
 
-    if (!ab) {
-        return <div>No details found</div>;
-    }
-
     return (
         <div className={styles.main_container}>
             <h1 className={styles.title}>AB Detail</h1>
             <div className={styles.image_container}>
-                <img src={ab.abImg} alt={ab.abBreed} className={styles.ab_image} />
+                <img src={ab.abImage} alt={ab.abBreed} className={styles.ab_image} />
             </div>
             <table className={styles.info_table}>
                 <tbody>
                     <tr className={styles.table_row}>
                         <td className={styles.table_label}>센터명</td>
                         <td className={styles.table_data}>
-                            <Link to={`/shelterdetail/${ab.shID}`} className={styles.shelter_link}>
+                            <Link to={`/shelters/detail/${ab.shID}`} className={styles.shelter_link}>
                                 {shelter?.shName || '센터 정보 없음'}
                             </Link>
                         </td>

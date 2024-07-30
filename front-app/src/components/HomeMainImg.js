@@ -67,7 +67,7 @@ export default function HomeMainImg() {
           <div className={styles.circle}>
             <img src={adopt} alt="adopt" className={styles.icon} />
           </div>
-          <label className={styles.btnName}>유기동물 현황</label>
+          <label className={styles.btnName}>유기견 현황</label>
         </Link>
         <Link to='/pl' className={styles.miniBtn}>
           <div className={styles.circle}>
