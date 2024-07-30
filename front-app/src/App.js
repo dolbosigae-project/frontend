@@ -19,6 +19,7 @@ import AdminContact from './components/AdminContact';
 import AdminContactNormalTableDetail from './components/AdminContactNormalTableDetail';
 import AdminContactWrite from './components/AdminContactWrite';
 import Footer from './components/Footer';
+import ChatCreatedRoom from './components/ChatCreatedRoom';
 import ChatIntro from './components/ChatIntro';
 import MateSearch from './components/MateSearch';
 import MatePetProfile from './components/MatePetProfile';
@@ -32,6 +33,8 @@ import AddPharmacy from './components/AddPharmacy';
 import CO from './components/co_main_components/CO';
 import CoInfoView from './components/co_info_components/CoInfoView';
 import DogRandomDate from './components/DogRandomDate';
+import MsgBox from './components/MsgBox';
+import MsgSend from './components/MsgSend';
 import ChatCreatedRoom from './components/ChatCreatedRoom';
 import Board from './components/Board';
 import ShelterDetail from './components/ShelterDetail';
@@ -75,6 +78,7 @@ function App() {
             <Route path='/co' element={<CO />} />
             <Route path='/coinfo/:coId' element={<CoInfoView />} />
             <Route path='/coInsert' element={<CoInsert />} />
+            <Route path='/shelter/animal' element={<ShelterAnimalsInfo />} />
             <Route path="/shelters" element={<ShelterList />} />
             <Route path='/shelters/detail/:sh_id' element={<ShelterDetail />} />
             <Route path='/ab' element={<ABList />} />
@@ -95,6 +99,8 @@ function App() {
             <Route path='/phinfo/:phId' element={<PharmacyDetail />} />
             <Route path="/addHospital" element={<AddHospital />} />
             <Route path="/addPharmacy" element={<AddPharmacy />} />
+            <Route path="/mate/msg" element={<MsgBox/>} />
+            <Route path="/mate/sendMsg" element={<MsgSend/>} />
             <Route path="/mate/chat" element={<ChatCreatedRoom />} />
             <Route path="/mate/intro" element={<ChatIntro />} />
             <Route path="/mate/member" element={<MateSearch />} />

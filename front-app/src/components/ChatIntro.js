@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ReactDOM from 'react-dom'; // ReactDOM 임포트 추가
-import IoChat from './IoChat'; // IoChat 임포트 추가
-import styles from '../css/IoChat.module.css';
+import ReactDOM from 'react-dom';
+import ChatCreatedRoom from './ChatCreatedRoom';
+import styles from '../css/chatRoom.module.css';
 
 function ChatIntro() {
   const [recipientId, setRecipientId] = useState('');
-  const [searchCategory, setSearchCategory] = useState('id'); // 검색 기준 상태 변수, 기본값을 'id'로 설정
+  const [searchCategory, setSearchCategory] = useState('id');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [userId, setUserId] = useState('');
 
-  // localStorage에서 사용자 정보를 가져와 설정하는 부분
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -41,27 +40,35 @@ function ChatIntro() {
         },
       });
       setSearchResults(response.data);
-      console.log('검색 결과:', response.data); // 검색 결과 로그 추가
+      console.log("--------검색 결과:", response.data);
     } catch (error) {
       console.error('회원 검색 실패:', error.response ? error.response.data : error.message);
     }
   };
 
   const openChatRoom = (roomId, nickname) => {
-    const chatWindow = window.open('', '_blank');
+    const url = `/chatRoom?roomId=${roomId}&nickname=${nickname}`; //새 창에서 열릴 ulr 경로
+    const chatWindow = window.open(url, '_blank', 'width=600,height=800');
     chatWindow.document.write('<div id="chat-root"></div>');
     chatWindow.document.close();
-    // 새로운 창에 ReactDOM을 사용하여 IoChat 컴포넌트 렌더링
+
+    // 새로운 창에 CSS를 동적으로 추가
+    const linkElement = chatWindow.document.createElement('link');
+    linkElement.rel = 'stylesheet';
+    linkElement.href = '/static/css/chatRoom.module.css'; // CSS 파일 경로를 맞춰주세요.
+    chatWindow.document.head.appendChild(linkElement);
+    
     setTimeout(() => {
-      ReactDOM.render(<IoChat roomId={roomId} nickname={nickname} />, chatWindow.document.getElementById('chat-root'));
+      ReactDOM.render(<ChatCreatedRoom roomId={roomId} nickname={nickname} />, chatWindow.document.getElementById('chat-root'));
     }, 100);
   };
 
   const createRoom = () => {
     if (selectedUser) {
-      const newRoomId = generateRoomId(userId, selectedUser.id);
-      console.log(`이 아이디로 방이 생성됨: ${newRoomId}`); // 방 생성 콘솔 로그 추가
-      openChatRoom(newRoomId, selectedUser.nickname);
+      const newRoomId = generateRoomId(userId, selectedUser.boardMemberId);
+      console.log(`이 아이디로 방이 생성됨: ${newRoomId}`);
+      console.log("--------방 생성:", newRoomId);
+      openChatRoom(newRoomId, selectedUser.boardMemberNick);
     } else {
       alert('회원 선택 후 방을 생성하세요.');
     }
@@ -81,8 +88,7 @@ function ChatIntro() {
           onChange={handleRecipientChange}
         />
         <select value={searchCategory} onChange={handleCategoryChange}>
-          <option value="id">ID</option> 
-          <option value="nickname">닉네임</option>
+          <option value="id">ID</option>
         </select>
         <button className={styles.chatSearchBtn} onClick={searchUsers}>
           회원 검색
@@ -90,10 +96,8 @@ function ChatIntro() {
       </div>
       <div className={styles.searchResults}>
         {searchResults.map((user) => (
-          <div key={user.id} onClick={() => {
-            setSelectedUser(user);
-          }}>
-            {user.nickname} ({user.id})
+          <div key={user.boardMemberId} onClick={() => setSelectedUser(user)}>
+            {user.boardMemberNick} ({user.boardMemberId})
           </div>
         ))}
       </div>
