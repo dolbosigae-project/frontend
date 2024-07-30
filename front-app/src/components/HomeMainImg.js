@@ -45,7 +45,7 @@ export default function HomeMainImg() {
         ))}
       </div>
       <div className={styles.btnContainer}>
-        <Link to='/' className={styles.miniBtn}>
+        <Link to='/mate/msg' className={styles.miniBtn}>
           <div className={styles.circle}>
             <img src={message} alt="message" className={styles.icon} />
           </div>

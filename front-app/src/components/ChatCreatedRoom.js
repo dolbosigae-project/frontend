@@ -10,7 +10,7 @@ function ChatCreatedRoom({ roomId, nickname }) {
   const [userId, setUserId] = useState('');
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user'); // localStorage에서 사용자 정보 가져오기
+    const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       if (parsedUser && parsedUser.boardMemberId) {
@@ -22,69 +22,78 @@ function ChatCreatedRoom({ roomId, nickname }) {
   }, []);
 
   useEffect(() => {
-    if (roomId) {
-      connectWebSocket(roomId).then(client => {
+    let client;
+    const connectWebSocket = () => {
+      return new Promise((resolve, reject) => {
+        client = new Client({
+          brokerURL: 'ws://localhost:9999/ws',
+          connectHeaders: {},
+          webSocketFactory: () => new SockJS('http://localhost:9999/ws'),
+          onConnect: (frame) => {
+            console.log("--------WebSocket 연결 완료, 방 이름:", roomId, "닉네임:", nickname);
+
+            client.subscribe(`/topic/${roomId}`, (messageOutput) => {
+              const message = JSON.parse(messageOutput.body);
+              console.log("--------받은 메시지:", message);
+
+              setMessages((prevMessages) => {
+                const newMessages = [...prevMessages, message];
+                console.log("--------업데이트된 메시지 배열:", newMessages); // 상태 업데이트 확인
+                return newMessages;
+              });
+            });
+            resolve(client);
+          },
+          onStompError: (frame) => {
+            reject(frame.body);
+            console.log("--------WebSocket 연결 에러:", frame.body);
+          },
+        });
+        client.activate();
+
+        window.addEventListener('beforeunload', () => {
+          if (client && client.active) {
+            client.publish({
+              destination: `/chat.removeUser/${roomId}`,
+              body: JSON.stringify({ sender: nickname, type: 'LEAVE' }),
+            });
+            client.deactivate();
+          }
+        });
+      });
+    };
+
+    if (roomId && !stompClient) {
+      connectWebSocket().then(client => {
         setStompClient(client);
       });
-    }
-  }, [roomId]);
 
-  const connectWebSocket = (roomId) => {
-    return new Promise((resolve, reject) => {
-      const client = new Client({
-        brokerURL: 'ws://localhost:9999/ws',
-        connectHeaders: {},
-        webSocketFactory: () => new SockJS('http://localhost:9999/ws'),
-        onConnect: (frame) => {
-          console.log("--------WebSocket 연결 완료, 방 이름:", roomId, "닉네임:", nickname); // 디버그: WebSocket 연결 완료 로그
-
-          setStompClient(client);
-          client.subscribe(`/topic/${roomId}`, (messageOutput) => {
-            const message = JSON.parse(messageOutput.body);
-            console.log("--------받은 메시지:", message); // 디버그: 받은 메시지 로그
-
-            setMessages((prevMessages) => [...prevMessages, message]);
-          });
-          resolve(client);
-        },
-        onStompError: (frame) => {
-          reject(frame.body);
-          console.log("--------WebSocket 연결 에러:", frame.body); // 디버그: WebSocket 연결 에러 로그
-        },
-      });
-      client.activate();
-
-      window.addEventListener('beforeunload', () => {
-        if (client.active) {
-          client.publish({
-            destination: `/chat.removeUser/${roomId}`,
-            body: JSON.stringify({ sender: nickname, type: 'LEAVE' }),
-          });
+      return () => {
+        if (client && client.active) {
           client.deactivate();
         }
-      });
-    });
-  };
+      };
+    }
+  }, [roomId, stompClient, nickname]);
 
   const sendMessage = () => {
     if (stompClient && stompClient.active) {
       const chatMessage = {
-        sender: nickname, // nickname 설정
+        sender: nickname,
         content: message,
         type: 'CHAT',
         roomId: roomId,
       };
-      console.log("--------보낸 메시지:", chatMessage); // 디버그: 보낸 메시지 로그
+      console.log("--------보낸 메시지:", chatMessage);
 
       stompClient.publish({
-        destination: `/chat/${roomId}`,
+        destination: `/ChatCreatedRoom/chat/${roomId}`,
         body: JSON.stringify(chatMessage),
       });
       setMessages((prevMessages) => [...prevMessages, chatMessage]);
       setMessage('');
     } else {
       console.error('stomp 연결 또는 방 ID 없음');
-      console.log("--------stomp 연결 또는 방 ID 없음"); // 디버그: stomp 연결 또는 방 ID 없음 로그
     }
   };
 

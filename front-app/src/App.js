@@ -19,7 +19,6 @@ import AdminContact from './components/AdminContact';
 import AdminContactNormalTableDetail from './components/AdminContactNormalTableDetail';
 import AdminContactWrite from './components/AdminContactWrite';
 import Footer from './components/Footer';
-import ChatCreatedRoom from './components/ChatCreatedRoom';
 import ChatIntro from './components/ChatIntro';
 import MateSearch from './components/MateSearch';
 import MatePetProfile from './components/MatePetProfile';
