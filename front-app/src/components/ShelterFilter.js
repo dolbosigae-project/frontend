@@ -13,11 +13,8 @@ const ShelterFilter = ({ onFilterChange }) => {
     };
 
     const handleApplyFilter = () => {
-        if (region !== '선택' || keyword.trim()) {
-            onFilterChange(region, keyword);
-        } else {
-            alert('검색어 또는 필터를 입력해주세요.');
-        }
+        // "선택"인 경우 region은 null로 설정
+        onFilterChange(region === '선택' ? null : region, keyword);
     };
 
     return (

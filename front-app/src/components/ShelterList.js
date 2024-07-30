@@ -12,7 +12,7 @@ const ShelterList = () => {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
     const [pagination, setPagination] = useState({ totalPages: 0, currentPage: 1 });
-    const [selectedRegion, setSelectedRegion] = useState('선택');
+    const [selectedRegion, setSelectedRegion] = useState(null); // "선택"을 null로 변경
 
     const fetchShelterData = async () => {
         try {
@@ -20,7 +20,7 @@ const ShelterList = () => {
                 params: {
                     page,
                     limit,
-                    region: selectedRegion !== '선택' ? selectedRegion : null,
+                    region: selectedRegion,
                     centerName: searchKeyword || null
                 }
             });
