@@ -7,12 +7,12 @@ export default function AdminContactDefaultTable() {
   const [adminDefaultList, setAdminDefaultList] = useState([]); // FAQ 목록 상태 관리
   const [openIndexes, setOpenIndexes] = useState({}); // 각 항목의 열림/닫힘 상태 관리
 
-  // 컴포넌트가 마운트될 때 데이터 가져오기
   useEffect(() => {
     const readData = async () => {
       try {
         const response = await axios.get('http://localhost:9999/admin/default');
         setAdminDefaultList(response.data);
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }

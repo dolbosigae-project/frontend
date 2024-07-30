@@ -34,6 +34,15 @@ export default function AdminContactNormalTableDetail() {
     fetchDetail();
   }, [adminNo]);
 
+  useEffect(()=>{
+    if(user && detail){
+      if(!(user.boardMemberGradeNo === 0 || user.boardMemberId === detail.adminMemberId)){
+        alert("접근 권한이 없습니다.");
+        navigate('/admin/contact');
+      }
+    }
+  })
+
     // 댓글 삭제 버튼
     const deleteCommentClick = async (adminCommentNo) => {
       try {

@@ -154,7 +154,6 @@ const PH = () => {
                         <KakaoMap locations={locations} />
                     </div>
                 </div>
-                {/* <footer className={styles.footer}>박유영0725</footer> */}
             </div>
         </>
     );

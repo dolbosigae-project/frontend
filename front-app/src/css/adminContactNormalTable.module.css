@@ -3,23 +3,26 @@
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
+  overflow: visible; /* 부모 요소가 자식 요소를 가리지 않도록 설정 */
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed; /* 고정된 테이블 레이아웃 */
+  overflow: visible; /* 테이블이 자식 요소를 가리지 않도록 설정 */
 }
 
 .table th, .table td {
   border: 1px solid #ddd;
   padding: 8px; 
   text-align: center;
-  overflow: hidden; /* 내용이 넘칠 경우 숨기기 */
+  overflow: visible; /* 셀이 자식 요소를 가리지 않도록 설정 */
   text-overflow: ellipsis; /* 내용이 넘칠 경우 말줄임표 추가 */
   white-space: nowrap; /* 줄바꿈 방지 */
   vertical-align: middle; /* 세로 가운데 정렬 */
   font-size: 16px;
+  position: relative; /* 툴팁이 셀 안에서 제대로 위치할 수 있도록 설정 */
 }
 
 .table th {
@@ -44,11 +47,11 @@
   height: 30px;
 }
 
-.pagination{
+.pagination {
   border: none !important;
 }
 
-.paginationGroup{
+.paginationGroup {
   display: flex;
   justify-content: center;
   margin-top: 20px;
@@ -66,6 +69,34 @@
 
 .link:hover {
   text-decoration: underline;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: not-allowed;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 10; /* 툴팁을 다른 요소들 위에 표시 */
+  bottom: 125%; /* Tooltip이 위로 뜨도록 설정 */
+  left: 50%;
+  transform: translateX(-50%); /* 툴팁을 가운데 정렬 */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 
 .deleteButton, .unansweredButton {
