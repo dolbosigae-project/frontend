@@ -74,8 +74,8 @@ const HomeCommunity = () => {
       </div>
       <div id="bannerList">
         <ul>
-          <li><Link to='/board'><img src={banner1} alt="default" /></Link></li>
-          <li><Link to='/mate/member'><img src={banner2} alt="admin" /></Link></li>
+          <li><Link to='/mate/member'><img src={banner1} alt="default" /></Link></li>
+          <li><Link to='/board'><img src={banner2} alt="admin" /></Link></li>
           <li><Link to='/dog/random/date'><img src={banner3} alt="admin" /></Link></li>
           <li><Link to='/dwc'><img src={banner4} alt="admin" /></Link></li>
         </ul>
