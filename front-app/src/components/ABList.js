@@ -31,7 +31,7 @@ const ABList = () => {
                 }
             });
 
-            console.log('응답 데이터:', response.data); // 응답 데이터 확인
+            console.log('응답 데이터:', response.data); // 확인
 
             if (response.data && response.data.contents) {
                 setAbList(response.data.contents); // `contents` 배열을 상태로 설정
