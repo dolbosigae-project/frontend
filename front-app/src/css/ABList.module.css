@@ -1,24 +1,24 @@
 .ab_list {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .ab_list h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
 .ab_filter {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .ab_card_list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .ab_card_list p {
-    margin: 5px 0;
+  margin: 5px 0;
 }

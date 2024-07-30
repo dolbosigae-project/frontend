@@ -1,32 +1,36 @@
-// src/components/KakaoMap.js
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 
+// KakaoMap 컴포넌트에서 지도를 생성하고 마커를 추가하는 부분
 const KakaoMap = ({ locations }) => {
-    const mapContainer = useRef(null);
-
     useEffect(() => {
-        // 카카오 지도 API를 초기화합니다.
-        const { kakao } = window;
+        if (window.kakao && locations.length > 0) {
+            const container = document.getElementById('map');
+            const options = {
+                center: new window.kakao.maps.LatLng(locations[0].lat, locations[0].lng), // 초기 위치를 첫 번째 병원으로 설정
+                level: 3
+            };
 
-        if (mapContainer.current && kakao) {
-            // 지도를 생성합니다.
-            const map = new kakao.maps.Map(mapContainer.current, {
-                center: new kakao.maps.LatLng(37.814536,127.510739), 
-                level: 8
-            });
+            const map = new window.kakao.maps.Map(container, options);
 
-            // 마커를 추가합니다.
             locations.forEach(location => {
-                const marker = new kakao.maps.Marker({
-                    position: new kakao.maps.LatLng(location.lat, location.lng),
+                const marker = new window.kakao.maps.Marker({
+                    position: new window.kakao.maps.LatLng(location.lat, location.lng),
                     map: map,
                     title: location.name
                 });
+                
+                // 마커를 클릭했을 때 지도 중심을 해당 마커 위치로 이동
+                window.kakao.maps.event.addListener(marker, 'click', () => {
+                    map.setCenter(marker.getPosition());
+                });
             });
+            
+            // 지도 중심을 가장 첫 번째 병원 위치로 이동
+            map.setCenter(new window.kakao.maps.LatLng(locations[0].lat, locations[0].lng));
         }
     }, [locations]);
 
-    return <div ref={mapContainer} style={{ width: '100%', height: '550px' }}></div>;
+    return <div id="map" style={{ width: '100%', height: '570px' }}></div>;
 };
 
 export default KakaoMap;

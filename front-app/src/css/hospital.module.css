@@ -1,25 +1,81 @@
-
+/* .banner {
+  background-image: url('../img/ho_default.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 150px;
+  margin-bottom: 20px;
+} */
 
 .container {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   padding: 20px;
 }
 
-.mapContainer {
-  flex: 2;
+.mainContent {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.searchContainer {
+.searchAndTableContainer {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center; /* 중앙 정렬 */
+  gap: 20px;
+  width: 100%; /* Make sure it takes up full width */
+}
+
+.searchContainer {
+  width: 80%; /* 검색 컨테이너의 너비를 조정하여 테이블과 일치시킵니다. */
+  max-width: 1200px; /* 최대 너비를 설정하여 너무 넓어지지 않도록 합니다. */
+  display: flex;
+  flex-direction: row; /* 수평으로 배치 */
+  align-items: center; /* 수직 가운데 정렬 */
+  gap: 10px; /* 요소 사이의 간격 */
   padding: 20px;
-  border-left: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+.searchInput {
+  flex: 1; /* 검색바가 가로 공간을 넓게 차지하도록 설정 */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-width: 200px; /* 최소 너비를 설정하여 너무 좁아지지 않도록 함 */
+}
+
+.searchButton {
+  padding: 10px 25px; /* 버튼의 여백을 조정 */
+  background-color: #00823E; /* 기본 배경색 설정 */
+  color: white; /* 텍스트 색상 */
+  border: none;
+  border-radius: 4px; /* 모서리 둥글게 설정 */
+  cursor: pointer; /* 커서 모양 변경 */
+}
+
+.DeleteBtn {
+  background-color: #CF1E1E;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.searchButton:hover {
+  opacity: 0.8;
+}
+
+.tableContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* 테이블을 중앙에 배치 */
 }
 
 .hospitalList {
@@ -32,37 +88,42 @@
   padding: 10px 0;
 }
 
-.DeleteBtn {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-
 .footer {
   text-align: center;
   padding: 10px;
   background-color: #f1f1f1;
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: 100%;
 }
 
 .linkButton {
-  background-color: #4CAF50; /* 기본 배경색 설정, 필요에 따라 조정 */
-  color: white; /* 텍스트 색상 */
+  background-color: #00823E;
+  color: white;
   border: none;
-  padding: 5px 10px; /* 버튼 내부 여백 */
-  text-align: center; /* 텍스트 정렬 */
-  text-decoration: none; /* 링크 밑줄 제거 */
-  display: inline-block; /* 버튼 크기 조정 */
-  font-size: 14px; /* 폰트 크기 설정 */
-  border-radius: 5px; /* 모서리 둥글게 설정 */
-  cursor: pointer; /* 커서 모양 변경 */
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .linkButton:hover {
-  background-color: #45a049; /* 마우스 오버 시 배경색 변경 */
+  opacity: 0.8;
+}
+
+.mapContainer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }

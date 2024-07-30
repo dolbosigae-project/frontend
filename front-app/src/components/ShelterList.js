@@ -1,67 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import styles from '../css/shelter.module.css';
 import ShelterFilter from './ShelterFilter';
 import Pagination from './Pagination';
 
 const ShelterList = () => {
-    const [shelters, setShelters] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [selectedRegion, setSelectedRegion] = useState('선택');
     const [searchKeyword, setSearchKeyword] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageOfContentCount, setPageOfContentCount] = useState(10);
-    const [totalPage, setTotalPage] = useState(1);
+    const [error, setError] = useState('');
+    const [shelters, setShelters] = useState([]);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [pagination, setPagination] = useState({ totalPages: 0, currentPage: 1 });
+    const [selectedRegion, setSelectedRegion] = useState('선택');
 
-    useEffect(() => {
-        fetchShelters(currentPage);
-    }, [currentPage, selectedRegion, searchKeyword]);
-
-    const fetchShelters = async (page) => {
-        setLoading(true);
+    const fetchShelterData = async () => {
         try {
-            const response = await axios.get('http://localhost:9999/shelters/search', {
+            const response = await axios.get('http://localhost:9999/shelters/list', {
                 params: {
                     pageNo: page,
-                    pageContentEa: pageOfContentCount,
+                    pageContentEa: limit,
                     region: selectedRegion !== '선택' ? selectedRegion : null,
                     centerName: searchKeyword || null
                 }
             });
-            console.log('Response Data (Filtered Shelters):', response.data);
-            setShelters(response.data.list);
-            setTotalPage(response.data.totalPage);
+            const contents = response.data.list || [];
+            setShelters(contents);
+            setPagination({
+                totalPages: response.data.totalPage,
+                currentPage: page,
+            });
         } catch (error) {
-            console.error('Error fetching shelters:', error);
-            setError(error);
-        } finally {
-            setLoading(false);
+            console.log('Error fetching data:', error);
+            setError('Error fetching data');
         }
     };
 
-    const handleFilterChange = (region, keyword) => {
-        setSelectedRegion(region);
-        setSearchKeyword(keyword);
-        setCurrentPage(1); // 필터 변경 시 페이지를 1로 리셋
+    useEffect(() => {
+        fetchShelterData();
+    }, [page, limit, selectedRegion, searchKeyword]);
+
+    const searchShelterClick = async () => {
+        setPage(1);
+        fetchShelterData();
     };
 
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
+    const onNumberRing = (number) => {
+        setPage(Number(number));  // ensure the number is parsed as a number
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
-
-    return (
-        <div className="shelter-list">
-            <h1>Shelter List</h1>
-            <ShelterFilter onFilterChange={handleFilterChange} />
+    const renderTable = useCallback(() => (
+        <div className={styles.tableContainer}>
             <table>
                 <thead>
                     <tr>
@@ -72,32 +61,52 @@ const ShelterList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {shelters.length > 0 ? (
-                        shelters.map((shelter) => (
-                            <tr key={shelter.shID}>
-                                <td>{shelter.shRegion}</td>
-                                <td>
-                                    <Link to={`/shelters/detail/${shelter.shID}`}>
-                                        {shelter.shName}
-                                    </Link>
-                                </td>
-                                <td>{shelter.shTel}</td>
-                                <td>{shelter.shAddress}</td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="4">No shelters available</td>
+                    {shelters.map((shelter, index) => (
+                        <tr key={index}>
+                            <td>{shelter.shRegion}</td>
+                            <td>
+                                <Link to={`/shelters/detail/${shelter.shID}`} className={styles.linkButton}>
+                                    {shelter.shName}
+                                </Link>
+                            </td>
+                            <td>{shelter.shTel}</td>
+                            <td>{shelter.shAddress}</td>
                         </tr>
-                    )}
+                    ))}
                 </tbody>
             </table>
-            <Pagination 
-                currentPage={currentPage}
-                totalPage={totalPage}
-                onPageChange={handlePageChange}
-            />
         </div>
+    ), [shelters]);
+
+    return (
+        <>
+            <div className={styles.container}>
+                <div className={styles.mainContent}>
+                    <div className={styles.searchAndTableContainer}>
+                        <div className={styles.searchContainer}>
+                            <input
+                                type="text"
+                                value={searchKeyword}
+                                placeholder="보호소 이름을 입력해주세요."
+                                onChange={(e) => setSearchKeyword(e.target.value)}
+                                className={styles.searchInput}
+                            />
+                            <button onClick={searchShelterClick} className={styles.searchButton}>조회</button>
+                        </div>
+                        <ShelterFilter onFilterChange={(region) => setSelectedRegion(region)} />
+                        {error && <div className={styles.error}>{error}</div>}
+                        {shelters.length > 0 && (
+                            <>
+                                {renderTable()}
+                                <div className={styles.paginationContainer}>
+                                    <Pagination onNumberRing={onNumberRing} pagination={pagination} />
+                                </div>
+                            </>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </>
     );
 };
 

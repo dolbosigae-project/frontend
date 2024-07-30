@@ -16,6 +16,7 @@
   margin-bottom: 10px;
   box-sizing: border-box;
   padding-left: 10px;
+  outline: none;
 }
 
 .searchBox input{
@@ -24,6 +25,10 @@
   margin-right: 10px;
   box-sizing: border-box;
   padding-left: 20px;
+  outline: none;
+  font-size: 16px;
+  position: relative;
+  top: -5px;
 }
 
 .searchBox button{
@@ -36,8 +41,7 @@
 }
 
 .searchBox button:hover {
-  background-color: #00A44B; /* 약간 더 밝은 초록색 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+  opacity: 0.8;
 }
 
 .manage_table_container {
@@ -89,13 +93,17 @@
   margin-right: 10px; /* 라벨과 입력 필드 사이의 간격 */
 }
 
-input {
+.manage_table_container input {
   width: 150px; /* 입력 필드의 고정된 너비 */
   height: 35px;
   border: 1px solid #BEB4B4;
   border-radius: 10px;
   margin-bottom: 10px;
   font-size: 20px;
+}
+
+.searchBox input{
+  border: 1px solid #BEB4B4;
 }
 
 .customSelect {
@@ -107,7 +115,7 @@ input {
   font-size: 20px;
 }
 
-input[type="checkbox"] {
+.manage_table_container input[type="checkbox"] {
   width: 25px;
 }
 
@@ -130,8 +138,16 @@ input.petInfo {
   height: 100%;
 }
 
-button {
+.manage_table_container  button { 
   width: 60px;
+  height: 57px;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.searchBox button {
+  width: 100px;
   height: 57px;
   border: none;
   border-radius: 10px;

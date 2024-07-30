@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom'; // Link 컴포넌트 추가
 import ABList from './ABList';
 import styles from '../css/ShelterDetail.module.css';
 
@@ -14,8 +14,10 @@ const ShelterDetail = () => {
         const fetchShelterDetail = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:9999/shelters/detail/${shID}`);
-                console.log(response);
+                // Axios를 사용하여 서버에서 셸터 상세 정보 가져오기
+                const response = await axios.get(`http://localhost:9999/shelterdetail`, {
+                    params: { id: shID }
+                });
                 setShelter(response.data);
             } catch (error) {
                 setError(error);
@@ -26,7 +28,7 @@ const ShelterDetail = () => {
 
         fetchShelterDetail();
     }, [shID]);
-
+    
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -36,39 +38,44 @@ const ShelterDetail = () => {
     }
 
     return (
-        <div className={styles.shelter_detail}>
+        <div className={styles.main_container}>
             <h1>셸터 상세 정보</h1>
             <table className={styles.shelter_info_table}>
                 <tbody>
                     <tr>
-                        <td><strong>센터명:</strong></td>
-                        <td>{shelter?.shName}</td>
+                        <td className={styles.label}><strong>센터명:</strong></td>
+                        <td className={styles.data}>{shelter?.shName}</td>
                     </tr>
                     <tr>
-                        <td><strong>연락처:</strong></td>
-                        <td>{shelter?.shTel}</td>
+                        <td className={styles.label}><strong>연락처:</strong></td>
+                        <td className={styles.data}>{shelter?.shTel}</td>
                     </tr>
                     <tr>
-                        <td><strong>해당지역:</strong></td>
-                        <td>{shelter?.shRegion}</td>
+                        <td className={styles.label}><strong>해당지역:</strong></td>
+                        <td className={styles.data}>{shelter?.shRegion}</td>
                     </tr>
                     <tr>
-                        <td><strong>주소:</strong></td>
-                        <td>{shelter?.shAddress}</td>
+                        <td className={styles.label}><strong>주소:</strong></td>
+                        <td className={styles.data}>{shelter?.shAddress}</td>
                     </tr>
                     <tr>
-                        <td><strong>운영시간:</strong></td>
-                        <td>{shelter?.shHour}</td>
+                        <td className={styles.label}><strong>운영시간:</strong></td>
+                        <td className={styles.data}>{shelter?.shHour}</td>
                     </tr>
                     <tr>
-                        <td><strong>보호동물종:</strong></td>
-                        <td>{shelter?.shAnimalType}</td>
+                        <td className={styles.label}><strong>보호동물종:</strong></td>
+                        <td className={styles.data}>{shelter?.shAnimalType}</td>
                     </tr>
                 </tbody>
             </table>
             <h2>보호 동물 목록</h2>
             <ABList shID={shID} />
+            {/* 글 목록으로 이동하는 버튼 추가 */}
+            <div className={styles.buttonContainer}>
+                <Link to="/animal-medical" className={styles.linkButton}>글 목록</Link>
+            </div>
         </div>
     );
-}
+};
+
 export default ShelterDetail;

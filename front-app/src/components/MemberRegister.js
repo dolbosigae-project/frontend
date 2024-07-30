@@ -22,7 +22,7 @@ export default function MemberRegister() {
 
   const handleAddressSearch = () => {
     new window.daum.Postcode({
-      oncomplete: function(data) {
+      oncomplete: function (data) {
         setAddress(data.address);
       }
     }).open();
@@ -223,7 +223,7 @@ export default function MemberRegister() {
                   </tr>
                   <tr>
                     <td><label>반려동물 출생년월</label></td>
-                    <td><input type="text" name="petBirth" placeholder='0000-00'/></td>
+                    <td><input type="text" name="petBirth" placeholder='0000-00' /></td>
                   </tr>
                   <tr>
                     <td><label>반려동물 성별</label></td>
@@ -257,7 +257,7 @@ export default function MemberRegister() {
                   </tr>
                   <tr>
                     <td><label>반려동물 소개</label></td>
-                    <td><textarea name="petInfo" placeholder='산책 프로필에 노출됩니다'/></td>
+                    <td><textarea name="petInfo" placeholder='산책 프로필에 노출됩니다' /></td>
                   </tr>
                   <tr>
                     <td><label>반려동물 사진</label></td>
@@ -285,7 +285,7 @@ export default function MemberRegister() {
             </tbody>
           </table>
           <div className={styles.checkbox_container_00}>
-            <input type='checkbox' id='check' required/>
+            <input type='checkbox' id='check' required />
             <label htmlFor='check'>개인정보 제공에 동의합니다.</label>
           </div>
           <div className={styles.form_buttons}>
