@@ -109,8 +109,7 @@ function App() {
             {/* 개상형 월드컵 이동경로 */}
             <Route path='/dwc' element={<DogWorldCup />} />
             <Route path="/dwc/round/:round" element={<DogWorldCupPage />} />
-            <Route path="/wp" element={<WinnerPage />} />
-
+            <Route path="/wp/:dogId" element={<WinnerPage />} />
           </Routes>
         </main>
         <Footer />

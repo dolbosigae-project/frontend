@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import styles from './css/dogWorldCupPage.module.css'
+import styles from './css/dogWorldCupPage.module.css';
 
 // 강아지 정보 띄워주는 함수
 const DogCard = ({ dog, onClick }) => (
@@ -36,47 +36,35 @@ const DogWorldCupPage = () => {
                 const shuffledDogs = dogsResult.sort(() => Math.random() - 0.5).slice(0, parseInt(round));
                 setDogs(shuffledDogs);
                 setDisplays([shuffledDogs[0], shuffledDogs[1]]);
+                console.log('Dogs fetched and shuffled:', shuffledDogs);
             } catch (error) {
-                console.error(error);
+                console.error('Error fetching random dogs:', error);
             }
         };
         fetchRandomDog();
     }, [round]);
 
     // 선택 버튼 눌렀을 때 선택된 강아지 뽑아오는 함수
-    const chooseDog = selectedDog => () => {
-        if (dogs.length <= 2) {
-            if (winners.length === 0) {
-                setDisplays([selectedDog]);
+    const chooseDog = useCallback(selectedDog => {
+        console.log('Dog chosen:', selectedDog);
+        setWinners(prevWinners => [...prevWinners, selectedDog]);
+        setDogs(prevDogs => prevDogs.slice(2));
+        setCurrentTurn(prevTurn => prevTurn + 1);
+    }, []);
+
+    // 상태가 변경될 때마다 처리
+    useEffect(() => {
+        if (dogs.length === 0 && winners.length > 0) {
+            if (winners.length === 1) {
+                navigate(`/wp/${winners[0].dogId}`);
             } else {
-                const updatedDogs = [...winners, selectedDog];
-                setDogs(updatedDogs);
-                setDisplays([updatedDogs[0], updatedDogs[1]]);
+                setDogs(winners);
                 setWinners([]);
                 setCurrentTurn(1);
+                setDisplayRound(prev => prev / 2);
             }
-        } else if (dogs.length > 2) {
-            setWinners([...winners, selectedDog]);
-            setDisplays([dogs[2], dogs[3]]);
-            setDogs(dogs.slice(2));
-            setCurrentTurn(currentTurn + 1);
-        }
-
-        // 라운드가 끝나면 currentRound 초기화하고 displayRound 절반으로 줄이기
-        if (currentTurn + 1 > displayRound) {
-            setCurrentTurn(1);
-            setDisplayRound(prev => prev / 2);
-        } else {
-            setCurrentTurn(currentTurn + 1);
-        }
-    };
-
-    // 우승한 강아지 페이지로 이동
-    useEffect(() => {
-        if (dogs.length === 1 && winners.length === 0) {
-            setTimeout(() => {
-                navigate('/wp', { state: { winner: dogs[0] } });
-            }, 2000);
+        } else if (dogs.length > 0) {
+            setDisplays([dogs[0], dogs[1]]);
         }
     }, [dogs, winners, navigate]);
 
@@ -92,7 +80,7 @@ const DogWorldCupPage = () => {
                 </div>
                 <div className={styles.dwcp_dogInfo}>
                     {displays.map((dog, index) => (
-                        <DogCard key={index} dog={dog} onClick={chooseDog(dog)} />
+                        <DogCard key={index} dog={dog} onClick={() => chooseDog(dog)} />
                     ))}
                 </div>
             </div>
