@@ -33,6 +33,8 @@ import MsgBox from './components/MsgBox';
 import MsgSend from './components/MsgSend';
 import ChatCreatedRoom from './components/ChatCreatedRoom';
 import Board from './components/Board';
+import AB from './components/AB';
+import Shelter from './components/Shelter';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -93,6 +95,8 @@ function App() {
             <Route path="/mate/member" element={<MateSearch />} />
             <Route path="/mate/petinfo" element={<MatePetProfile />} />
             <Route path='/board' element={<Board />} />
+            <Route path='/Shelter' element={<Shelter/>} />
+            <Route path='/ab' element={<AB /> } />
           </Routes>
         </main>
         <Footer />
