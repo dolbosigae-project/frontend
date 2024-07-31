@@ -29,7 +29,6 @@ const Board = () => {
             const response = await axios.get('http://localhost:9999/boards/list', {
                 params: { showText, page, limit }
             });
-            console.log(response.data); // 응답 데이터 확인용
             const contents = response.data.contents || [];
             setResult(contents);
             setPagination({
@@ -44,9 +43,9 @@ const Board = () => {
 
     useEffect(() => {
         fetchBoardData();
-    }, [page, limit]);
+    }, [page, limit, showText]);
 
-    const searchBoardClick = async () => {
+    const searchBoardClick = () => {
         setPage(1);
         fetchBoardData();
     };
@@ -87,22 +86,22 @@ const Board = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {result.map((item, index) => (
-                        <tr key={index}>
+                    {result.map((item) => (
+                        <tr key={item.showNo}>
                             <td>
                                 {user && user.boardMemberGradeNo === 0 && (
                                     <button className={styles.DeleteBtn}
-                                        onClick={() => deleteBoard(item.mId)}>삭제</button>
+                                        onClick={() => deleteBoard(item.showNo)}>삭제</button>
                                 )}
                             </td>
                             <td>{item.showNo}</td>
                             <td>
-                                <Link to={`/showinfo/${item.showNo}`}>
+                                <Link to={`/boarddetail/${item.showNo}`}>
                                     {item.showTitle}
                                 </Link>
                             </td>
                             <td>{item.pNick}</td>
-                            <td>{item.showDate}</td>
+                            <td>{new Date(item.showDate).toLocaleDateString()}</td>
                             <td>{item.showCount}</td>
                         </tr>
                     ))}

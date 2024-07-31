@@ -6,18 +6,13 @@ import styles from '../css/adminContactWrite.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
-
-
-
-
 export default function BoardWrite() {
     const [myEditor, setMyEditor] = useState(null);
     const title = useRef();
     const [user, setUser] = useState(null);
+    const [file, setFile] = useState(null);
     const navigate = useNavigate();
 
-    // 로컬 스토리지에서 user 정보 가져오기
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
@@ -39,51 +34,69 @@ export default function BoardWrite() {
         }
     };
 
-    // HTML 태그 제거 함수
     const stripHtmlTags = (str) => {
         return str.replace(/<[^>]*>?/gm, '');
     };
 
-    // 글쓰기 버튼 클릭 핸들러
+    const uploadFile = async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await axios.post('http://localhost:9999/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            return response.data.fileUrl;
+        } catch (error) {
+            console.error('파일 업로드 오류:', error);
+            alert('파일 업로드 중 오류가 발생했습니다.');
+        }
+    };
+
     const writeClick = async () => {
         if (!title.current.value.trim()) {
             alert('제목을 입력하세요.');
             return;
         }
-
+    
         if (!user) {
             alert('사용자 정보를 확인할 수 없습니다. 로그인 후 다시 시도해 주세요.');
             return;
         }
-
+    
         if (myEditor) {
             const rawContent = myEditor.getData();
-            const strippedContent = stripHtmlTags(rawContent); // HTML 태그 제거
+            const strippedContent = stripHtmlTags(rawContent);
+            let fileUrl = '';
 
+            if (file) {
+                fileUrl = await uploadFile(file);
+            }
+    
             const jsonData = {
-                pNick: user ? user.pNick : null,
+                mId: user.boardMemberId,
                 showTitle: title.current.value,
                 showContent: strippedContent,
+                pNick: user.boardMemberNick,
+                fileUrl: fileUrl,
             };
-
-            console.log("jsonData:", jsonData);
-
+    
             try {
                 const response = await axios.post('http://localhost:9999/shows', jsonData, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
-
+    
                 if (response.status === 200) {
-                    console.log(response.data);
                     alert('자랑글을 업로드하였습니다.');
-                    navigate('/board'); // '글쓰기' 버튼 클릭 후 이동할 페이지
+                    navigate('/board'); // 게시글 작성 후 게시글 목록 페이지로 리디렉션
                 } else {
-                    console.error('Unexpected response status:', response.status);
+                    alert('글 작성 중 예상치 못한 오류가 발생했습니다.');
                 }
             } catch (error) {
-                console.error('글 작성 에러 발생', error);
                 alert('글 작성 중 오류가 발생했습니다.');
             }
         }
@@ -95,10 +108,18 @@ export default function BoardWrite() {
         editableElement.style.height = '500px';
     };
 
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+    };
+
     return (
         <div>
             <div className={styles.editor}>
-                <input className={styles.adminTitle} placeholder='제목을 입력하세요.' ref={title} />
+                <input
+                    className={styles.adminTitle}
+                    placeholder='제목을 입력하세요.'
+                    ref={title}
+                />
                 <CKEditor
                     editor={ClassicEditor}
                     config={editorConfig}
@@ -110,6 +131,10 @@ export default function BoardWrite() {
                     <p>내용 입력시 전체 내용을 지우고 입력해주세요.</p>"
                     onReady={handleEditorReady}
                 />
+                <div className={styles.fileUpload}>
+                    <label htmlFor="fileUpload">사진 업로드</label>
+                    <input type="file" id="fileUpload" onChange={handleFileChange} />
+                </div>
                 <div className={styles.writeBtnGroup}>
                     <button className={styles.writeBtn} onClick={writeClick}>글쓰기</button>
                     <Link to='/board'>
