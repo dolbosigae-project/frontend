@@ -10,8 +10,6 @@ import MyPage from './components/MyPage';
 import LoginPasswd from './components/LoginPasswd';
 import PL from './components/pl_main_components/PL';
 import PlInfoView from './components/pl_info_component/PlInfoView';
-import ShelterList from './components/ShelterList';
-import ShelterAnimalsInfo from './components/ShelterAnimalsInfo';
 import Hospital from './components/Hospital';
 import HospitalDetail from './components/HospitalDetail';
 import AdminContact from './components/AdminContact';
@@ -35,9 +33,6 @@ import MsgBox from './components/MsgBox';
 import MsgSend from './components/MsgSend';
 import ChatCreatedRoom from './components/ChatCreatedRoom';
 import Board from './components/Board';
-import ShelterDetail from './components/ShelterDetail';
-import ABList from './components/ABList';
-import ABDetail from './components/ABDetail';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -75,11 +70,6 @@ function App() {
             <Route path='/co' element={<CO />} />
             <Route path='/coinfo/:coId' element={<CoInfoView />} />
             <Route path='/coInsert' element={<CoInsert />} />
-            <Route path='/shelter/animal' element={<ShelterAnimalsInfo />} />
-            <Route path="/shelters" element={<ShelterList />} />
-            <Route path='/shelters/detail/:sh_id' element={<ShelterDetail />} />
-            <Route path='/ab' element={<ABList />} />
-            <Route path='/ab/detail/:ab_id' element={<ABDetail />} />
             <Route path='/animal-medical' element={<Hospital />} />
             <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
             <Route path="/pharmacies" element={<Pharmacy />} />
