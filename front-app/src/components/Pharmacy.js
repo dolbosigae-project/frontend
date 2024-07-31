@@ -154,7 +154,6 @@ const PH = () => {
                         <KakaoMap locations={locations} />
                     </div>
                 </div>
-             
             </div>
         </>
     );
