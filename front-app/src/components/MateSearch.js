@@ -84,8 +84,8 @@ export default function MateSearch() {
       <div className={styles.mateSearchBox}>
         <input value={searchRegion} onChange={(e) => setSearchRegion(e.target.value)} placeholder="지역으로 검색" />
         <button onClick={handleSearch}>검색</button>
-        <button onClick={handleChatClick}>채팅하러가기(임시버튼)</button> {/* 채팅하러가기(임시버튼) 추가 */}
-        <button onClick={handleMsgClick}>쪽지함(임시)</button> {/* 쪽지함(임시) 추가 */}
+        <button onClick={handleChatClick}>채팅하러가기(임시버튼)</button> 
+        <button onClick={handleMsgClick}>쪽지함(임시)</button> 
       </div>
       {mateList.length === 0 ? (
         <div>해당 데이터가 없습니다.</div>

@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from '../css/msgSend.module.css';
 
-function MsgSend({ userId }) {
+function MsgSend() {
+  const [userId, setUserId] = useState('');
   const [recipientId, setRecipientId] = useState('');
   const [searchCategory, setSearchCategory] = useState('id');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [msgContent, setMsgContent] = useState('');
   const [msgTitle, setMsgTitle] = useState('');
+
+  
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      if (parsedUser && parsedUser.boardMemberId) {
+        setUserId(parsedUser.boardMemberId);
+      }
+    } else {
+      console.error('로그인된 사용자가 없습니다.');
+    }
+  }, []);
 
   const handleRecipientChange = (event) => {
     setRecipientId(event.target.value);
@@ -40,12 +54,14 @@ function MsgSend({ userId }) {
     }
 
     try {
-      await axios.post('http://localhost:9999/msg/sendMsg', {
+      const messageData = {
         mIdFrom: userId,
         mIdTo: selectedUser.boardMemberId,
         msgTitle: msgTitle,
         msgContent: msgContent,
-      });
+      };
+      console.log('보낼 메시지 데이터:', messageData);
+      await axios.post('http://localhost:9999/msg/sendMsg', messageData);
       alert('메시지가 성공적으로 전송되었습니다.');
       setMsgContent('');
       setMsgTitle('');

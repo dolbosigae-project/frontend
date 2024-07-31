@@ -104,6 +104,7 @@ function App() {
             <Route path="/mate/intro" element={<ChatIntro />} />
             <Route path="/mate/member" element={<MateSearch />} />
             <Route path="/mate/petinfo" element={<MatePetProfile />} />
+            <Route path="/mate/notice" element={<MateNo />} />
             <Route path='/board' element={<Board />} />
           </Routes>
         </main>

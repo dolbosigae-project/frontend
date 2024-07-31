@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import ChatCreatedRoom from './ChatCreatedRoom';
+import SockJS from 'sockjs-client';
+import { Client } from '@stomp/stompjs';
 import styles from '../css/chatRoom.module.css';
 
 function ChatIntro() {
@@ -11,6 +13,8 @@ function ChatIntro() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [userId, setUserId] = useState('');
   const [clickToggleActive, setClickToggleActive] = useState(null);
+  const [stompClient, setStompClient] = useState(null);
+  const [chatRoom, setChatRoom] = useState(null); // 채팅방 상태 추가
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -22,6 +26,28 @@ function ChatIntro() {
     } else {
       console.error('로그인된 사용자가 없습니다.');
     }
+
+    // WebSocket 연결 설정
+    const socket = new SockJS('http://localhost:9999/ws');
+    const client = new Client({
+      webSocketFactory: () => socket,
+      connectHeaders: {},
+      onConnect: () => {
+        console.log('WebSocket 연결 완료');
+        setStompClient(client);
+      },
+      onStompError: (frame) => {
+        console.error('WebSocket 연결 에러:', frame);
+      },
+    });
+
+    client.activate();
+
+    return () => {
+      if (client && client.active) {
+        client.deactivate();
+      }
+    };
   }, []);
 
   const handleRecipientChange = (event) => {
@@ -41,35 +67,48 @@ function ChatIntro() {
         },
       });
       setSearchResults(response.data);
-      console.log("--------검색 결과:", response.data);
+      console.log("검색 결과:", response.data);
     } catch (error) {
       console.error('회원 검색 실패:', error.response ? error.response.data : error.message);
     }
   };
 
   const openChatRoom = (roomId, nickname) => {
-    const url = `/chatRoom?roomId=${roomId}&nickname=${nickname}`; //새 창에서 열릴 ulr 경로
-    const chatWindow = window.open(url, '_blank', 'width=600,height=800');
-    chatWindow.document.write('<div id="chat-root"></div>');
-    chatWindow.document.close();
-
-    // 새로운 창에 CSS를 동적으로 추가
-    const linkElement = chatWindow.document.createElement('link');
-    linkElement.rel = 'stylesheet';
-    linkElement.href = '/static/css/chatRoom.module.css'; // CSS 파일 경로를 맞춰주세요.
-    chatWindow.document.head.appendChild(linkElement);
-    
-    setTimeout(() => {
-      ReactDOM.render(<ChatCreatedRoom roomId={roomId} nickname={nickname} />, chatWindow.document.getElementById('chat-root'));
-    }, 100);
+    setChatRoom({ roomId, nickname }); // 채팅방 상태 업데이트
   };
 
   const createRoom = () => {
     if (selectedUser) {
       const newRoomId = generateRoomId(userId, selectedUser.boardMemberId);
-      console.log(`이 아이디로 방이 생성됨: ${newRoomId}`);
-      console.log("--------방 생성:", newRoomId);
-      openChatRoom(newRoomId, selectedUser.boardMemberNick);
+      
+      // WebSocket을 통해 방 생성 메시지 전송
+      if (stompClient && stompClient.connected) {
+        const chatMsg = {
+          sender: userId,
+          receiver: selectedUser.boardMemberId,
+          content: "채팅방 생성 요청",
+          type: "CREATE",
+        };
+
+        stompClient.publish({
+          destination: `/ChatCreatedRoom/chat.createRoom/${newRoomId}`,
+          body: JSON.stringify(chatMsg),
+        });
+
+        // 메시지가 성공적으로 전송된 후 로그를 출력
+        console.log(`방 생성 요청 메시지 전송됨: ${newRoomId}`);
+        
+        // WebSocket 응답을 처리하기 위한 구독
+        stompClient.subscribe(`/topic/${newRoomId}`, (message) => {
+          const response = JSON.parse(message.body);
+          if (response && response.type === 'CREATE') {
+            console.log(`이 아이디로 방이 생성됨: ${newRoomId}`);
+            openChatRoom(newRoomId, selectedUser.boardMemberNick);
+          }
+        });
+      } else {
+        console.error('WebSocket 연결이 활성화되지 않았습니다.');
+      }
     } else {
       alert('회원 선택 후 방을 생성하세요.');
     }
@@ -82,41 +121,48 @@ function ChatIntro() {
   const toggleActive = (userId) => {
     setClickToggleActive(clickToggleActive === userId ? null : userId);
     setSelectedUser(searchResults.find(user => user.boardMemberId === userId));
-  }
+  };
 
   return (
     <div className={styles.chatIntroContainer}>
-      <div >
-        <input
-          type="text"
-          placeholder="수신자 ID 또는 닉네임 입력"
-          value={recipientId}
-          onChange={handleRecipientChange}
-          className={styles.searchInput}
-        />
-        <select value={searchCategory} onChange={handleCategoryChange} className={styles.searchSelect}>
-          <option value="id" className={styles.chatIntroOption}>ID</option>
-        </select>
-        <button className={styles.chatSearchBtn} onClick={searchUsers}>
-          회원 검색
-        </button>
-      </div>
-      <div className={styles.searchResults}>
-        {searchResults.map((user) => (
-          <div 
-            key={user.boardMemberId} 
-            onClick={() => toggleActive(user.boardMemberId)} 
-            className={`${styles.chatIntroResultString} ${clickToggleActive === user.boardMemberId ? styles.active : ''}`}
-          >
-            {user.boardMemberNick} ({user.boardMemberId})
+      {chatRoom ? (
+        <ChatCreatedRoom roomId={chatRoom.roomId} nickname={chatRoom.nickname} />
+      ) : (
+        <>
+          <div>
+            <input
+              type="text"
+              placeholder="수신자 ID 또는 닉네임 입력"
+              value={recipientId}
+              onChange={handleRecipientChange}
+              className={styles.searchInput}
+            />
+            <select value={searchCategory} onChange={handleCategoryChange} className={styles.searchSelect}>
+              <option value="id" className={styles.chatIntroOption}>ID</option>
+              <option value="nickname" className={styles.chatIntroOption}>닉네임</option>
+            </select>
+            <button className={styles.chatSearchBtn} onClick={searchUsers}>
+              회원 검색
+            </button>
           </div>
-        ))}
-      </div>
-      <div>
-        <button className={styles.chatRequestBtn} onClick={createRoom}>
-          상대방과 채팅하기
-        </button>
-      </div>
+          <div className={styles.searchResults}>
+            {searchResults.map((user) => (
+              <div
+                key={user.boardMemberId}
+                onClick={() => toggleActive(user.boardMemberId)}
+                className={`${styles.chatIntroResultString} ${clickToggleActive === user.boardMemberId ? styles.active : ''}`}
+              >
+                {user.boardMemberNick} ({user.boardMemberId})
+              </div>
+            ))}
+          </div>
+          <div>
+            <button className={styles.chatRequestBtn} onClick={createRoom}>
+              상대방과 채팅하기
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
