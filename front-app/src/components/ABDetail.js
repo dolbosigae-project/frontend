@@ -1,109 +1,98 @@
-// ABDetail.js
-import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
-import styles from '../css/ABDetail.module.css';  // 스타일 파일
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from "react-router-dom";
+import KakaoMap from "./KakaoMap";
 
-const ABDetail = () => {
-    const { abID } = useParams();
-    const [ab, setAb] = useState(null);
-    const [shelter, setShelter] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+import styles from "../css/abDetail.module.css";
+import SubTitleAB from "./SubTitles/SubTitleAB";
 
-    useEffect(() => {
-        const fetchABDetail = async () => {
-            try {
-                const response = await axios.get(`http://localhost:9999/ab/detail/${abID}`);
-                console.log("AB Detail Response:", response.data); // 추가
-                setAb(response.data);
-    
-                if (response.data.shID) {
-                    const shelterResponse = await axios.get(`http://localhost:9999/shelters/detail/${response.data.shID}`);
-                    console.log("Shelter Response:", shelterResponse.data); // 추가
-                    setShelter(shelterResponse.data);
-                }
-            } catch (error) {
-                console.error("Error fetching data:", error); // 추가
-                setError(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-    
-        fetchABDetail();
-    }, [abID]);
-    
+export default function ABDetail() {
+  const { abid } = useParams();
+  const [abDetail, setAbDetail] = useState([]);
+  const navigate = useNavigate();
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+  useEffect(() => {
+    const fetchDetail = async () => {
+      try {
+        const response = await axios.get(`http://localhost:9999/ab/detail/${abid}`);
+        console.log(response);
+        setAbDetail(response.data);
+      } catch (error) {
+        console.error("There was an error fetching the detail!", error);
+      }
+    };
+    fetchDetail();
+  }, [abid]);
 
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
+  const location = {
+    name: abDetail.abstatus, // 지역명 사용
+    lat: parseFloat(abDetail.ablati), // 위도
+    lng: parseFloat(abDetail.ablong)  // 경도
+  };
 
-    return (
-        <div className={styles.main_container}>
-            <h1 className={styles.title}>AB Detail</h1>
-            <div className={styles.image_container}>
-                <img src={ab.abImage} alt={ab.abBreed} className={styles.ab_image} />
-            </div>
-            <table className={styles.info_table}>
-                <tbody>
-                    <tr className={styles.table_row}>
-                        <td className={styles.table_label}>센터명</td>
-                        <td className={styles.table_data}>
-                            <Link to={`/shelters/detail/${ab.shID}`} className={styles.shelter_link}>
-                                {shelter?.shName || '센터 정보 없음'}
-                            </Link>
-                        </td>
-                    </tr>
-                    <tr className={styles.table_row}>
-                        <td className={styles.table_label}>보호 시작일</td>
-                        <td className={styles.table_data}>{new Date(ab.abDate).toLocaleDateString()}</td>
-                    </tr>
-                    <tr className={styles.table_row}>
-                        <td className={styles.table_label}>발견 장소</td>
-                        <td className={styles.table_data}>{ab.abLocation}</td>
-                    </tr>
-                    <tr className={styles.table_row}>
-                        <td className={styles.table_label}>상태</td>
-                        <td className={styles.table_data}>{ab.abStatus}</td>
-                    </tr>
-                    <tr className={styles.table_row}>
-                        <td className={styles.table_label}>보호종</td>
-                        <td className={styles.table_data}>{ab.abBreed}</td>
-                    </tr>
-                    <tr className={styles.table_row}>
-                        <td className={styles.table_label}>성별</td>
-                        <td className={styles.table_data}>{ab.abGender}</td>
-                    </tr>
-                    <tr className={styles.table_row}>
-                        <td className={styles.table_label}>나이</td>
-                        <td className={styles.table_data}>{ab.abAge}</td>
-                    </tr>
-                    <tr className={styles.table_row}>
-                        <td className={styles.table_label}>무게</td>
-                        <td className={styles.table_data}>{ab.abWeight}</td>
-                    </tr>
-                    <tr className={styles.table_row}>
-                        <td className={styles.table_label}>색상</td>
-                        <td className={styles.table_data}>{ab.abColor}</td>
-                    </tr>
-                    <tr className={styles.table_row}>
-                        <td className={styles.table_label}>발견시 특이사항</td>
-                        <td className={styles.table_data}>{ab.abRescued}</td>
-                    </tr>
-                    <tr className={styles.table_row}>
-                        <td className={styles.table_label}>특징</td>
-                        <td className={styles.table_data}>{ab.abCharacter}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <footer className={styles.footer}></footer>
+  return (
+    <div>
+      <SubTitleAB />
+      <div className={styles.container}>
+        <div className={styles.mediaRow}>
+          <img src={abDetail.abimg} className={styles.image} />
+          {SubTitleAB.ablati === 0 ? (
+            <div className={styles.noMapMessage}>지도가 제공되지 않습니다</div>
+          ) : (
+            <KakaoMap locations={[location]} className={styles.map} />
+          )}
         </div>
-    );
-};
-
-export default ABDetail;
+        {abDetail ? (
+          <table className={styles.table}>
+            <tbody>
+              <tr>
+                <th className={styles.th}>출생년</th>
+                <td className={styles.td}>{abDetail.abage}</td>
+                <th className={styles.th}>견종</th>
+                <td className={styles.td}>{abDetail.abbreed}</td>
+              </tr>
+              <tr>
+                <th className={styles.th}>특징</th>
+                <td className={styles.td}>{abDetail.abcharacter}</td>
+                <th className={styles.th}>색깔</th>
+                <td className={styles.td}>{abDetail.abcolor}</td>
+              </tr>
+              <tr>
+                <th className={styles.th}>성별</th>
+                <td className={styles.td}>{abDetail.abgender}</td>
+                <th className={styles.th}>구조시간</th>
+                <td className={styles.td}>{abDetail.abdate}</td>
+              </tr>
+              <tr>
+                <th className={styles.th}>구조장소</th>
+                <td className={styles.td}>{abDetail.ablocation}</td>
+                <th className={styles.th}>보호센터</th>
+                <td className={styles.td}>
+                  {abDetail.shname}
+                  {abDetail.shid != null && (
+                    <Link to={`/shelter/detail/${abDetail.shid}`} className={styles.link}>보호센터 바로가기</Link>
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <th className={styles.th}>보호센터 운영시간</th>
+                <td className={styles.td}>{abDetail.shhour}</td>
+                <th className={styles.th}>보호센터 연락처</th>
+                <td className={styles.td}>{abDetail.shtel}</td>
+              </tr>
+              <tr>
+                <th className={styles.th}>보호상태</th>
+                <td className={styles.td}>{abDetail.abstatus}</td>
+                <th className={styles.th}>몸무게</th>
+                <td className={styles.td}>{abDetail.abweight}kg</td>
+              </tr>
+            </tbody>
+          </table>
+        ) : (
+          <div className={styles.noDataMessage}>해당 데이터가 없습니다.</div>
+        )}
+        <button onClick={() => navigate(-1)} className={styles.button}>뒤로가기</button>
+      </div>
+    </div>
+  );
+}

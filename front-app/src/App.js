@@ -8,17 +8,15 @@ import MemberView from './components/MemberView';
 import MemberRegister from './components/MemberRegister';
 import MyPage from './components/MyPage';
 import LoginPasswd from './components/LoginPasswd';
-import KakaoLogin from './components/KakaoLogin';
-import PL from './components/pl_main_components/PL';
+import PL from './components/pl_main_components/contents/PL';
 import PlInfoView from './components/pl_info_component/PlInfoView';
-import ShelterList from './components/ShelterList';
-import ShelterAnimalsInfo from './components/ShelterAnimalsInfo';
 import Hospital from './components/Hospital';
 import HospitalDetail from './components/HospitalDetail';
 import AdminContact from './components/AdminContact';
 import AdminContactNormalTableDetail from './components/AdminContactNormalTableDetail';
 import AdminContactWrite from './components/AdminContactWrite';
 import Footer from './components/Footer';
+import IoChat from './components/IoChat';
 import ChatIntro from './components/ChatIntro';
 import MateSearch from './components/MateSearch';
 import MatePetProfile from './components/MatePetProfile';
@@ -32,13 +30,15 @@ import AddPharmacy from './components/AddPharmacy';
 import CO from './components/co_main_components/CO';
 import CoInfoView from './components/co_info_components/CoInfoView';
 import DogRandomDate from './components/DogRandomDate';
-import ChatCreatedRoom from './components/ChatCreatedRoom';
 import Board from './components/Board';
+import AB from './components/AB';
+import Shelter from './components/Shelter';
 import ShelterDetail from './components/ShelterDetail';
-import ABList from './components/ABList';
 import ABDetail from './components/ABDetail';
 import DogWorldCupPage from './components/dog_worldCup_components/dog_worldCup_Page.component/DogWorldCupPage';
 import WinnerPage from './components/dog_worldCup_components/winnerPage_components/WinnerPage';
+import BoardWrite from './components/BoardWrite';
+import BoardDetail from './components/BoardDetail';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -91,6 +91,20 @@ function App() {
             <Route path="/pharmacies" element={<Pharmacy />} />
             <Route path="/phinfo/:phId" element={<PharmacyDetail />} />
             <Route path='/hospitalDetail' element={<HospitalDetail />} />
+            <Route path='/dwc' element={<DogWorldCup />} />
+            <Route path="/addHospital" element={<AddHospital />} />
+            <Route path="/addPharmacy" element={<AddPharmacy />} />
+            <Route path="/mate/chat" element={<IoChat />} />
+            <Route path="/mate/intro" element={<ChatIntro />} />
+            <Route path="/mate/member" element={<MateSearch />} />
+            <Route path="/mate/petinfo" element={<MatePetProfile />} />
+            <Route path='/shelter' element={<Shelter />} />
+            <Route path='/shelter/detail/:shelterId' element={<ShelterDetail />} />
+            <Route path='/ab' element={<AB />} />
+            <Route path='/ab/detail/:abid' element={<ABDetail />} />
+            <Route path="/board" element={<Board />} />
+            <Route path="/board/write" element={<BoardWrite />} />
+            <Route path="/boarddetail/:showNo" element={<BoardDetail />} />
             <Route path='/admin/contact' element={<AdminContact />} />
             <Route path='/admin/contact/detail/:adminNo' element={<AdminContactNormalTableDetail />} />
             <Route path='/admin/write' element={<AdminContactWrite />} />

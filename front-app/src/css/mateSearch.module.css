@@ -39,7 +39,6 @@
 
 .mateSearchBox button:hover {
   background-color: #00A44B; /* 약간 더 밝은 초록색 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
 }
 
 .mateTableContainer {
@@ -81,7 +80,6 @@
   padding: 20px;
   border: 1px solid #EFEFEF;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .mateCard img {
