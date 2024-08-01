@@ -4,7 +4,6 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import styles from '../css/boardDetail.module.css';
 import DOMPurify from 'dompurify';
 import SubTitleBoard from './SubTitles/SubTitleBoard';
-import Comments from './Comments';
 
 export default function BoardDetail() {
   const { showNo } = useParams();
@@ -40,7 +39,7 @@ export default function BoardDetail() {
     try {
       const response = await axios.delete(`http://localhost:9999/boards/delete/${showNo}`, {
         headers: {
-          'userRole': user && user.boardMemberGradeNo === 0 ? 'ADMIN' : ''
+          'userRole': user && (user.boardMemberGradeNo === 0 || user.boardMemberId === detail.mId) ? 'ADMIN' : ''
         }
       });
       if (response.data.status === 'success') {
@@ -96,14 +95,10 @@ export default function BoardDetail() {
           </Link>
           {user && (user.boardMemberGradeNo === 0 || user.boardMemberId === detail.mId) && (
             <>
-              <Link to={`/board/edit/${showNo}`}>
-                <button className={styles.editBtn}>게시글 수정</button>
-              </Link>
               <button className={styles.deleteBigBtn} onClick={deleteClick}>게시글 삭제</button>
             </>
           )}
         </div>
-        <Comments showNo={showNo} />
       </div>
     </div>
   );

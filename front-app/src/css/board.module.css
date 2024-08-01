@@ -1,89 +1,134 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
 }
 
-
-/* 테이블 컨테이너 */
-.tableContainer {
-  width: 100%;
-  overflow-x: auto; /* 필요 시 스크롤바 추가 */
-  padding: 20px; /* 패딩 추가 */
+.mainContent {
+  padding: 20px;
 }
 
-/* 테이블 스타일 */
-.table {
-  width: 100%;
-  border-collapse: collapse; /* 테두리 간격 제거 */
-  margin-top: 20px; /* 테이블 상단 여백 추가 */
+.searchAndTableContainer {
+  display: flex;
+  flex-flow: column;
 }
 
-/* 테이블 헤더 */
-.table thead th {
-  background-color: #f4f4f4;
-  padding: 12px 15px; /* 패딩 조정 */
-  text-align: left;
-  border-bottom: 2px solid #ddd;
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-/* 테이블 데이터 셀 */
-.table tbody td {
-  padding: 12px 15px; /* 패딩 조정 */
-  border-bottom: 1px solid #ddd;
-  white-space: nowrap; /* 셀 내용 줄 바꿈 방지 */
-  overflow: hidden; /* 넘치는 내용 숨기기 */
-  text-overflow: ellipsis; /* 넘치는 내용 생략 표시 */
+.searchInput {
+  width: 70%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
 }
 
-/* 테이블 전체 테두리 */
-.table, .table th, .table td {
-  border: 1px solid #ddd;
-  border-radius: 4px; /* 테두리 둥글게 만들기 (옵션) */
-}
-
-/* 테이블 행 색상 */
-.table tbody tr:nth-child(even) {
-  background-color: #f9f9f9; /* 짝수 행 배경색 */
-}
-
-.table tbody tr:hover {
-  background-color: #f1f1f1; /* 마우스 오버 시 배경색 */
-}
-
-/* 삭제 버튼 스타일 */
-.DeleteBtn {
-  background-color: #CF1E1E;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-
-  font-size: 14px; /* 버튼 텍스트 크기 조정 */
-}
-
-/* 링크 버튼 스타일 */
-.linkButton {
+.searchButton {
+  padding: 10px 20px;
   background-color: #00823E;
-  color: white;
+  color: #fff;
   border: none;
-  padding: 5px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
 
+.searchButton:hover {
+  opacity: 0.8;
+}
+
+.addButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.linkButton {
+  padding: 10px 20px;
+  background-color: #595959;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
 .linkButton:hover {
   opacity: 0.8;
 }
 
-/* 오류 메시지 스타일 */
+.tableContainer {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+  font-size: 14px;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.table td {
+  background-color: #ffffff;
+  color: #333;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit; /* 링크 텍스트의 기본 색상을 유지하고 싶다면 추가 */
+}
+
+.DeleteBtn {
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.DeleteBtn:hover {
+  background-color: #c82333;
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.paginationContainer button {
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.paginationContainer .activePage {
+  background-color: #00823E;
+  color: #fff;
+  font-weight: bold; /* 추가: 굵게 표시 */
+}
+
+
 .error {
   color: red;
-  font-weight: bold;
+  font-size: 14px;
   margin-top: 10px;
 }

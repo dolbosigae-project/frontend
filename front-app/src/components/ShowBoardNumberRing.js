@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from '../css/board.module.css';
 
 const ShowBoardNumberRing = ({ onNumberRing, pagination }) => {
     const totalPages = pagination.totalPages;
@@ -17,7 +18,7 @@ const ShowBoardNumberRing = ({ onNumberRing, pagination }) => {
     console.log("ShowBoardNumberRing pages: ", pages); // 페이지 배열을 로그에 출력
 
     return (
-        <div>
+        <div className={styles.paginationContainer}>
             {currentPageGroup > 1 && (
                 <>
                     <button onClick={() => onNumberRing(1)}>&lt;&lt;</button>
@@ -28,7 +29,7 @@ const ShowBoardNumberRing = ({ onNumberRing, pagination }) => {
                 <button
                     key={number}
                     onClick={() => onNumberRing(number)}
-                    style={{ fontWeight: number === currentPage ? 'bold' : 'normal' }}
+                    className={number === currentPage ? styles.activePage : ''}
                 >
                     {number}
                 </button>
