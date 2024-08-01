@@ -24,7 +24,7 @@ export default function Co() {
     const convenienceList = async () => {
         try {
             const response = await axios.get('http://localhost:9999/conven/list', {
-                params: { coText, page, limit }
+                params: { coText, page, limit, isDescending: true }
             });
             const contents = response.data.contents || [];
             setResult(contents);
