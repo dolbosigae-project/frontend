@@ -8,11 +8,8 @@ import MemberView from './components/MemberView';
 import MemberRegister from './components/MemberRegister';
 import MyPage from './components/MyPage';
 import LoginPasswd from './components/LoginPasswd';
-import KakaoLogin from './components/KakaoLogin';
 import PL from './components/pl_main_components/contents/PL';
 import PlInfoView from './components/pl_info_component/PlInfoView';
-import ShelterList from './components/ShelterList';
-import ShelterAnimalsInfo from './components/ShelterAnimalsInfo';
 import Hospital from './components/Hospital';
 import HospitalDetail from './components/HospitalDetail';
 import AdminContact from './components/AdminContact';
@@ -71,15 +68,12 @@ function App() {
             <Route path="/member/view" element={<MemberView />} />
             <Route path="/member/register" element={<MemberRegister />} />
             <Route path="/member/mypage" element={<MyPage />} />
-            <Route path="/kakao/callback" element={<KakaoLogin onLoginSuccess={handleLoginSuccess} />} />
             <Route path="/pl" element={<PL />} />
             <Route path='/plinfo/:plId' element={<PlInfoView />} />
             <Route path='/plInsert' element={<PlInsert />} />
             <Route path='/co' element={<CO />} />
             <Route path='/coinfo/:coId' element={<CoInfoView />} />
             <Route path='/coInsert' element={<CoInsert />} />
-            <Route path='/shelter' element={<ShelterList />} />
-            <Route path='/shelter/animal' element={<ShelterAnimalsInfo />} />
             <Route path='/animal-medical' element={<Hospital />} />
             <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
             <Route path="/pharmacies" element={<Pharmacy />} />
