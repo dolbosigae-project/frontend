@@ -78,7 +78,6 @@ const Board = () => {
                 <thead>
                     <tr>
                         <th></th>  
-                        <th>글 번호</th>               
                         <th>제목</th>
                         <th>닉네임</th>
                         <th>작성일</th>
@@ -94,7 +93,6 @@ const Board = () => {
                                         onClick={() => deleteBoard(item.showNo)}>삭제</button>
                                 )}
                             </td>
-                            <td>{item.showNo}</td>
                             <td>
                                 <Link to={`/boarddetail/${item.showNo}`}>
                                     {item.showTitle}
