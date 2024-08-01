@@ -91,7 +91,7 @@ export default function ABDetail() {
         ) : (
           <div className={styles.noDataMessage}>해당 데이터가 없습니다.</div>
         )}
-        <button onClick={() => navigate(-1)} className={styles.button}>글목록</button>
+        <button onClick={() => navigate(-1)} className={styles.button}>뒤로가기</button>
       </div>
     </div>
   );
