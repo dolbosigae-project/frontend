@@ -8,7 +8,7 @@ import MemberView from './components/MemberView';
 import MemberRegister from './components/MemberRegister';
 import MyPage from './components/MyPage';
 import LoginPasswd from './components/LoginPasswd';
-import PL from './components/pl_main_components/contents/PL';
+import PL from './components/pl_main_components/PL';
 import PlInfoView from './components/pl_info_component/PlInfoView';
 import Hospital from './components/Hospital';
 import HospitalDetail from './components/HospitalDetail';
@@ -70,7 +70,6 @@ function App() {
             <Route path="/member/view" element={<MemberView />} />
             <Route path="/member/register" element={<MemberRegister />} />
             <Route path="/member/mypage" element={<MyPage />} />
-            <Route path="/kakao/callback" element={<KakaoLogin onLoginSuccess={handleLoginSuccess} />} />
             {/* 놀이시설 이동경로 */}
             <Route path="/pl" element={<PL />} />
             <Route path='/plinfo/:plId' element={<PlInfoView />} />
@@ -82,9 +81,7 @@ function App() {
             <Route path='/coinfo/:coId' element={<CoInfoView />} />
             <Route path='/coInsert' element={<CoInsert />} />
             {/* 편의시설 이동경로 */}
-            <Route path="/shelters" element={<ShelterList />} />
             <Route path='/shelters/detail/:sh_id' element={<ShelterDetail />} />
-            <Route path='/ab' element={<ABList />} />
             <Route path='/ab/detail/:ab_id' element={<ABDetail />} />
             <Route path='/animal-medical' element={<Hospital />} />
             <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
@@ -115,7 +112,6 @@ function App() {
             <Route path='/phinfo/:phId' element={<PharmacyDetail />} />
             <Route path="/addHospital" element={<AddHospital />} />
             <Route path="/addPharmacy" element={<AddPharmacy />} />
-            <Route path="/mate/chat" element={<ChatCreatedRoom />} />
             <Route path="/mate/intro" element={<ChatIntro />} />
             <Route path="/mate/member" element={<MateSearch />} />
             <Route path="/mate/petinfo" element={<MatePetProfile />} />

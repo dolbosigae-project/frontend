@@ -65,7 +65,7 @@ const WinnerPage = () => {
 
     return (
         <div className={styles.winner_container}>
-            <div>
+            <div className={styles.winner_main_container}>
                 <div className={styles.winner_dog_container}>
                     <h2 className={styles.dwcp_title}>개상형 월드컵 우승</h2>
                     <img className={styles.winner_img} src={winnerDog.dogImg} alt={`dog-${winnerDog.dogId}`} />
@@ -74,7 +74,7 @@ const WinnerPage = () => {
                         <p className={styles.winner_pTag}>내용 : {winnerDog.dogTypeInfo}</p>
                         <p className={styles.winner_pTag}>우승 횟수 : {winnerDog.dogRanking}</p>
                     </div>
-                    <div>
+                    <div className={styles.winner_button}>
                         <button className={styles.winner_back} onClick={goToBack}>돌아가기</button>
                     </div>
                 </div>
