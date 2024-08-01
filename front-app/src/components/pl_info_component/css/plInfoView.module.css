@@ -33,16 +33,18 @@
     background-position: right;
     background-repeat: no-repeat;
     background-size: cover;
-    box-shadow: 0 20px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 5px 5px 5px grey, -5px -5px 5px lightgrey;
     display: flex;
     margin-left: 20px;
     margin-top: 20px;
+    border-radius: 10px;
 }
 
 .pl_table{
     margin-top: 80px;
     width: 900px;
     border: 1px solid #BEB4B4;
+    box-shadow: 5px 5px 5px grey, -5px -5px 5px lightgrey;
 }
 
 .name_td{

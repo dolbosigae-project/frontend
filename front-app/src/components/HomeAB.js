@@ -7,8 +7,8 @@ import 'slick-carousel';
 import { Link } from 'react-router-dom';
 
 import styles from '../css/homeAB.module.css';
-import left from '../img/left.png'; 
-import right from '../img/right.png'; 
+import left from '../img/left.png';
+import right from '../img/right.png';
 
 export default function HomeAB() {
   const [ABList, setABList] = useState([]);
@@ -22,7 +22,7 @@ export default function HomeAB() {
 
         // 슬라이더 설정
         const $slider = $('#abListSlider > ul');
-        
+
         $slider.slick({
           accessibility: false,
           infinite: true,
@@ -37,11 +37,11 @@ export default function HomeAB() {
           nextArrow: '<a class="slick-next"><img src={right} alt="next" /></a>',
         });
 
-        $slider.on('setPosition', function(){
+        $slider.on('setPosition', function () {
           $('#abListSlider li').css('width', '100%');
           $('#abListSlider img').css('width', '80%').css('margin', '0 auto')
-          .css('display', 'block').css('border-radius', '50px')
-          .css('box-shadow', '2px 10px 20px rgba(0, 0, 0, 0.2)');
+            .css('display', 'block').css('border-radius', '50px')
+            .css('box-shadow', '2px 10px 20px rgba(0, 0, 0, 0.2)');
         });
 
       } catch (error) {
@@ -51,34 +51,34 @@ export default function HomeAB() {
     readData();
   }, []);
 
-  return(
+  return (
     <div>
       <div className={styles.container}>
         <div className={styles.title}>
-          <h2>지금 구조되었어요</h2> 
+          <h2>지금 구조되었어요</h2>
           <p>경기 보호센터에서 보호중인 강아지들을 만나보세요.</p>
           <Link to='/ab'>
             <button>더보기</button>
           </Link>
         </div>
         {ABList.length === 0 ? (
-            <div>해당 데이터가 없습니다.</div>
-          ) : (
-            <div id="abListSlider" className={styles.listContainer}>
-              <ul className={styles.list}>
-                {ABList.map((ab) => (
-                  <Link key={ab.abid} className={styles.customLink} to={`/ab/detail/${ab.abid}`}>
-                    <li className={styles.listItem}>
-                      <img src={ab.abimg} alt="견종 이미지"/>
-                      <div className={styles.abbreed}>{ab.abbreed}</div>
-                      <div>{ab.ablocation}</div>
-                      <div>{ab.abcharacter}</div>
-                    </li>
-                  </Link>
-                ))}
-              </ul>
-            </div>
-          )}
+          <div>해당 데이터가 없습니다.</div>
+        ) : (
+          <div id="abListSlider" className={styles.listContainer}>
+            <ul className={styles.list}>
+              {ABList.map((ab) => (
+                <Link key={ab.abid} className={styles.customLink} to={`/ab/detail/${ab.abid}`}>
+                  <li className={styles.listItem}>
+                    <img src={ab.abimg} alt="견종 이미지" />
+                    <div className={styles.abbreed}>{ab.abbreed}</div>
+                    <div>{ab.ablocation}</div>
+                    <div>{ab.abcharacter}</div>
+                  </li>
+                </Link>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -51,7 +51,7 @@
     border: 1px solid #ccc;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 5px 5px 5px grey, -5px -5px 5px lightgrey;
     margin-right: 100px;
 }
 
@@ -59,17 +59,18 @@
     border: 1px solid #ccc;
     width: 400px;
     height: 300px;
+    border-radius: 10px;
 }
 
 .dwcp_choose_img {
     width: 360px;
     height: 235px;
     border-radius: 10px;
+    box-shadow: 5px 5px 5px grey, -5px -5px 5px lightgrey;
     margin-bottom: 20px;
     margin-top: 20px;
     margin-left: 20px;
-    object-fit: contain;
-    object-position: center;
+    
 }
 
 .dwcp_choose_text {
@@ -77,14 +78,14 @@
     font-weight: bold;
     margin-bottom: 20px;
     width: 380px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 0px 10px;
 }
 
 .dwcp_choose_infoText {
     height: 180px;
-}
-
-.dwcp_choose_btn {
-    margin-top: 20px;
 }
 
 .dwcp_choose_button {
