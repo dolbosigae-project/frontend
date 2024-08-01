@@ -77,8 +77,7 @@ const HO = () => {
             <table>
                 <thead>
                     <tr>
-                        <th></th>
-                       
+                        <th></th>                     
                         <th>병원명</th>
                         <th>지역</th>
                         <th>전화번호</th>
@@ -122,7 +121,7 @@ const HO = () => {
 
     return (
         <>
-            {/* <div className={styles.banner}></div> */}
+          
             <SubTitleHospital />
             <div className={styles.container}>
                 <div className={styles.mainContent}>
