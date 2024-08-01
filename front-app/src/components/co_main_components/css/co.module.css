@@ -1,128 +1,128 @@
 
 .co_searchResult_container{
-  width: 90%;
-  margin-top: 50px;
-  border-top: 1px solid black;
-}
-
-.co_list_td {
-  text-align: center;
-  vertical-align: middle;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
-  font-size: 20px;
-  border-bottom: 1px solid #BEB4B4;
-  margin-top: 50px;
-  height: 80px;
-}
-
-.co_list_th {
-  text-align: center;
-  font-size: 22px;
-  border-bottom: 1px solid #BEB4B4;
-  padding-bottom: 30px;
-}
-
-.co_list_thead{
-  margin-bottom: 50px;
-}
-
-.co_list_container {
-  width: 100%;
-  border: none;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-right: 100px;
-}
-
-.co_deleteBtn{
-  background-color: red;
-  color: white;
-  width: 80px;
-  margin-right: 20px;
-  height: 40px;
-  border: none;
-  border-radius: 10px;
-}
-
-.co_main_container{
-  margin: 0;
-  padding: 0;
-}
-
-.co_search_and_result_container{
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-}
-
-.co_search_container{
-  display: flex;
-  flex-flow: row nowrap;
-  width: 90%;
-  justify-content: space-between;
-  margin-top: 40px;
-  border-top: 2px solid black;
-  border-bottom: 2px solid #BEB4B4;
-}
-
-.search_input_co{
-  width: 200px;
-  height: 45px;
-  font-size: 16px;
-  padding-left: 15px;
-  margin-top: 20px;
-  margin-left: 70px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  border: 1px solid black;
-}
-
-.searchBtn_co{
-  width: 100px;
-  height: 50px;
-  margin-top: 20px;
-  font-size: 16px;
-  background-color: #00823E;
-  color: white;
-  margin-right: 70px;
-  cursor: pointer;
-  border: none;
-  border-radius: 10px;
-}
+    width: 90%;
+    margin-top: 50px;
+    border-top: 1px solid black;
+  }
+  
+  .co_list_td {
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    font-size: 20px;
+    border-bottom: 1px solid #BEB4B4;
+    margin-top: 50px;
+    height: 80px;
+  }
+  
+  .co_list_th {
+    text-align: center;
+    font-size: 22px;
+    border-bottom: 1px solid #BEB4B4;
+    padding-bottom: 30px;
+  }
+  
+  .co_list_thead{
+    margin-bottom: 50px;
+  }
+  
+  .co_list_container {
+    width: 100%;
+    border: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 100px;
+  }
+  
+  .co_deleteBtn{
+    background-color: red;
+    color: white;
+    width: 80px;
+    margin-right: 20px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+  }
+  
+  .co_main_container{
+    margin: 0;
+    padding: 0;
+  }
+  
+  .co_search_and_result_container{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+  
+  .co_search_container{
+    display: flex;
+    flex-flow: row nowrap;
+    width: 90%;
+    justify-content: space-between;
+    margin-top: 40px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid #BEB4B4;
+  }
+  
+  .search_input_co{
+    width: 200px;
+    height: 45px;
+    font-size: 16px;
+    padding-left: 15px;
+    margin-top: 20px;
+    margin-left: 70px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid black;
+  }
+  
+  .searchBtn_co{
+    width: 100px;
+    height: 50px;
+    margin-top: 20px;
+    font-size: 16px;
+    background-color: #00823E;
+    color: white;
+    margin-right: 70px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+  }
 
 .co_insert_container{
-display: flex;
-margin: auto;
-width: 120px;
-height: 40px;
-background-color: green;
-border-radius: 10px;
+  display: flex;
+  margin: auto;
+  width: 120px;
+  height: 40px;
+  background-color: green;
+  border-radius: 10px;
 }
-
+  
 .co_insert_link{
-padding-top: 8px;
-display: flex;
-padding-left: 8px;
-width: 100%;
-height: 100%;
-text-decoration: none;
-color: white;
+  padding-top: 8px;
+  display: flex;
+  padding-left: 8px;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: white;
 }
 
 .co_list_link{
-display: flex;
-width: 55px;
-color: white;
-border: none;
-background-color: green;
-text-decoration: none;
-font-size: 14px;
-padding-left: 25px;
-margin: auto;
-padding-top: 12px;
-height: 30px;
-border-radius: 10px;
+  display: flex;
+  width: 55px;
+  color: white;
+  border: none;
+  background-color: green;
+  text-decoration: none;
+  font-size: 14px;
+  padding-left: 25px;
+  margin: auto;
+  padding-top: 12px;
+  height: 30px;
+  border-radius: 10px;
 }
