@@ -32,37 +32,13 @@ export default function BoardWrite() {
         image: {
             toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
             upload: {
-                types: ['png', 'jpeg'],
-                url: 'http://localhost:9999/upload',
+                url: 'http://localhost:9999/upload', // 이미지 업로드 API 엔드포인트
                 withCredentials: false,
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             }
         }
-    };
-
-    const uploadFile = async () => {
-        if (file) {
-            const formData = new FormData();
-            formData.append('file', file);
-            try {
-                const response = await axios.post('http://localhost:9999/upload', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-                if (response.status === 200) {
-                    return response.data.fileUrl; // 파일 URL 반환
-                } else {
-                    throw new Error('파일 업로드 실패');
-                }
-            } catch (error) {
-                console.error('파일 업로드 오류:', error);
-                throw new Error('파일 업로드 중 오류가 발생했습니다.');
-            }
-        }
-        return null;
     };
 
     const writeClick = async () => {
@@ -86,9 +62,10 @@ export default function BoardWrite() {
                 showTitle: title.current.value,
                 showContent: rawContent, // HTML 태그를 포함한 콘텐츠
                 pNick: user.boardMemberNick,
-                showImage: await uploadFile() // 업로드된 이미지 URL을 추가
+                showImage: null // 이미지 URL을 추가할 수 있는 부분
             };
 
+            // 게시글 작성 API 호출
             const response = await axios.post('http://localhost:9999/shows', jsonData, {
                 headers: {
                     'Content-Type': 'application/json'

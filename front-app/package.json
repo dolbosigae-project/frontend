@@ -7,6 +7,7 @@
     "@babel/runtime": "^7.24.8",
     "@ckeditor/ckeditor5-alignment": "^42.0.2",
     "@ckeditor/ckeditor5-build-classic": "^42.0.2",
+    "@ckeditor/ckeditor5-image": "^42.0.2",
     "@ckeditor/ckeditor5-react": "^8.0.0",
     "@stomp/stompjs": "^7.0.0",
     "@testing-library/jest-dom": "^5.17.0",

@@ -36,6 +36,7 @@ import DogRandomDate from './components/DogRandomDate';
 import Board from './components/Board';
 import BoardWrite from './components/BoardWrite';
 import BoardDetail from './components/BoardDetail';
+import BoardEdit from './components/BoardEdit';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -90,6 +91,7 @@ function App() {
             <Route path="/board" element={<Board />} />
             <Route path="/board/write" element={<BoardWrite />} />
             <Route path="/boarddetail/:showNo" element={<BoardDetail />} />
+            <Route path="/board/edit/:showNo" element={<BoardEdit />} />  {/* BoardEdit 라우팅 추가 */}
             <Route path='/admin/contact' element={<AdminContact />} />
             <Route path='/admin/contact/detail/:adminNo' element={<AdminContactNormalTableDetail />} />
             <Route path='/admin/write' element={<AdminContactWrite />} />
