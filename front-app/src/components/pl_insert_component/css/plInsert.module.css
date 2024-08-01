@@ -28,25 +28,34 @@
 }
 
 .pl_insert_th{
-    width: 100px;
+    width: 120px;
     font-size: 16px;
     text-align: center;
     padding-top: 20px;
     border-bottom: 1px solid #BEB4B4;
+    padding-bottom: 20px;
 }
 
 .pl_insert_td{
     width: 100px;
     border-bottom: 1px solid #BEB4B4;
-    padding-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     
 }
 
 .pl_insert_input{
     width: 300px;
-    height: 30px;
+    height: 40px;
     font-size: 12px;
     padding-left: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.pl_insert_conditions{
+    display: flex;
+    justify-content: center;
 }
 
 .pl_insertBtn{
@@ -56,6 +65,8 @@
     color: white;
     font-size: 24px;
     margin-top: 60px;
+    border-radius: 10px;
+    border: none;
 }
 
 .pl_insert_back{
@@ -65,6 +76,8 @@
     color: white;
     font-size: 24px;
     margin-top: 60px;
+    border-radius: 10px;
+    border: none;
 }
 
 .pl_insert_footer{

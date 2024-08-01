@@ -45,7 +45,7 @@ export default function HomeMainImg() {
         ))}
       </div>
       <div className={styles.btnContainer}>
-        <Link to='/' className={styles.miniBtn}>
+        <Link to='/mate/msg' className={styles.miniBtn}>
           <div className={styles.circle}>
             <img src={message} alt="message" className={styles.icon} />
           </div>
@@ -63,11 +63,11 @@ export default function HomeMainImg() {
           </div>
           <label className={styles.btnName}>보호센터 찾기</label>
         </Link>
-        <Link to='/shelter/animal' className={styles.miniBtn}>
+        <Link to='/ab' className={styles.miniBtn}>
           <div className={styles.circle}>
             <img src={adopt} alt="adopt" className={styles.icon} />
           </div>
-          <label className={styles.btnName}>유기동물 현황</label>
+          <label className={styles.btnName}>유기견 보호현황</label>
         </Link>
         <Link to='/pl' className={styles.miniBtn}>
           <div className={styles.circle}>
@@ -75,7 +75,7 @@ export default function HomeMainImg() {
           </div>
           <label className={styles.btnName}>놀이시설 찾기</label>
         </Link>
-        <Link to='/' className={styles.miniBtn}>
+        <Link to='/co' className={styles.miniBtn}>
           <div className={styles.circle}>
             <img src={amenities} alt="amenities" className={styles.icon} />
           </div>

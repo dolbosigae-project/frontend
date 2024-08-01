@@ -155,7 +155,6 @@ const HO = () => {
                         <KakaoMap locations={locations} />
                     </div>
                 </div>
-              
             </div>
         </>
     );
