@@ -28,25 +28,33 @@
 }
 
 .co_insert_th{
-    width: 100px;
+    width: 120px;
     font-size: 16px;
     text-align: center;
     padding-top: 20px;
     border-bottom: 1px solid #BEB4B4;
+    padding-bottom: 20px;
 }
 
 .co_insert_td{
     width: 100px;
     border-bottom: 1px solid #BEB4B4;
-    padding-top: 20px;
-    
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .co_insert_input{
     width: 300px;
-    height: 30px;
+    height: 40px;
     font-size: 12px;
     padding-left: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.co_insert_conditions{
+    display: flex;
+    justify-content: center;
 }
 
 .co_insertBtn{
@@ -56,6 +64,8 @@
     color: white;
     font-size: 24px;
     margin-top: 60px;
+    border: none;
+    border-radius: 10px;
 }
 
 .co_insert_back{
@@ -65,6 +75,8 @@
     color: white;
     font-size: 24px;
     margin-top: 60px;
+    border: none;
+    border-radius: 10px;
 }
 
 .co_insert_footer{

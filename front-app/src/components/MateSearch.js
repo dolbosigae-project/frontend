@@ -64,7 +64,19 @@ export default function MateSearch() {
     const windowFeatures = 'width=500,height=650,left=100,top=100,toolbar=no'; // 창의 크기와 위치 지정 및 UI 요소 숨김
     window.open(url, '_blank', windowFeatures); // 특정 크기와 위치로 새로운 창 열기
   };
-  
+
+  // '채팅하러가기(임시버튼)' 클릭 핸들러 추가 (새 창에서 열리도록 수정)
+  const handleChatClick = () => {
+    const url = '/mate/intro'; // ChatIntro 페이지의 URL
+    const windowFeatures = 'width=500,height=650,left=100,top=100,toolbar=no'; // 창의 크기와 위치 지정 및 UI 요소 숨김
+    window.open(url, '_blank', windowFeatures); // 특정 크기와 위치로 새로운 창 열기
+  };
+
+  // '쪽지함(임시)' 클릭 핸들러 추가
+  const handleMsgClick = () => {
+    const url = '/mate/msg'; // 쪽지함 페이지의 URL
+    window.open(url, '_blank'); // 새로운 탭에서 열기
+  };
 
   return (
     <div>
@@ -72,24 +84,26 @@ export default function MateSearch() {
       <div className={styles.mateSearchBox}>
         <input value={searchRegion} onChange={(e) => setSearchRegion(e.target.value)} placeholder="지역으로 검색" />
         <button onClick={handleSearch}>검색</button>
+        <button onClick={handleChatClick}>채팅하러가기(임시버튼)</button> {/* 채팅하러가기(임시버튼) 추가 */}
+        <button onClick={handleMsgClick}>쪽지함(임시)</button> {/* 쪽지함(임시) 추가 */}
       </div>
       {mateList.length === 0 ? (
         <div>해당 데이터가 없습니다.</div>
       ) : (
         <div className={styles.mateTableContainer}>
           <div className={styles.mateTable}>
-          {mateList.map((mate) => (
-            <div key={mate.boardMemberId} className={styles.mateCard} onClick={() => handleMateClick(mate.boardMemberId)}> {/* 회원 카드 클릭 시 handleMateClick 호출 */}
-              <img src={mate.petImagePath || default_img} alt="Pet" />
-              <span>{mate.boardMemberNick}</span>
-              <div className={styles.mateFlexContainer}>
-                <input value={mate.petInfo || ''} className={`${styles.mateInput} ${styles.matePetInfo}`} readOnly />
+            {mateList.map((mate) => (
+              <div key={mate.boardMemberId} className={styles.mateCard} onClick={() => handleMateClick(mate.boardMemberId)}> {/* 회원 카드 클릭 시 handleMateClick 호출 */}
+                <img src={mate.petImagePath || default_img} alt="Pet" />
+                <span>{mate.boardMemberNick}</span>
+                <div className={styles.mateFlexContainer}>
+                  <input value={mate.petInfo || ''} className={`${styles.mateInput} ${styles.matePetInfo}`} readOnly />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
           </div>
           <div className={styles.matePagination}>
-            {pagination && pagination.priviousPageGroup && (
+            {pagination && pagination.previousPageGroup && (
               <button onClick={() => handlePageChange(pagination.startPageOfPageGroup - 1)}>◀</button>
             )}
             {pagination && Array.from({ length: pagination.endPageOfPageGroup - pagination.startPageOfPageGroup + 1 }, (_, i) => (
