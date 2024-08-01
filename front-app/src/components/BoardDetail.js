@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import styles from '../css/boardDetail.module.css';
+import DOMPurify from 'dompurify';
 import SubTitleBoard from './SubTitles/SubTitleBoard';
 
 export default function BoardDetail() {
@@ -83,7 +84,10 @@ export default function BoardDetail() {
               <th colSpan={4}>내용</th>
             </tr>
             <tr>
-              <td className={styles.contentCell} colSpan="4">{detail.showContent}</td>
+              <td className={styles.contentCell} colSpan="4">
+                {/* CKEditor에서 작성한 콘텐츠를 DOMPurify로 처리하여 렌더링 */}
+                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(detail.showContent) }} />
+              </td>
             </tr>
           </tbody>
         </table>
@@ -92,7 +96,7 @@ export default function BoardDetail() {
             <button className={styles.commentBtn}>글 목록</button>
           </Link>
           {user && (user.boardMemberGradeNo === 0 || user.boardMemberId === detail.mId) && (
-              <button className={styles.deleteBigBtn} onClick={deleteClick}>게시글 삭제</button>
+            <button className={styles.deleteBigBtn} onClick={deleteClick}>게시글 삭제</button>
           )}
         </div>
       </div>
