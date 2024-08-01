@@ -1,4 +1,88 @@
 .winner_container{
     display: flex;
     flex-flow: row nowrap;
+    margin: auto;
+    border-top: 1px solid black;
+    margin-top: 20px;
+}
+
+.winner_dog_container{
+    display: flex;
+    flex-flow: column nowrap;
+    width: 80%;
+    margin: auto;
+}
+
+.dwcp_title{
+    display: flex;
+    justify-content: center;
+}
+
+.ranking_th_img{
+    padding-left: 10px;
+}
+
+.winner_img{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.winner_pTag{
+    font-size: 20px;
+}
+
+.ranking_community_container{
+    width: 100%;
+    margin-right: 40px;
+}
+
+
+.ranking_topTen_table{
+    width: 100;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.ranking_item{
+    border: 1px solid black;
+}
+
+.ranking_item > td{
+    text-align: center;
+    padding-top: 5px;
+    
+}
+
+.ranking_th_number{
+    width: 50px;
+    padding-left: 5px;
+}
+
+.ranking_th_rank{
+    width: 100px;
+}
+
+.ranking_number{
+    padding-left: 5px;
+}
+
+.ranking_typeName{
+    width: 100px;
+}
+
+.ranking_typeInfo{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+}
+
+.ranking_img{
+    width: 150px;
+    height: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-left: 10px;
 }

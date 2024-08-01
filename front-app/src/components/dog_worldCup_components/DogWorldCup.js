@@ -67,6 +67,9 @@ const DogWorldCup = () => {
                     </div>
                 ))}
             </div>
+            <div className={styles.dwc_info}>
+                {hiddenText && <p className={styles.hiddenText}>{hiddenText}</p>}
+            </div>
             <hr className={styles.dwc_hr} />
         </div>
     )
