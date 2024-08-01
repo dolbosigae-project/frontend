@@ -42,7 +42,9 @@ const PlInfoView = () => {
             <div className={styles.SubTitlePL_container}>
                 <SubTitlePL />
             </div>
-            <img className={styles.info_Img} src={placeInfo.plImg} />
+            <div className={styles.pl_img_container}>
+                <img className={styles.info_Img} src={placeInfo.plImg} />
+            </div>
             <table className={styles.pl_table}>
                 <tbody>
                     <tr className={styles.Info_tr}>

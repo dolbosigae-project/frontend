@@ -19,7 +19,7 @@ export default function Header({ isLoggedIn, onLogout }) {
 
   useEffect(() => {
     setIsPetInfo(location.pathname === '/mate/petinfo'); // 특정 경로 설정해서 header 안보이게 하는 부분
-    
+
 
     if (isLoggedIn) {
       const storedUser = localStorage.getItem('user');
@@ -142,9 +142,9 @@ export default function Header({ isLoggedIn, onLogout }) {
                 <li className={styles.navSublink}><Link to="/dwc">개상형 월드컵</Link></li>
               </ul>
             </li>
-            <li 
-              className={styles.navItem} 
-              onMouseOver={() => handleMouseOver('protection')} 
+            <li
+              className={styles.navItem}
+              onMouseOver={() => handleMouseOver('protection')}
               onMouseOut={handleMouseOut}>
               <Link className={styles.navLink}>동물보호</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'protection' ? styles.visible : ''}`}>
