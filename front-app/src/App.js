@@ -35,6 +35,7 @@ import DogRandomDate from './components/DogRandomDate';
 import MsgBox from './components/MsgBox';
 import MsgSend from './components/MsgSend';
 import ChatCreatedRoom from './components/ChatCreatedRoom';
+import MateNotice from './components/MateNotice';
 import Board from './components/Board';
 import ShelterDetail from './components/ShelterDetail';
 import ABList from './components/ABList';
@@ -104,7 +105,7 @@ function App() {
             <Route path="/mate/intro" element={<ChatIntro />} />
             <Route path="/mate/member" element={<MateSearch />} />
             <Route path="/mate/petinfo" element={<MatePetProfile />} />
-            <Route path="/mate/notice" element={<MateNo />} />
+            <Route path="/mate/notice" element={<MateNotice />} />
             <Route path='/board' element={<Board />} />
           </Routes>
         </main>
