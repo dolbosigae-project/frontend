@@ -13,7 +13,7 @@
 }
 
 .name_td{
-  background-color: rgb(45, 177, 45);
+  background-color: #00823E;
   border-right: 1px solid black;
   text-align: center;
   padding-right: 30px;
@@ -25,3 +25,19 @@
   height: 20px;
 }
 
+.linkButton {
+  background-color: #00823E;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.linkButton:hover {
+  opacity: 0.8;
+}
