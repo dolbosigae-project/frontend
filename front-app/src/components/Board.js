@@ -1,143 +1,155 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // useNavigate 추가
+import React, { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from '../css/board.module.css';
+import ShowBoardNumberRing from './ShowBoardNumberRing';
 import SubTitleBoard from './SubTitles/SubTitleBoard';
 
-export default function Board({ boardList = [], pagination, handlePageChange, user, deleteClick }) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchCategory, setSearchCategory] = useState('제목');
-  const [filteredBoardList, setFilteredBoardList] = useState(boardList);
+const Board = () => {
+    const [showText, setShowText] = useState('');
+    const [error, setError] = useState('');
+    const [result, setResult] = useState([]);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(5);
+    const [pagination, setPagination] = useState({ totalPages: 0, currentPage: 1 });
+    const [user, setUser] = useState(null);
 
-  const navigate = useNavigate(); // useNavigate 훅 사용
+    const navigate = useNavigate(); // useNavigate 훅 가져오기
 
-  // Search handler
-  const handleSearch = () => {
-    const filteredList = boardList.filter(item => {
-      const target = item[searchCategory];
-      return target && target.toLowerCase().includes(searchTerm.toLowerCase());
-    });
-    setFilteredBoardList(filteredList);
-  };
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            setUser(parsedUser);
+        }
+    }, []);
 
-  // Effect to reset filtered list when the boardList prop changes
-  useEffect(() => {
-    setFilteredBoardList(boardList);
-  }, [boardList]);
+    const fetchBoardData = async () => {
+        try {
+            const response = await axios.get('http://localhost:9999/boards/list', {
+                params: { showText, page, limit }
+            });
+            const contents = response.data.contents || [];
+            setResult(contents);
+            setPagination({
+                totalPages: response.data.pagination?.totalPages || 0,
+                currentPage: page,
+            });
+        } catch (error) {
+            console.log('데이터 가져오기 오류:', error);
+            setError('데이터를 가져오는 중 오류가 발생했습니다.');
+        }
+    };
 
-  // Navigate to the write page
-  const handleWriteClick = () => {
-    navigate('/board/write');
-  };
+    useEffect(() => {
+        fetchBoardData();
+    }, [page, limit, showText]);
 
-  return (
-    <div>
-      <SubTitleBoard />
-      <div className={styles.container}>
-        {/* 검색 바 및 옵션 */}
-        <div className={styles.searchContainer}>
-          <div className={styles.searchBox}>
-            <select value={searchCategory} onChange={(e) => setSearchCategory(e.target.value)} className={styles.searchSelect}>
-              <option value="제목">제목</option>
-              <option value="작성자ID">작성자ID</option>
-              <option value="작성자 닉네임">작성자 닉네임</option>
-            </select>
-            <input 
-              type="text" 
-              value={searchTerm} 
-              onChange={(e) => setSearchTerm(e.target.value)} 
-              placeholder="검색어 입력"
-              className={styles.searchInput}
-            />
-            <button onClick={handleSearch} className={styles.searchButton}>검색</button>
-            {/* 글쓰기 버튼 클릭 시 /board/write로 이동 */}
-            <button onClick={handleWriteClick} className={styles.searchButton}>글쓰기</button>
-          </div>
-        </div>
-        
+    const searchBoardClick = () => {
+        setPage(1);
+        fetchBoardData();
+    };
+
+    const onNumberRing = (number) => {
+        setPage(Number(number));
+    };
+
+    const deleteBoard = async (showId) => {
+        try {
+            const response = await axios.delete(`http://localhost:9999/boards/delete/${showId}`, {
+                headers: {
+                    'userRole': user && user.boardMemberGradeNo === 0 ? 'ADMIN' : ''
+                }
+            });
+            if (response.data.status === 'success') {
+                fetchBoardData();
+            } else {
+                setError(response.data.message || '게시글 삭제 오류');
+            }
+        } catch (error) {
+            console.log('게시글 삭제 오류:', error);
+            setError('게시글을 삭제하는 중 오류가 발생했습니다.');
+        }
+    };
+
+    const renderTable = useCallback(() => (
         <div className={styles.tableContainer}>
-          <table className={styles.table}>
-            <colgroup>
-              <col style={{ width: '10%' }} />
-              <col style={{ width: '10%' }} />
-              <col style={{ width: '40%' }} />
-              <col style={{ width: '10%' }} />
-              <col style={{ width: '10%' }} />
-              <col style={{ width: '10%' }} />
-              <col style={{ width: '10%' }} />
-            </colgroup>
-            <thead>
-              <tr>
-                <th></th>
-                <th>글번호</th>
-                <th>제목</th>
-                <th>작성자ID</th>   
-                <th>작성자 닉네임</th>
-                <th>작성일</th>
-                <th>조회수</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredBoardList.length > 0 ? (
-                filteredBoardList.map((item, index) => (
-                  <React.Fragment key={index}>
+            <table className={styles.table}>
+                <thead>
                     <tr>
-                      <td>
-                        {user && (user.boardMemberGradeNo === 0 || user.boardMemberId === item.memberId) && (
-                          <button className={styles.deleteButton} onClick={() => deleteClick(item.no, item.commentCount)}>삭제</button>
-                        )}
-                        {user && user.boardMemberGradeNo === 0 && (
-                          <button
-                            className={`${styles.unansweredButton} ${item.commentCount > 0 ? styles.answered : styles.unanswered}`}
-                          >
-                            {item.commentCount > 0 ? '답변완료' : '미답변'}
-                          </button>
-                        )}
-                      </td>
-                      <td>{item.no}</td>
-                      <td>
-                        <Link to={`/board/detail/${item.no}`} className={styles.link}>
-                          {item.title}
-                        </Link>
-                      </td>
-                      <td>{item.boardmemberId}</td>
-                      <td>{item.boardmembernick}</td>
-                      <td>{item.date}</td>
-                      <td>{item.commentCount}</td>
+                        <th></th>  
+                        <th>글 번호</th>               
+                        <th>제목</th>
+                        <th>닉네임</th>
+                        <th>작성일</th>
+                        <th>조회수</th>
                     </tr>
-                  </React.Fragment>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="7">No data available</td>
-                </tr>
-              )}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan="7" className={styles.pagination}>
-                  <div className={styles.paginationGroup}>
-                    {pagination && pagination.previousPageGroup && (
-                      <button onClick={() => handlePageChange(pagination.startPageOfPageGroup - 1)}>◀</button>
-                    )}
-                    {pagination && Array.from({ length: pagination.endPageOfPageGroup - pagination.startPageOfPageGroup + 1 }, (_, i) => (
-                      <button
-                        key={i + pagination.startPageOfPageGroup}
-                        onClick={() => handlePageChange(i + pagination.startPageOfPageGroup)}
-                        className={pagination.currentPage === i + pagination.startPageOfPageGroup ? styles.activePage : ''}
-                      >
-                        {i + pagination.startPageOfPageGroup}
-                      </button>
+                </thead>
+                <tbody>
+                    {result.map((item) => (
+                        <tr key={item.showNo}>
+                            <td>
+                                {user && user.boardMemberGradeNo === 0 && (
+                                    <button className={styles.DeleteBtn}
+                                        onClick={() => deleteBoard(item.showNo)}>삭제</button>
+                                )}
+                            </td>
+                            <td>{item.showNo}</td>
+                            <td>
+                                <Link to={`/boarddetail/${item.showNo}`}>
+                                    {item.showTitle}
+                                </Link>
+                            </td>
+                            <td>{item.pNick}</td>
+                            <td>{new Date(item.showDate).toLocaleDateString()}</td>
+                            <td>{item.showCount}</td>
+                        </tr>
                     ))}
-                    {pagination && pagination.nextPageGroup && (
-                      <button onClick={() => handlePageChange(pagination.endPageOfPageGroup + 1)}>▶</button>
-                    )}
-                  </div>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
+                </tbody>
+            </table>
         </div>
-      </div>
-    </div>
-  );
-}
+    ), [result, user]);
+
+    return (
+        <>
+            <SubTitleBoard />
+            <div className={styles.container}>
+                <div className={styles.mainContent}>
+                    <div className={styles.searchAndTableContainer}>
+                        <div className={styles.searchContainer}>
+                            <input
+                                type="text"
+                                value={showText}
+                                placeholder="검색어를 입력해주세요."
+                                onChange={(e) => setShowText(e.target.value)}
+                                className={styles.searchInput}
+                            />
+                            <button onClick={searchBoardClick} className={styles.searchButton}>조회</button>
+                        </div>
+                        
+                        <div className={styles.addButtonContainer}>
+                            <button 
+                                className={styles.linkButton}
+                                onClick={() => navigate('/board/write')} // navigate를 사용하여 페이지 이동
+                            >
+                                + 글쓰기
+                            </button>
+                        </div>
+                        
+                        {error && <div className={styles.error}>{error}</div>}
+                        {result.length > 0 && (
+                            <>
+                                {renderTable()}
+                                <div className={styles.paginationContainer}>
+                                    <ShowBoardNumberRing onNumberRing={onNumberRing} pagination={pagination} />
+                                </div>
+                            </>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default Board;
