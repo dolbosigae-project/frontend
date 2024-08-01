@@ -36,18 +36,18 @@
     height: 55px;
     margin: auto;
     text-decoration: none;
-    color: black;
-    background-color: greenyellow;
+    color: white;
+    background-color: #00823E;
     border-radius: 20px;
     text-align: center;
     padding-top: 20px;
     margin-top: 50px;
     margin-bottom: 50px
+
 }
 
 .dwc_link:hover {
-    background-color: rgb(139, 228, 7);
-    border: 1px solid green;
+   opacity: 0.8;
 }
 
 .dwc_label {

@@ -14,7 +14,7 @@ const Board = () => {
     const [pagination, setPagination] = useState({ totalPages: 0, currentPage: 1 });
     const [user, setUser] = useState(null);
 
-    const navigate = useNavigate(); // useNavigate 훅 가져오기
+    const navigate = useNavigate();
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -77,22 +77,16 @@ const Board = () => {
             <table className={styles.table}>
                 <thead>
                     <tr>
-                        <th></th>  
                         <th>제목</th>
                         <th>닉네임</th>
                         <th>작성일</th>
                         <th>조회수</th>
+                        {user && user.boardMemberGradeNo === 0 && <th>삭제</th>}
                     </tr>
                 </thead>
                 <tbody>
                     {result.map((item) => (
                         <tr key={item.showNo}>
-                            <td>
-                                {user && user.boardMemberGradeNo === 0 && (
-                                    <button className={styles.DeleteBtn}
-                                        onClick={() => deleteBoard(item.showNo)}>삭제</button>
-                                )}
-                            </td>
                             <td>
                                 <Link to={`/boarddetail/${item.showNo}`}>
                                     {item.showTitle}
@@ -101,6 +95,12 @@ const Board = () => {
                             <td>{item.pNick}</td>
                             <td>{new Date(item.showDate).toLocaleDateString()}</td>
                             <td>{item.showCount}</td>
+                            {user && user.boardMemberGradeNo === 0 && (
+                                <td>
+                                    <button className={styles.DeleteBtn}
+                                        onClick={() => deleteBoard(item.showNo)}>삭제</button>
+                                </td>
+                            )}
                         </tr>
                     ))}
                 </tbody>
@@ -128,20 +128,22 @@ const Board = () => {
                         <div className={styles.addButtonContainer}>
                             <button 
                                 className={styles.linkButton}
-                                onClick={() => navigate('/board/write')} // navigate를 사용하여 페이지 이동
+                                onClick={() => navigate('/board/write')}
                             >
                                 + 글쓰기
                             </button>
                         </div>
                         
                         {error && <div className={styles.error}>{error}</div>}
-                        {result.length > 0 && (
+                        {result.length > 0 ? (
                             <>
                                 {renderTable()}
                                 <div className={styles.paginationContainer}>
                                     <ShowBoardNumberRing onNumberRing={onNumberRing} pagination={pagination} />
                                 </div>
                             </>
+                        ) : (
+                            <div>검색 결과가 없습니다.</div>
                         )}
                     </div>
                 </div>

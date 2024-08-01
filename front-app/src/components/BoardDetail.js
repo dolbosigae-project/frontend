@@ -4,9 +4,10 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import styles from '../css/boardDetail.module.css';
 import DOMPurify from 'dompurify';
 import SubTitleBoard from './SubTitles/SubTitleBoard';
+import Comments from './Comments';
 
 export default function BoardDetail() {
-  const { showNo } = useParams(); // 게시글 번호를 가져옵니다.
+  const { showNo } = useParams();
   const [detail, setDetail] = useState(null);
   const [error, setError] = useState('');
   const [user, setUser] = useState(null);
@@ -35,7 +36,6 @@ export default function BoardDetail() {
     fetchDetail();
   }, [showNo]);
 
-  // 게시글 삭제 버튼
   const deleteClick = async () => {
     try {
       const response = await axios.delete(`http://localhost:9999/boards/delete/${showNo}`, {
@@ -59,7 +59,7 @@ export default function BoardDetail() {
 
   return (
     <div>
-      <SubTitleBoard /> {/* 동일한 서브타이틀 컴포넌트 사용 */}
+      <SubTitleBoard />
       <div className={styles.detailContainer}>
         {error && <div className={styles.error}>{error}</div>}
         <table className={styles.detailTable}>
@@ -85,7 +85,6 @@ export default function BoardDetail() {
             </tr>
             <tr>
               <td className={styles.contentCell} colSpan="4">
-                {/* CKEditor에서 작성한 콘텐츠를 DOMPurify로 처리하여 렌더링 */}
                 <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(detail.showContent) }} />
               </td>
             </tr>
@@ -96,9 +95,15 @@ export default function BoardDetail() {
             <button className={styles.commentBtn}>글 목록</button>
           </Link>
           {user && (user.boardMemberGradeNo === 0 || user.boardMemberId === detail.mId) && (
-            <button className={styles.deleteBigBtn} onClick={deleteClick}>게시글 삭제</button>
+            <>
+              <Link to={`/board/edit/${showNo}`}>
+                <button className={styles.editBtn}>게시글 수정</button>
+              </Link>
+              <button className={styles.deleteBigBtn} onClick={deleteClick}>게시글 삭제</button>
+            </>
           )}
         </div>
+        <Comments showNo={showNo} />
       </div>
     </div>
   );
