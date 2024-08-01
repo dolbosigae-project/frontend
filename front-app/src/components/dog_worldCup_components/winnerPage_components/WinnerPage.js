@@ -104,7 +104,7 @@ const WinnerPage = () => {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >
     );
 };
 

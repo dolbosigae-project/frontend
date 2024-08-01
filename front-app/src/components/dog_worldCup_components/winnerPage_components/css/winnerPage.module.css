@@ -13,12 +13,12 @@
 .winner_dog_container{
     display: flex;
     flex-flow: column nowrap;
-    width: 80%;
+    width: 500px;
     margin: auto;
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 5px 5px 5px grey, -5px -5px 5px lightgrey;
-
+    margin-left: 60px;
 }
 
 .dwcp_title{
@@ -64,30 +64,39 @@
 .winner_back{
     width: 160px;
     height: 60px;
-    background-color: greenyellow;
+    background-color: #00823E;
     border: none;
     border-radius: 10px;
     font-size: 20px;
+    cursor: pointer;
+    color: white;
+}
+
+.winner_back:hover{
+    opacity: 0.8;
 }
 
 .ranking_community_container{
-    width: 138%;
-    margin-right: 40px;
+    width: 700px;
     margin-top: 50px;
     border: 1px solid #ccc;
-    box-shadow: 5px 5px 5px grey, -5px -5px 5px lightgrey;
+    box-shadow: 3px 3px 3px rgb(182, 182, 182), -3px -3px 3px rgb(228, 224, 224);
+    margin-left: 60px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
 }
 
 .ranking_title{
-    margin-left: 20px;
+    margin-left: 40px;
 }
 
 
 .ranking_topTen_table{
-    width: 100;
-    margin: 10px 15px;
+    width: 90%;
     border: 1px solid #ccc;
     border-collapse: collapse;
+    margin: auto;
 }
 
 .ranking_item{
@@ -125,8 +134,8 @@
 }
 
 .ranking_img{
-    width: 130px;
-    height: 80px;
+    width: 120px;
+    height: 70px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
