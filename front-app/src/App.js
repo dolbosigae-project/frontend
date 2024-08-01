@@ -34,6 +34,10 @@ import CO from './components/co_main_components/CO';
 import CoInfoView from './components/co_info_components/CoInfoView';
 import DogRandomDate from './components/DogRandomDate';
 import Board from './components/Board';
+import AB from './components/AB';
+import Shelter from './components/Shelter';
+import ShelterDetail from './components/ShelterDetail';
+import ABDetail from './components/ABDetail';
 import BoardWrite from './components/BoardWrite';
 import BoardDetail from './components/BoardDetail';
 
@@ -87,6 +91,10 @@ function App() {
             <Route path="/mate/intro" element={<ChatIntro />} />
             <Route path="/mate/member" element={<MateSearch />} />
             <Route path="/mate/petinfo" element={<MatePetProfile />} />
+            <Route path='/shelter' element={<Shelter/>} />
+            <Route path='/shelter/detail/:shelterId' element={<ShelterDetail /> }/>
+            <Route path='/ab' element={<AB /> } />
+            <Route path='/ab/detail/:abid' element={<ABDetail />} />
             <Route path="/board" element={<Board />} />
             <Route path="/board/write" element={<BoardWrite />} />
             <Route path="/boarddetail/:showNo" element={<BoardDetail />} />
