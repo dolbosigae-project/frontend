@@ -1,5 +1,8 @@
-import SubTitleAB from './SubTitles/SubTitleAB';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
+import SubTitleAB from './SubTitles/SubTitleAB';
 import styles from '../css/ab.module.css';
 
 export default function AB() {
@@ -14,6 +17,7 @@ export default function AB() {
         const response = await axios.get('http://localhost:9999/ab/list');
         setABList(response.data.ab);
         setPagination(response.data.pagination);
+        console.log(response.data);
       } catch (error) {
         console.error("유기견 조회 중 에러발생", error);
       }
@@ -96,46 +100,38 @@ export default function AB() {
       {ABList.length === 0 ? (
         <div>해당 데이터가 없습니다.</div>
       ) : (
-        <table className={styles.table}>
-            <tr>
-              <th>지역</th>
-              <th>이름</th>
-              <th>주소</th>
-              <th>전화번호</th>
-              <th>운영시간</th>
-            </tr>
+        <div className={styles.listContainer}>
+          <ul className={styles.list}>
             {ABList.map((ab) => (
-              <tr key={ab.shelterId}>
-                <td>{ab.shelterRegion}</td>
-                <td>
-                  <Link to={`/shelter/detail/${ab.shelterId}`} className={styles.link}>{ab.shelterName}</Link>
-                </td>
-                <td>{ab.shelterAddress}</td>
-                <td>{ab.shelterTel}</td>
-                <td>{ab.shelterHour}</td>
-              </tr>
+              <Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/ab/detail/${ab.abid}`}>
+                <li key={ab.shelterId} className={styles.listItem}>
+                  <img src={ab.abimg} alt="견종 이미지"/>
+                  <div className={styles.abbreed}>{ab.abbreed}</div>
+                  <div>{ab.ablocation}</div>
+                  <div>{ab.abcharacter}</div>
+                </li>
+              </Link>
             ))}
-            <tr>
-              <td className={styles.paginationGroup} colSpan={5} style={{ textAlign: 'center' }}>
-                {pagination && pagination.previousPageGroup && (
-                  <button onClick={() => handlePageChange(pagination.startPageOfPageGroup - 1)}>◀</button>
-                )}
-                {pagination && Array.from({ length: pagination.endPageOfPageGroup - pagination.startPageOfPageGroup + 1 }, (_, i) => (
-                  <button
-                    key={i + pagination.startPageOfPageGroup}
-                    onClick={() => handlePageChange(i + pagination.startPageOfPageGroup)}
-                    className={pagination.currentPage === i + pagination.startPageOfPageGroup ? styles.activePage : ''}
-                  >
-                    {i + pagination.startPageOfPageGroup}
-                  </button>
-                ))}
-                {pagination && pagination.nextPageGroup && (
-                  <button onClick={() => handlePageChange(pagination.endPageOfPageGroup + 1)}>▶</button>
-                )}
-              </td>
-            </tr>
-        </table>
+          </ul>
+        </div>
       )}
+      <div className={styles.paginationGroup}>
+        {pagination && pagination.previousPageGroup && (
+          <button onClick={() => handlePageChange(pagination.startPageOfPageGroup - 1)}>◀</button>
+        )}
+        {pagination && Array.from({ length: pagination.endPageOfPageGroup - pagination.startPageOfPageGroup + 1 }, (_, i) => (
+          <button
+            key={i + pagination.startPageOfPageGroup}
+            onClick={() => handlePageChange(i + pagination.startPageOfPageGroup)}
+            className={pagination.currentPage === i + pagination.startPageOfPageGroup ? styles.activePage : ''}
+          >
+            {i + pagination.startPageOfPageGroup}
+          </button>
+        ))}
+        {pagination && pagination.nextPageGroup && (
+          <button onClick={() => handlePageChange(pagination.endPageOfPageGroup + 1)}>▶</button>
+        )}
+      </div>
     </div>
   );
 }

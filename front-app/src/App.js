@@ -36,6 +36,7 @@ import Board from './components/Board';
 import AB from './components/AB';
 import Shelter from './components/Shelter';
 import ShelterDetail from './components/ShelterDetail';
+import ABDetail from './components/ABDetail';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -99,6 +100,7 @@ function App() {
             <Route path='/shelter' element={<Shelter/>} />
             <Route path='/shelter/detail/:shelterId' element={<ShelterDetail /> }/>
             <Route path='/ab' element={<AB /> } />
+            <Route path='/ab/detail/:abid' element={<ABDetail />} />
           </Routes>
         </main>
         <Footer />
