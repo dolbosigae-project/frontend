@@ -24,14 +24,17 @@
   margin-right: 10px;
   box-sizing: border-box;
   padding-left: 20px;
+  border: 1px solid #BEB4B4;
+  border-radius: 10px;
+  font-size: 18px;
 }
 
-.mateSearchBox button {
+.searchBtn {
   width: 100px;
   height: 57px;
   background-color: #00823E;
   color: white;
-  font-size: 20px;
+  font-size: 18px;
   box-sizing: border-box;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -40,7 +43,38 @@
 }
 
 .mateSearchBox button:hover {
-  background-color: #00A44B; /* 약간 더 밝은 초록색 */
+  opacity: 0.8;
+}
+
+.subBtnSet{
+  position: absolute;
+  right: 1%;
+}
+
+.msgBtn{
+  width: 100px;
+  height: 57px;
+  background-color: #595959;
+  color: white;
+  font-size: 18px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: none;
+  margin-right: 3px;
+}
+
+.favBtn{
+  width: 100px;
+  height: 57px;
+  background-color: #0F3C3C;
+  color: white;
+  font-size: 18px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: none;
+  margin-right: 3px;
 }
 
 .mateTableContainer {
@@ -165,7 +199,7 @@
 }
 
 .mateMypageButton {
-  background-color: #4CAF50; /* Green */
+  background-color: #595959;
   border: none;
   color: white;
   padding: 10px 24px;

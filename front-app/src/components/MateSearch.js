@@ -61,7 +61,7 @@ export default function MateSearch() {
       const response = await axios.get('http://localhost:9999/member/walkmate/search', {
         params: {
           addressText: searchAddress,
-          page: 1, // 검색 시 페이지를 1로 설정합니다.
+          // page 파라미터를 제거하여 전체 결과를 요청합니다.
         },
       });
       console.log('검색 결과 - 회원 목록:', response.data.members); // 디버그: 검색 결과 회원 목록
@@ -69,7 +69,7 @@ export default function MateSearch() {
       setMateList(response.data.members || []); // 데이터가 없으면 빈 배열로 설정
       setPagination(null); // 검색 결과에 페이지네이션이 없으므로 null로 설정
       setIsSearching(true); // 검색 상태 설정
-      setCurrentPage(1); // 검색 시 페이지를 1로 
+      setCurrentPage(1); // 검색 시 페이지를 1로 초기화
     } catch (error) {
       console.error('여기서 주소로 검색하는건데 오류났음', error);
       alert('매이트 검색 중 오류가 발생했습니다.');
@@ -120,11 +120,13 @@ export default function MateSearch() {
       <SubTitleMateSearch />
       <div className={styles.mateSearchBox}>
         <input value={searchAddress} onChange={(e) => setSearchAddress(e.target.value)} placeholder="지역으로 검색" />
-        <button onClick={handleSearch}>검색</button>
-        <button onClick={handleMsgClick}>쪽지함(임시)</button>
-        <button onClick={openMateFavInNewWindow} style={{ marginLeft: '10px' }}>
-          즐겨찾기 목록 보기
-        </button>
+        <button className={styles.searchBtn} onClick={handleSearch}>검색</button>
+        <div className={styles.subBtnSet}>
+          <button className={styles.msgBtn} onClick={handleMsgClick}>쪽지함(임시)</button>
+          <button className={styles.favBtn} onClick={openMateFavInNewWindow} style={{ marginLeft: '10px' }}>
+            즐겨찾기 목록 보기
+          </button>
+        </div>
         {user && user.boardMemberGradeNo === 0 && (
           <button onClick={handleChangeWalkProfile} disabled={selectedIds.length === 0} style={{ marginLeft: '10px' }}>
             T to F
