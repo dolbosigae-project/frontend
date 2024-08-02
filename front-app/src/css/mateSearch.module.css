@@ -35,6 +35,8 @@
   box-sizing: border-box;
   border-radius: 10px;
   margin-bottom: 10px;
+  border: none;
+  margin-right: 3px;
 }
 
 .mateSearchBox button:hover {
@@ -146,7 +148,7 @@
   border-radius: 5px;
 }
 
-.matePagination .activePage {
+.matePagination .mateActivePage {
   background-color: #00823E;
   color: white;
   border: none; /* 테두리 제거 */
@@ -154,4 +156,28 @@
 
 .matePagination button:hover {
   text-decoration: underline;
+}
+
+.mateMypageButtonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.mateMypageButton {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.mateMypageButton img {
+  margin-right: 8px;
 }
