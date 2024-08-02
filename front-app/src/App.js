@@ -69,7 +69,7 @@ function MainContent({ handleLoginSuccess, isLoggedIn }) {
   const location = useLocation();
 
   // Footer를 숨길 경로를 배열로 정의합니다.
-  const hiddenFooterPaths = ['/mate/fav', '/mate/petinfo'];
+  const hiddenFooterPaths = ['/mate/fav', '/mate/petinfo', '/mate/sendMsg'];
 
   return (
     <main className="app-content">
@@ -111,12 +111,6 @@ function MainContent({ handleLoginSuccess, isLoggedIn }) {
         <Route path='/admin/contact/detail/:adminNo' element={<AdminContactNormalTableDetail />} />
         <Route path='/admin/write' element={<AdminContactWrite />} />
         <Route path='/dog/random/date' element={<DogRandomDate />} />
-        <Route path='/co' element={<CO />} />
-        <Route path='/coinfo/:coId' element={<CoInfoView />} />
-        <Route path='/pharmacies' element={<Pharmacy />} />
-        <Route path='/phinfo/:phId' element={<PharmacyDetail />} />
-        <Route path="/addHospital" element={<AddHospital />} />
-        <Route path="/addPharmacy" element={<AddPharmacy />} />
         <Route path="/mate/member" element={<MateSearch />} />
         <Route path="/mate/petinfo" element={<MatePetProfile />} />
         <Route path="/mate/fav" element={<MateFav />} />

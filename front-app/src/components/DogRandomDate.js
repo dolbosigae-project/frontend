@@ -22,21 +22,21 @@ export default function DogRandomDate() {
       petGender: data.petGender
     };
 
-    try{
+    try {
       const response = await axios.post('http://localhost:9999/dog/random/date', jsonData, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
 
-      if(response.data.length === 0){
+      if (response.data.length === 0) {
         alert('해당하는 강아지가 없습니다.\n 다른 조건을 선택해주세요.');
-      }else{
+      } else {
         const randomIndex = Math.floor(Math.random() * response.data.length);
         setRandomDog(response.data[randomIndex]);
       }
 
-    } catch(error){
+    } catch (error) {
       console.error('댕개팅 에러 발생', error);
       alert('정보 조회 중 오류가 발생했습니다.');
     }
@@ -55,15 +55,24 @@ export default function DogRandomDate() {
     }
   }
 
-  return(
+  // 팝업 창으로 쪽지 보내기 페이지를 여는 함수
+  const handleSendMsg = () => {
+    if (randomDog && randomDog.boardMemberId) {
+      const popupUrl = `/mate/sendMsg?receiverId=${randomDog.boardMemberId}`;
+      const popupFeatures = 'width=600,height=600,scrollbars=yes';
+      window.open(popupUrl, '_blank', popupFeatures);
+    }
+  }
+
+  return (
     <div className={styles.container}>
       <SubTitleDogRandomDate />
       <div className={styles.subContainer}>
         <div className={styles.sentence}>
           <img src={logo_small} alt="logo_small" className={styles.logo_small} />
           <div className={styles.sentenceSub}>
-            <span style={{fontSize : '18px'}}>견주님의 강아지와 잘 어울릴 댕친구를 찾아보세요🐶</span>
-            <span style={{fontSize : '14px', color : '#929292'}}>* 산책 프로필 노출을 선택한 강아지만 보실 수 있습니다.</span>
+            <span style={{fontSize: '18px'}}>견주님의 강아지와 잘 어울릴 댕친구를 찾아보세요🐶</span>
+            <span style={{fontSize: '14px', color: '#929292'}}>* 산책 프로필 노출을 선택한 강아지만 보실 수 있습니다.</span>
           </div>
         </div>
         <form ref={formRef} onSubmit={handleSubmit}>
@@ -118,7 +127,7 @@ export default function DogRandomDate() {
               {randomDog.petBirth} / {getPetGender(randomDog.petGender)} / {randomDog.petSize} / {randomDog.petWeight}kg
             </p>
             <p className={styles.randomDogText}>{randomDog.petInfo}</p>
-            <button className={styles.messageButton}>쪽지 보내기</button>
+            <button className={styles.messageButton} onClick={handleSendMsg}>쪽지 보내기</button> {/* 수정된 부분 */}
           </div>
         )}
       </div>
