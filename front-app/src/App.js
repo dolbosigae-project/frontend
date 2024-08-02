@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Home from './components/Home';
@@ -44,13 +44,6 @@ import MsgSend from './components/MsgSend';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
   };
@@ -63,67 +56,84 @@ function App() {
     <Router>
       <div className="app-container">
         <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
-        <main className="app-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-            <Route path="/login/passwd" element={<LoginPasswd />} />
-            <Route path="/member/view" element={<MemberView />} />
-            <Route path="/member/register" element={<MemberRegister />} />
-            <Route path="/member/mypage" element={<MyPage />} />
-            {/* 놀이시설 이동경로 */}
-            <Route path="/pl" element={<PL />} />
-            <Route path='/plinfo/:plId' element={<PlInfoView />} />
-            <Route path='/plInsert' element={<PlInsert />} />
-            {/* 놀이시설 이동경로 */}
-
-            {/* 편의시설 이동경로 */}
-            <Route path='/co' element={<CO />} />
-            <Route path='/coinfo/:coId' element={<CoInfoView />} />
-            <Route path='/coInsert' element={<CoInsert />} />
-            {/* 편의시설 이동경로 */}
-            <Route path='/shelters/detail/:sh_id' element={<ShelterDetail />} />
-            <Route path='/animal-medical' element={<Hospital />} />
-            <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
-            <Route path="/pharmacies" element={<Pharmacy />} />
-            <Route path="/phinfo/:phId" element={<PharmacyDetail />} />
-            <Route path='/hospitalDetail' element={<HospitalDetail />} />
-            <Route path='/dwc' element={<DogWorldCup />} />
-            <Route path="/addHospital" element={<AddHospital />} />
-            <Route path="/addPharmacy" element={<AddPharmacy />} />
-            <Route path='/shelter' element={<Shelter />} />
-            <Route path='/shelter/detail/:shelterId' element={<ShelterDetail />} />
-            <Route path='/ab' element={<AB />} />
-            <Route path='/ab/detail/:abid' element={<ABDetail />} />
-            <Route path="/board" element={<Board />} />
-            <Route path="/board/write" element={<BoardWrite />} />
-            <Route path="/boarddetail/:showNo" element={<BoardDetail />} />
-            <Route path='/admin/contact' element={<AdminContact />} />
-            <Route path='/admin/contact/detail/:adminNo' element={<AdminContactNormalTableDetail />} />
-            <Route path='/admin/write' element={<AdminContactWrite />} />
-            <Route path='/dog/random/date' element={<DogRandomDate />} />
-            <Route path='/co' element={<CO />} />
-            <Route path='/coinfo/:coId' element={<CoInfoView />} />
-            <Route path='/pharmacies' element={<Pharmacy />} />
-            <Route path='/phinfo/:phId' element={<PharmacyDetail />} />
-            <Route path="/addHospital" element={<AddHospital />} />
-            <Route path="/addPharmacy" element={<AddPharmacy />} />
-            <Route path="/mate/member" element={<MateSearch />} />
-            <Route path="/mate/petinfo" element={<MatePetProfile />} />
-            <Route path="/mate/fav" element={<MateFav />} />
-            <Route path="/mate/msg" element={<MsgBox/>} />
-            <Route path="/mate/sendMsg" element={<MsgSend/>} />
-            <Route path='/board' element={<Board />} />
-            {/* 개상형 월드컵 이동경로 */}
-            <Route path='/dwc' element={<DogWorldCup />} />
-            <Route path="/dwc/round/:round" element={<DogWorldCupPage />} />
-            <Route path="/wp/:dogId" element={<WinnerPage />} />
-          </Routes>
-        </main>
-        <Footer />
+        <MainContent 
+          handleLoginSuccess={handleLoginSuccess} 
+          isLoggedIn={isLoggedIn}
+        />
       </div>
     </Router>
   );
 }
+
+function MainContent({ handleLoginSuccess, isLoggedIn }) {
+  const location = useLocation();
+
+  // Footer를 숨길 경로를 배열로 정의합니다.
+  const hiddenFooterPaths = ['/mate/fav', '/mate/petinfo'];
+
+  return (
+    <main className="app-content">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
+        <Route path="/login/passwd" element={<LoginPasswd />} />
+        <Route path="/member/view" element={<MemberView />} />
+        <Route path="/member/register" element={<MemberRegister />} />
+        <Route path="/member/mypage" element={<MyPage />} />
+        {/* 놀이시설 이동경로 */}
+        <Route path="/pl" element={<PL />} />
+        <Route path='/plinfo/:plId' element={<PlInfoView />} />
+        <Route path='/plInsert' element={<PlInsert />} />
+        {/* 놀이시설 이동경로 */}
+
+        {/* 편의시설 이동경로 */}
+        <Route path='/co' element={<CO />} />
+        <Route path='/coinfo/:coId' element={<CoInfoView />} />
+        <Route path='/coInsert' element={<CoInsert />} />
+        {/* 편의시설 이동경로 */}
+        <Route path='/shelters/detail/:sh_id' element={<ShelterDetail />} />
+        <Route path='/animal-medical' element={<Hospital />} />
+        <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
+        <Route path="/pharmacies" element={<Pharmacy />} />
+        <Route path="/phinfo/:phId" element={<PharmacyDetail />} />
+        <Route path='/hospitalDetail' element={<HospitalDetail />} />
+        <Route path='/dwc' element={<DogWorldCup />} />
+        <Route path="/addHospital" element={<AddHospital />} />
+        <Route path="/addPharmacy" element={<AddPharmacy />} />
+        <Route path='/shelter' element={<Shelter />} />
+        <Route path='/shelter/detail/:shelterId' element={<ShelterDetail />} />
+        <Route path='/ab' element={<AB />} />
+        <Route path='/ab/detail/:abid' element={<ABDetail />} />
+        <Route path="/board" element={<Board />} />
+        <Route path="/board/write" element={<BoardWrite />} />
+        <Route path="/boarddetail/:showNo" element={<BoardDetail />} />
+        <Route path='/admin/contact' element={<AdminContact />} />
+        <Route path='/admin/contact/detail/:adminNo' element={<AdminContactNormalTableDetail />} />
+        <Route path='/admin/write' element={<AdminContactWrite />} />
+        <Route path='/dog/random/date' element={<DogRandomDate />} />
+        <Route path='/co' element={<CO />} />
+        <Route path='/coinfo/:coId' element={<CoInfoView />} />
+        <Route path='/pharmacies' element={<Pharmacy />} />
+        <Route path='/phinfo/:phId' element={<PharmacyDetail />} />
+        <Route path="/addHospital" element={<AddHospital />} />
+        <Route path="/addPharmacy" element={<AddPharmacy />} />
+        <Route path="/mate/member" element={<MateSearch />} />
+        <Route path="/mate/petinfo" element={<MatePetProfile />} />
+        <Route path="/mate/fav" element={<MateFav />} />
+        <Route path="/mate/msg" element={<MsgBox/>} />
+        <Route path="/mate/sendMsg" element={<MsgSend/>} />
+        <Route path='/board' element={<Board />} />
+        {/* 개상형 월드컵 이동경로 */}
+        <Route path='/dwc' element={<DogWorldCup />} />
+        <Route path="/dwc/round/:round" element={<DogWorldCupPage />} />
+        <Route path="/wp/:dogId" element={<WinnerPage />} />
+      </Routes>
+
+      {/* Footer 컴포넌트를 conditionally 렌더링 */}
+      {!hiddenFooterPaths.includes(location.pathname) && <Footer />}
+    </main>
+  );
+}
+
 
 export default App;
