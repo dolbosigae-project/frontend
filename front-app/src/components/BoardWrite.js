@@ -6,25 +6,19 @@ import styles from '../css/adminContactWrite.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-export default function AdminContactWrite() {
-    const [isLayoutReady, setIsLayoutReady] = useState(false);
-    const title = useRef();
+export default function BoardWrite() {
     const [myEditor, setMyEditor] = useState(null);
+    const title = useRef();
     const [user, setUser] = useState(null);
+    const [file, setFile] = useState(null);
     const navigate = useNavigate();
 
-    // 로컬 스토리지에서 user 정보 가져오기
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             const parsedUser = JSON.parse(storedUser);
             setUser(parsedUser);
         }
-    }, []);
-
-    useEffect(() => {
-        setIsLayoutReady(true);
-        return () => setIsLayoutReady(false);
     }, []);
 
     const editorConfig = {
@@ -36,50 +30,56 @@ export default function AdminContactWrite() {
         ],
         language: 'ko',
         image: {
-            toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side']
+            toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
+            upload: {
+                url: 'http://localhost:9999/upload', // 이미지 업로드 API 엔드포인트
+                withCredentials: false,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
         }
     };
 
-    // HTML 태그 제거 함수
-    const stripHtmlTags = (str) => {
-        return str.replace(/<[^>]*>?/gm, '');
-    };
-
-    // 글쓰기 버튼
     const writeClick = async () => {
         if (!title.current.value.trim()) {
             alert('제목을 입력하세요.');
             return;
         }
 
-        if (myEditor) {
+        if (!user) {
+            alert('사용자 정보를 확인할 수 없습니다. 로그인 후 다시 시도해 주세요.');
+            return;
+        }
+
+        try {
+            // CKEditor에서 콘텐츠 가져오기
             const rawContent = myEditor.getData();
-            const strippedContent = stripHtmlTags(rawContent); // HTML 태그 제거
+
+            // 게시글 작성 데이터
             const jsonData = {
-                adminMemberId: user?.boardMemberId,
-                adminTitle: title.current.value,
-                adminContent: strippedContent
+                mId: user.boardMemberId,
+                showTitle: title.current.value,
+                showContent: rawContent, // HTML 태그를 포함한 콘텐츠
+                pNick: user.boardMemberNick,
+                showImage: null // 이미지 URL을 추가할 수 있는 부분
             };
-            console.log("jsonData:", jsonData);
 
-            try {
-                const response = await axios.post('http://localhost:9999/admin/write', jsonData, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                if (response.status === 200) {
-                    console.log(response.data);
-                    alert('문의글을 업로드하였습니다.');
-                    navigate('/admin/contact');
-                } else {
-                    console.error('Unexpected response status:', response.status);
+            // 게시글 작성 API 호출
+            const response = await axios.post('http://localhost:9999/shows', jsonData, {
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-            } catch (error) {
-                console.error('문의작성 에러 발생', error);
-                alert('문의작성 중 오류가 발생했습니다.');
+            });
+
+            if (response.status === 200) {
+                alert('자랑글을 업로드하였습니다.');
+                navigate('/board'); // 게시글 작성 후 게시글 목록 페이지로 리디렉션
+            } else {
+                alert('글 작성 중 예상치 못한 오류가 발생했습니다.');
             }
+        } catch (error) {
+            alert('글 작성 중 오류가 발생했습니다.');
         }
     };
 
@@ -92,17 +92,20 @@ export default function AdminContactWrite() {
     return (
         <div>
             <div className={styles.editor}>
-                <input className={styles.adminTitle} placeholder='제목을 입력하세요.' ref={title} />
+                <input
+                    className={styles.adminTitle}
+                    placeholder='제목을 입력하세요.'
+                    ref={title}
+                />
                 <CKEditor
                     editor={ClassicEditor}
                     config={editorConfig}
-                    data="<p>귀엽고 예쁜 내 반려견을 맘껏 자랑해주세요.</p>
-                    <p>- 반려견 이름, 나이, 사는 곳, 좋아하는 장난감 등</p>
-                    <p>- 사진이 있으면 더 좋아요.</p>
-                    <p>- 게시판 목적과 다른 게시글은 통보 없이 삭제</p>
-                    <p>===========================================</p>
-                    <p>내용 입력시 전체 내용을 지우고 입력해주세요.</p>"
                     onReady={handleEditorReady}
+                    data=""
+                />
+                <input
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
                 />
                 <div className={styles.writeBtnGroup}>
                     <button className={styles.writeBtn} onClick={writeClick}>글쓰기</button>

@@ -15,14 +15,11 @@ export default function Header({ isLoggedIn, onLogout }) {
   const [visibleSubmenu, setVisibleSubmenu] = useState(null);
   let timeout;
   const location = useLocation();
-  const [petInfo, setPetInfo] = useState(false);
-  const [sendMsg, setSendMsg] = useState(false);
-  const [chatIntro, setChatIntro] = useState(false);
+  const [isPetInfo, setIsPetInfo] = useState(false);
 
-  useEffect(() => {   // 특정 경로 설정해서 header 안보이게 하는 부분
-    setPetInfo(location.pathname === '/mate/petinfo'); 
-    setSendMsg(location.pathname === '/mate/sendMsg');
-    setChatIntro(location.pathname === '/mate/intro');
+  useEffect(() => {
+    setIsPetInfo(location.pathname === '/mate/petinfo'); // 특정 경로 설정해서 header 안보이게 하는 부분
+
 
     if (isLoggedIn) {
       const storedUser = localStorage.getItem('user');
@@ -65,7 +62,7 @@ export default function Header({ isLoggedIn, onLogout }) {
   };
 
   // 특정 경로에서는 헤더를 렌더링하지 않음
-  if (petInfo || sendMsg || chatIntro) return null;  // 위에서 설정했던 특정 경로에서 헤더 숨기기
+  if (isPetInfo) return null; // 위에서 설정했던 특정 경로에서 헤더 숨기기
 
   return (
     <div className={styles.headerContainer}>
@@ -145,13 +142,13 @@ export default function Header({ isLoggedIn, onLogout }) {
                 <li className={styles.navSublink}><Link to="/dwc">개상형 월드컵</Link></li>
               </ul>
             </li>
-            <li 
-              className={styles.navItem} 
-              onMouseOver={() => handleMouseOver('protection')} 
+            <li
+              className={styles.navItem}
+              onMouseOver={() => handleMouseOver('protection')}
               onMouseOut={handleMouseOut}>
               <Link className={styles.navLink}>동물보호</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'protection' ? styles.visible : ''}`}>
-                <li className={styles.navSublink}><Link to="/shelters">동물보호센터 찾기</Link></li>
+                <li className={styles.navSublink}><Link to="/shelter">동물보호센터 찾기</Link></li>
                 <li className={styles.navSublink}><Link to="/ab">유기동물 보호현황</Link></li>
               </ul>
             </li>
