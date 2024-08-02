@@ -40,6 +40,7 @@ import BoardDetail from './components/BoardDetail';
 import MateFav from './components/MateFav';
 import MsgBox from './components/MsgBox';
 import MsgSend from './components/MsgSend';
+import MsgDisplay from './components/MsgDisplay';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -114,6 +115,7 @@ function App() {
             <Route path="/mate/fav" element={<MateFav />} />
             <Route path="/mate/msg" element={<MsgBox/>} />
             <Route path="/mate/sendMsg" element={<MsgSend/>} />
+            <Route path="/mate/msgDp" element={<MsgDisplay/>} />
             <Route path='/board' element={<Board />} />
             {/* 개상형 월드컵 이동경로 */}
             <Route path='/dwc' element={<DogWorldCup />} />

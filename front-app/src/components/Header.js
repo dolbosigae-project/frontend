@@ -19,13 +19,15 @@ export default function Header({ isLoggedIn, onLogout }) {
   const [sendMsg, setSendMsg] = useState(false);
   const [chatIntro, setChatIntro] = useState(false);
   const [mateFav, setMateFav] = useState(false);
+  const [msgDp, setMsgDp] = useState(false);
   
 
   useEffect(() => {
     setIsPetInfo(location.pathname === '/mate/petinfo'); // 특정 경로 설정해서 header 안보이게 하는 부분
     setSendMsg(location.pathname === '/mate/sendMsg');
     setChatIntro(location.pathname === '/mate/intro');
-    setMateFav(location.pathname === '/mate/fav')
+    setMateFav(location.pathname === '/mate/fav');
+    setMsgDp(location.pathname === '/mate/msgDp');
 
     if (isLoggedIn) {
       const storedUser = localStorage.getItem('user');
@@ -68,7 +70,7 @@ export default function Header({ isLoggedIn, onLogout }) {
   };
 
   // 특정 경로에서는 헤더를 렌더링하지 않음
-  if (isPetInfo || sendMsg || chatIntro || mateFav) return null;  // 위에서 설정했던 특정 경로에서 헤더 숨기기
+  if (isPetInfo || sendMsg || chatIntro || mateFav || msgDp) return null;  // 위에서 설정했던 특정 경로에서 헤더 숨기기
 
   return (
     <div className={styles.headerContainer}>
