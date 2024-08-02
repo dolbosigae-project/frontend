@@ -7,13 +7,12 @@ import SubTitleMsgBox from './SubTitles/SubTitleMsgBox';
 function MsgBox() {
   const [activeTab, setActiveTab] = useState('received'); // 'received' or 'sent'
 
-
   const sendMsgClick = () => {
-   const url = '/mate/sendMsg'; 
-   const windowFeatures = 'width=500,height=650,left=100,top=100,toolbar=no'; // 창의 크기와 위치 지정 및 UI 요소 숨김
-   window.open(url, '_blank', windowFeatures); // 특정 크기와 위치로 새로운 창 열기
- };
-  
+    const url = '/mate/sendMsg'; 
+    const windowFeatures = 'width=500,height=650,left=100,top=100,toolbar=no'; // 창의 크기와 위치 지정 및 UI 요소 숨김
+    window.open(url, '_blank', windowFeatures); // 특정 크기와 위치로 새로운 창 열기
+  };
+
   return (
     <div>
       <SubTitleMsgBox />
@@ -35,7 +34,7 @@ function MsgBox() {
           </div>
         </div>
         {activeTab === 'received' ? <MsgBoxReceive /> : <MsgBoxSend />}
-        <button className={styles.msgBoxsendPagebtn} onClick={sendMsgClick}>쪽지 보내기</button> 
+        <button className={styles.msgBoxsendPagebtn} onClick={sendMsgClick}>쪽지 보내기</button>
       </div>
     </div>
   );

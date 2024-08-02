@@ -35,6 +35,8 @@
   box-sizing: border-box;
   border-radius: 10px;
   margin-bottom: 10px;
+  border: none;
+  margin-right: 3px;
 }
 
 .mateSearchBox button:hover {

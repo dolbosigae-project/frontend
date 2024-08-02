@@ -3,12 +3,15 @@ import axios from 'axios';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import styles from '../css/msgBox.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function MsgBoxReceive() {
   const [receivedMessages, setReceivedMessages] = useState([]);
   const [userId, setUserId] = useState('');
   const [selectedMessages, setSelectedMessages] = useState([]);
 
+  const navigate = useNavigate();
+  
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -24,9 +27,7 @@ function MsgBoxReceive() {
   useEffect(() => {
     const fetchReceivedMessages = async () => {
       try {
-        const response = await axios.get(`http://localhost:9999/msg/R_Msg`, {
-          params: { id: userId },
-        });
+        const response = await axios.get(`http://localhost:9999/msg/received/${userId}`);
         setReceivedMessages(response.data);
       } catch (error) {
         console.error('받은 메시지 목록을 가져오는 중 오류 발생:', error);
@@ -47,9 +48,9 @@ function MsgBoxReceive() {
       },
       onConnect: (frame) => {
         console.log('연결됨: ' + frame);
-        stompClient.subscribe('/topic/notifications', (message) => {
+        stompClient.subscribe('/user/queue/notifications', (message) => {
           const notification = JSON.parse(message.body);
-          if (notification.mIdTo === userId) {
+          if (notification.rId === userId) {
             setReceivedMessages((prevMessages) => [notification, ...prevMessages]);
           }
         });
@@ -69,39 +70,41 @@ function MsgBoxReceive() {
     };
   }, [userId]);
 
-  const handleDelete = async (msgNo) => {
-    try {
-      await axios.delete(`http://localhost:9999/msg/message/${msgNo}`);
-      setReceivedMessages(receivedMessages.filter(message => message.msgNo !== msgNo));
-    } catch (error) {
-      console.error('메시지 삭제 중 오류 발생:', error);
-    }
-  };
 
   const handleReply = (message) => {
-    // 답장하기 로직
-    console.log('쪽지 답장하기:', message);
+    // 메시지 보내기 페이지로 이동하며 보낸이 ID 전달
+    navigate(`/msg/send/${message.sId}`);
   };
 
-  const handleSelectMessage = (msgNo) => {
+
+  const handleSelectMessage = (msgId) => {
     setSelectedMessages((prevSelected) => {
-      if (prevSelected.includes(msgNo)) {
-        return prevSelected.filter(no => no !== msgNo);
+      if (prevSelected.includes(msgId)) {
+        return prevSelected.filter(id => id !== msgId);
       } else {
-        return [...prevSelected, msgNo];
+        return [...prevSelected, msgId];
       }
     });
   };
 
-  const handleDeleteSelected = async () => {
+  const handleDelete = async (msgId) => {
     try {
-      await Promise.all(selectedMessages.map(msgNo => axios.delete(`http://localhost:9999/msg/message/${msgNo}`)));
-      setReceivedMessages(receivedMessages.filter(message => !selectedMessages.includes(message.msgNo)));
+      await axios.delete(`http://localhost:9999/msg/delete/${msgId}`);
+      setReceivedMessages(receivedMessages.filter(message => message.msgId !== msgId));
+    } catch (error) {
+      console.error('메시지 삭제 중 오류 발생:', error);
+    }
+};
+
+const handleDeleteSelected = async () => {
+    try {
+      await Promise.all(selectedMessages.map(msgId => axios.delete(`http://localhost:9999/msg/delete/${msgId}`)));
+      setReceivedMessages(receivedMessages.filter(message => !selectedMessages.includes(message.msgId)));
       setSelectedMessages([]);
     } catch (error) {
       console.error('선택한 메시지 삭제 중 오류 발생:', error);
     }
-  };
+};
 
   return (
     <div>
@@ -125,24 +128,24 @@ function MsgBoxReceive() {
               <th className={styles.msgBoxTh}>제목</th>
               <th className={styles.msgBoxTh}>내용</th>
               <th className={styles.msgBoxTh}>받은 시간</th>
-              <th className={styles.msgBoxTh}>답장</th>
+              {/* <th className={styles.msgBoxTh}>답장</th> */}
               <th className={styles.msgBoxTh}>삭제</th>
             </tr>
           </thead>
           <tbody>
             {receivedMessages.map(message => (
-              <tr key={message.msgNo} className={styles.msgBoxTr}>
-                <td className={styles.msgBoxTd}><input type="checkbox" onChange={() => handleSelectMessage(message.msgNo)} /></td>
-                <td className={styles.msgBoxTd}>{message.msgCheck ? '읽음' : '읽지않음'}</td>
-                <td className={styles.msgBoxTd}>{message.mIdFrom}</td>
-                <td className={styles.msgBoxTd}>{message.msgTitle}</td>
-                <td className={styles.msgBoxTd}>{message.msgContent}</td>
-                <td className={styles.msgBoxTd}>{new Date(message.msgReceiveTime).toLocaleString()}</td>
-                <td className={styles.msgBoxTd}>
+              <tr key={message.msgId} className={styles.msgBoxTr}>
+                <td className={styles.msgBoxTd}><input type="checkbox" onChange={() => handleSelectMessage(message.msgId)} /></td>
+                <td className={styles.msgBoxTd}>{message.isRead ? '읽음' : '읽지않음'}</td>
+                <td className={styles.msgBoxTd}>{message.sId}</td>
+                <td className={styles.msgBoxTd}>{message.title}</td>
+                <td className={styles.msgBoxTd}>{message.content}</td>
+                <td className={styles.msgBoxTd}>{new Date(message.sentTime).toLocaleString()}</td>
+                {/* <td className={styles.msgBoxTd}>
                   <button className={`${styles.msgBoxButton} ${styles.msgBoxReplyButton}`} onClick={() => handleReply(message)}>답장</button>
-                </td>
+                </td> */}
                 <td className={styles.msgBoxTd}>
-                  <button className={`${styles.msgBoxButton} ${styles.msgBoxDeleteButton}`} onClick={() => handleDelete(message.msgNo)}>삭제</button>
+                  <button className={`${styles.msgBoxButton} ${styles.msgBoxDeleteButton}`} onClick={() => handleDelete(message.msgId)}>삭제</button>
                 </td>
               </tr>
             ))}

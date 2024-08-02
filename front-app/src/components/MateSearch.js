@@ -36,14 +36,14 @@ export default function MateSearch() {
       const response = await axios.get('http://localhost:9999/member/walkmates', {
         params: {
           page: currentPage,
-        }
+        },
       });
       console.log('회원 목록:', response.data.members); // 디버그: 회원 목록
       console.log('페이지네이션 정보:', response.data.pagination); // 디버그: 페이지네이션 정보
       setMateList(response.data.members);
       setPagination(response.data.pagination);
     } catch (error) {
-      console.error("T인 회원들 불러오는데 실패한거임", error);
+      console.error('T인 회원들 불러오는데 실패한거임', error);
     }
   };
 
@@ -51,18 +51,21 @@ export default function MateSearch() {
     setCurrentPage(pageNo);
     const fetchPageData = async () => {
       try {
-        const response = await axios.get(isSearching ? 'http://localhost:9999/member/walkmate/search' : 'http://localhost:9999/member/walkmates', {
-          params: {
-            page: pageNo,
-            addressText: isSearching ? searchAddress : ''
-          }
-        });
+        const response = await axios.get(
+          isSearching ? 'http://localhost:9999/member/walkmate/search' : 'http://localhost:9999/member/walkmates',
+          {
+            params: {
+              page: pageNo,
+              addressText: isSearching ? searchAddress : '',
+            },
+          },
+        );
         console.log('페이지 변경 - 회원 목록:', response.data.members); // 디버그: 페이지 변경 시 회원 목록
         console.log('페이지 변경 - 페이지네이션 정보:', response.data.pagination); // 디버그: 페이지 변경 시 페이지네이션 정보
         setMateList(response.data.members);
         setPagination(response.data.pagination);
       } catch (error) {
-        console.error("There was an error fetching the page data!", error);
+        console.error('There was an error fetching the page data!', error);
       }
     };
     fetchPageData();
@@ -73,8 +76,8 @@ export default function MateSearch() {
       const response = await axios.get('http://localhost:9999/member/walkmate/search', {
         params: {
           addressText: searchAddress,
-          page: 1
-        }
+          page: 1,
+        },
       });
       console.log('검색 결과 - 회원 목록:', response.data.members); // 디버그: 검색 결과 회원 목록
       console.log('검색 결과 - 페이지네이션 정보:', response.data.pagination); // 디버그: 검색 결과 페이지네이션 정보
@@ -83,8 +86,8 @@ export default function MateSearch() {
       setIsSearching(true); // 검색 상태 설정
       setCurrentPage(1); // 검색 시 페이지를 1로 초기화
     } catch (error) {
-      console.error("여기서 주소로 검색하는건데 오류났음", error);
-      alert("매이트 검색 중 오류가 발생했습니다.");
+      console.error('여기서 주소로 검색하는건데 오류났음', error);
+      alert('매이트 검색 중 오류가 발생했습니다.');
       setMateList([]); // 오류 발생 시 목록 초기화
       setPagination(null); // 오류 발생 시 페이지네이션 초기화
       setIsSearching(false); // 검색 상태 해제
@@ -93,38 +96,36 @@ export default function MateSearch() {
 
   const handleMateClick = (id) => {
     const url = `/mate/petinfo?userId=${id}`; // PetProfile 페이지의 URL에 ID를 쿼리 파라미터로 포함
-    const windowFeatures = 'width=500,height=650,left=100,top=100,toolbar=no'; 
-    window.open(url, '_blank', windowFeatures); 
+    const windowFeatures = 'width=500,height=650,left=100,top=100,toolbar=no';
+    window.open(url, '_blank', windowFeatures);
   };
 
   const handleChatClick = () => {
-    const url = '/mate/intro'; 
-    const windowFeatures = 'width=500,height=350,left=100,top=100,toolbar=no'; 
-    window.open(url, '_blank', windowFeatures); 
+    const url = '/mate/intro';
+    const windowFeatures = 'width=500,height=350,left=100,top=100,toolbar=no';
+    window.open(url, '_blank', windowFeatures);
   };
 
   const handleMsgClick = () => {
-    const url = '/mate/msg'; 
-    window.open(url, '_blank'); 
+    const url = '/mate/msg';
+    window.open(url, '_blank');
   };
 
   const handleChangeWalkProfile = async () => {
-    console.log("변경하려는 Id들 : ", selectedIds); // 로그 추가
+    console.log('변경하려는 Id들 : ', selectedIds); // 로그 추가
     try {
       await axios.post(`http://localhost:9999/walkmate/changeTF`, { Wid: selectedIds });
       readData(); // 목록 새로 고침
       setSelectedIds([]);
     } catch (error) {
-      console.error("T -> F 변경 중 오류", error);
-      alert("T에서 F로 변경 중 오류가 발생했습니다.");
+      console.error('T -> F 변경 중 오류', error);
+      alert('T에서 F로 변경 중 오류가 발생했습니다.');
     }
   };
 
   const handleCheckboxChange = (memberId) => {
     setSelectedIds((prevSelectedIds) =>
-      prevSelectedIds.includes(memberId)
-        ? prevSelectedIds.filter((id) => id !== memberId)
-        : [...prevSelectedIds, memberId]
+      prevSelectedIds.includes(memberId) ? prevSelectedIds.filter((id) => id !== memberId) : [...prevSelectedIds, memberId],
     );
   };
 
@@ -134,11 +135,13 @@ export default function MateSearch() {
       <div className={styles.mateSearchBox}>
         <input value={searchAddress} onChange={(e) => setSearchAddress(e.target.value)} placeholder="지역으로 검색" />
         <button onClick={handleSearch}>검색</button>
-        <button onClick={handleChatClick}>채팅하러가기(임시버튼)</button> 
-        <button onClick={handleMsgClick}>쪽지함(임시)</button> 
+        <button onClick={handleChatClick}>채팅하러가기(임시버튼)</button>
+        <button onClick={handleMsgClick}>쪽지함(임시)</button>
         {userId && <MateNotice userId={userId} />} {/* 알림 컴포넌트 추가 */}
-        {user && user.boardMemberGradeNo === 0 && ( 
-          <button onClick={handleChangeWalkProfile} disabled={selectedIds.length === 0} style={{marginLeft: '10px'}}>T to F</button>
+        {user && user.boardMemberGradeNo === 0 && (
+          <button onClick={handleChangeWalkProfile} disabled={selectedIds.length === 0} style={{ marginLeft: '10px' }}>
+            T to F
+          </button>
         )}
       </div>
       {mateList.length === 0 ? (
@@ -148,7 +151,7 @@ export default function MateSearch() {
           <div className={styles.mateTable}>
             {mateList.map((mate) => (
               <div key={mate.boardMemberId} className={styles.mateCard} onClick={() => handleMateClick(mate.boardMemberId)}>
-                {user && user.boardMemberGradeNo === 0 && ( 
+                {user && user.boardMemberGradeNo === 0 && (
                   <input
                     type="checkbox"
                     checked={selectedIds.includes(mate.boardMemberId)}
@@ -170,15 +173,16 @@ export default function MateSearch() {
             {pagination && pagination.previousPageGroup && (
               <button onClick={() => handlePageChange(pagination.startPageOfPageGroup - 1)}>◀</button>
             )}
-            {pagination && Array.from({ length: pagination.endPageOfPageGroup - pagination.startPageOfPageGroup + 1 }, (_, i) => (
-              <button
-                key={i + pagination.startPageOfPageGroup}
-                onClick={() => handlePageChange(i + pagination.startPageOfPageGroup)}
-                className={pagination.currentPage === i + pagination.startPageOfPageGroup ? styles.mateActivePage : ''}
-              >
-                {i + pagination.startPageOfPageGroup}
-              </button>
-            ))}
+            {pagination &&
+              Array.from({ length: pagination.endPageOfPageGroup - pagination.startPageOfPageGroup + 1 }, (_, i) => (
+                <button
+                  key={i + pagination.startPageOfPageGroup}
+                  onClick={() => handlePageChange(i + pagination.startPageOfPageGroup)}
+                  className={pagination.currentPage === i + pagination.startPageOfPageGroup ? styles.mateActivePage : ''}
+                >
+                  {i + pagination.startPageOfPageGroup}
+                </button>
+              ))}
             {pagination && pagination.nextPageGroup && (
               <button onClick={() => handlePageChange(pagination.endPageOfPageGroup + 1)}>▶</button>
             )}
