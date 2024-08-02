@@ -80,6 +80,10 @@ export default function MatePetProfile() {
     }
   };
 
+  const handleSendMsg = () => {
+    navigate('/mate/sendMsg', { state: { receiverId: profileUserId } });
+  };
+
   return (
     <div>
       {!petProfile ? (
@@ -98,6 +102,9 @@ export default function MatePetProfile() {
           <div className={styles.petActions}>
             <button onClick={handleFavoriteClick} className={styles.favoriteButton}>
               즐겨찾기 상태 변경
+            </button>
+            <button onClick={handleSendMsg} className={styles.messageButton}>
+              쪽지보내기
             </button>
           </div>
         </div>

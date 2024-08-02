@@ -61,11 +61,13 @@
 }
 
 .messageButton { /* 추가된 부분: 쪽지 보내기 버튼 스타일 */
-  background-color: #4caf50;
+  width: 180px;
+  background-color: #595959;
   color: white;
 }
 
 .favoriteButton { /* 추가된 부분: 즐겨찾기 등록 버튼 스타일 */
+  width: 180px;
   background-color: #0F3C3C;
   color: white;
 }

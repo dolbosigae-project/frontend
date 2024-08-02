@@ -20,21 +20,21 @@
 
 .mateSearchBox input {
   width: 500px;
-  height: 57px;
+  height: 40px;
   margin-right: 10px;
   box-sizing: border-box;
   padding-left: 20px;
   border: 1px solid #BEB4B4;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .searchBtn {
   width: 100px;
-  height: 57px;
+  height: 40px;
   background-color: #00823E;
   color: white;
-  font-size: 18px;
+  font-size: 14px;
   box-sizing: border-box;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -47,16 +47,17 @@
 }
 
 .subBtnSet{
+  display: flex;
   position: absolute;
   right: 1%;
 }
 
 .msgBtn{
   width: 100px;
-  height: 57px;
+  height: 40px;
   background-color: #595959;
   color: white;
-  font-size: 18px;
+  font-size: 14px;
   box-sizing: border-box;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -66,10 +67,10 @@
 
 .favBtn{
   width: 100px;
-  height: 57px;
+  height: 40px;
   background-color: #0F3C3C;
   color: white;
-  font-size: 18px;
+  font-size: 14px;
   box-sizing: border-box;
   border-radius: 10px;
   margin-bottom: 10px;

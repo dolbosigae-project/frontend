@@ -134,9 +134,9 @@ export default function MateSearch() {
         <input value={searchAddress} onChange={(e) => setSearchAddress(e.target.value)} placeholder="지역으로 검색" />
         <button className={styles.searchBtn} onClick={handleSearch}>검색</button>
         <div className={styles.subBtnSet}>
-          <button className={styles.msgBtn} onClick={handleMsgClick}>쪽지함(임시)</button>
+          <button className={styles.msgBtn} onClick={handleMsgClick}>쪽지함</button>
           <button className={styles.favBtn} onClick={openMateFavInNewWindow} style={{ marginLeft: '10px' }}>
-            즐겨찾기 목록 보기
+            즐겨찾기 목록
           </button>
         </div>
         {user && user.boardMemberGradeNo === 0 && (
