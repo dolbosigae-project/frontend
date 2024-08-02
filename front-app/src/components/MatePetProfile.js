@@ -68,7 +68,7 @@ export default function MatePetProfile() {
       if (error.response) {
         // 서버 응답이 있는 경우
         console.error('서버 응답 오류:', error.response.data);
-        alert(`즐겨찾기 상태 변경 중 오류가 발생했습니다: ${error.response.data}`);
+        alert(`연결상태를 확인해주십시오: ${error.response.data}`);
       } else if (error.request) {
         // 요청이 전송되었으나 응답이 없는 경우
         console.error('응답 없음:', error.request);

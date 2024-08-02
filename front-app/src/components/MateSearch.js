@@ -1,3 +1,5 @@
+// MateSearch.js
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -27,8 +29,10 @@ export default function MateSearch() {
       console.error('로그인된 사용자가 없습니다.');
     }
 
-    readData();
-  }, [currentPage]);
+    if (!isSearching) {
+      readData(); // 검색 중이 아닐 때만 페이지 데이터를 불러옵니다.
+    }
+  }, [currentPage, isSearching]); // isSearching 추가
 
   const readData = async () => {
     try {
@@ -47,27 +51,9 @@ export default function MateSearch() {
   };
 
   const handlePageChange = (pageNo) => {
-    setCurrentPage(pageNo);
-    const fetchPageData = async () => {
-      try {
-        const response = await axios.get(
-          isSearching ? 'http://localhost:9999/member/walkmate/search' : 'http://localhost:9999/member/walkmates',
-          {
-            params: {
-              page: pageNo,
-              addressText: isSearching ? searchAddress : '',
-            },
-          },
-        );
-        console.log('페이지 변경 - 회원 목록:', response.data.members); // 디버그: 페이지 변경 시 회원 목록
-        console.log('페이지 변경 - 페이지네이션 정보:', response.data.pagination); // 디버그: 페이지 변경 시 페이지네이션 정보
-        setMateList(response.data.members);
-        setPagination(response.data.pagination);
-      } catch (error) {
-        console.error('There was an error fetching the page data!', error);
-      }
-    };
-    fetchPageData();
+    if (!isSearching) { // 검색 중일 때는 페이지를 변경하지 않습니다.
+      setCurrentPage(pageNo);
+    }
   };
 
   const handleSearch = async () => {
@@ -75,13 +61,13 @@ export default function MateSearch() {
       const response = await axios.get('http://localhost:9999/member/walkmate/search', {
         params: {
           addressText: searchAddress,
-          page: 1,
+          page: 1, // 검색 시 페이지를 1로 설정합니다.
         },
       });
       console.log('검색 결과 - 회원 목록:', response.data.members); // 디버그: 검색 결과 회원 목록
       console.log('검색 결과 - 페이지네이션 정보:', response.data.pagination); // 디버그: 검색 결과 페이지네이션 정보
       setMateList(response.data.members || []); // 데이터가 없으면 빈 배열로 설정
-      setPagination(response.data.pagination || null); // 페이지네이션 데이터가 없으면 null로 설정
+      setPagination(null); // 검색 결과에 페이지네이션이 없으므로 null로 설정
       setIsSearching(true); // 검색 상태 설정
       setCurrentPage(1); // 검색 시 페이지를 1로 
     } catch (error) {
@@ -99,11 +85,23 @@ export default function MateSearch() {
     window.open(url, '_blank', windowFeatures);
   };
 
+  const handleMsgClick = () => {
+    const url = '/mate/msg';
+    window.open(url, '_blank');
+  };
+
+  // MateFav를 새 창으로 열기
+  const openMateFavInNewWindow = () => {
+    const url = `/mate/fav`;
+    const windowFeatures = 'width=600,height=700,left=200,top=150,toolbar=no';
+    window.open(url, '_blank', windowFeatures);
+  };
+
   const handleChangeWalkProfile = async () => {
-    console.log('변경하려는 Id들 : ', selectedIds); // 로그 추가
+    console.log('변경하려는 Id들 : ', selectedIds); 
     try {
       await axios.post(`http://localhost:9999/walkmate/changeTF`, { Wid: selectedIds });
-      readData(); // 목록 새로 고침
+      readData(); // 버튼 클릭 후, 목록 새로 고침
       setSelectedIds([]);
     } catch (error) {
       console.error('T -> F 변경 중 오류', error);
@@ -123,6 +121,10 @@ export default function MateSearch() {
       <div className={styles.mateSearchBox}>
         <input value={searchAddress} onChange={(e) => setSearchAddress(e.target.value)} placeholder="지역으로 검색" />
         <button onClick={handleSearch}>검색</button>
+        <button onClick={handleMsgClick}>쪽지함(임시)</button>
+        <button onClick={openMateFavInNewWindow} style={{ marginLeft: '10px' }}>
+          즐겨찾기 목록 보기
+        </button>
         {user && user.boardMemberGradeNo === 0 && (
           <button onClick={handleChangeWalkProfile} disabled={selectedIds.length === 0} style={{ marginLeft: '10px' }}>
             T to F
@@ -154,12 +156,13 @@ export default function MateSearch() {
               </div>
             ))}
           </div>
-          <div className={styles.matePagination}>
-            {pagination && pagination.previousPageGroup && (
-              <button onClick={() => handlePageChange(pagination.startPageOfPageGroup - 1)}>◀</button>
-            )}
-            {pagination &&
-              Array.from({ length: pagination.endPageOfPageGroup - pagination.startPageOfPageGroup + 1 }, (_, i) => (
+          {/* 페이징을 검색하지 않은 상태일때만 적용하기 */}
+          {!isSearching && pagination && (
+            <div className={styles.matePagination}>
+              {pagination.previousPageGroup && (
+                <button onClick={() => handlePageChange(pagination.startPageOfPageGroup - 1)}>◀</button>
+              )}
+              {Array.from({ length: pagination.endPageOfPageGroup - pagination.startPageOfPageGroup + 1 }, (_, i) => (
                 <button
                   key={i + pagination.startPageOfPageGroup}
                   onClick={() => handlePageChange(i + pagination.startPageOfPageGroup)}
@@ -168,10 +171,11 @@ export default function MateSearch() {
                   {i + pagination.startPageOfPageGroup}
                 </button>
               ))}
-            {pagination && pagination.nextPageGroup && (
-              <button onClick={() => handlePageChange(pagination.endPageOfPageGroup + 1)}>▶</button>
-            )}
-          </div>
+              {pagination.nextPageGroup && (
+                <button onClick={() => handlePageChange(pagination.endPageOfPageGroup + 1)}>▶</button>
+              )}
+            </div>
+          )}
         </div>
       )}
       <div className={styles.mateMypageButtonContainer}>
