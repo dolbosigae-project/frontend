@@ -22,35 +22,30 @@ export default function MateFav() {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        // 즐겨찾기 목록을 가져옵니다
+        if (!userId) return;
+
+        console.log('Fetching favorites for userId:', userId); // userId 확인용
         const response = await axios.get('http://localhost:9999/mate/fav/list', {
-          params: {
-            id: userId,
-          },
+          params: { id: userId },
         });
-        const favoritesArray = response.data.split(','); // 응답 데이터를 ,로 분리하여 배열로 변환
-        
-        // 즐겨찾기 목록의 회원 상세 정보를 가져옵니다
-        const membersResponse = await axios.get('http://localhost:9999/member/walkmates', {
-          params: {
-            ids: favoritesArray.join(','), // 여러 ID를 ,로 구분하여 전달
-          },
-        });
-        setFavorites(membersResponse.data.members); // 상세 정보를 설정
+
+        console.log('Favorites list response:', response.data); // 응답 데이터 확인용
+
+        // Favorites list를 바로 화면에 뿌리기
+        setFavorites(response.data); // Favorites list 데이터를 바로 사용
+
       } catch (error) {
         console.error('즐겨찾기 목록을 불러오지 못했습니다.', error);
       }
     };
 
-    if (userId) {
-      fetchFavorites();
-    }
+    fetchFavorites();
   }, [userId]);
 
   const handleMateClick = (id) => {
-    const url = `/mate/petinfo?userId=${id}`; // PetProfile 페이지의 URL에 ID를 쿼리 파라미터로 포함
+    const url = `/mate/petinfo?userId=${id}`;
     const windowFeatures = 'width=500,height=650,left=100,top=100,toolbar=no';
-    window.open(url, '_blank', windowFeatures); // 새 창으로 열기
+    window.open(url, '_blank', windowFeatures);
   };
 
   return (
@@ -64,15 +59,14 @@ export default function MateFav() {
       ) : (
         <ul className={styles.favoriteList}>
           {favorites.map((favorite, index) => (
-            <li key={index} className={styles.favoriteItem} onClick={() => handleMateClick(favorite.boardMemberId)}>
+            <li key={index} className={styles.favoriteItem} onClick={() => handleMateClick(favorite)}>
               <img 
-                src={favorite.petImagePath || default_img} 
-                alt={`Pet of ${favorite.boardMemberNick}`} 
+                src={default_img} 
+                alt={`Pet of ${favorite}`} 
                 className={styles.favoriteImage}
               />
               <div className={styles.favoriteInfo}>
-                <span className={styles.favoriteName}>{favorite.boardMemberNick}</span>
-                <span className={styles.favoriteId}>{favorite.boardMemberId}</span>
+                <span className={styles.favoriteName}>{favorite}</span>
               </div>
             </li>
           ))}

@@ -28,7 +28,7 @@ export default function MatePetProfile() {
 
   useEffect(() => {
     const readData = async () => {
-      if (profileUserId) {
+      if (profileUserId && userId) {
         try {
           const response = await axios.get(`http://localhost:9999/member/petprofile/${profileUserId}`);
           setPetProfile(response.data);
@@ -51,7 +51,6 @@ export default function MatePetProfile() {
     readData();
   }, [profileUserId, userId]);
 
-
   const handleFavoriteClick = async () => {
     try {
       const response = await axios.post('http://localhost:9999/mate/fav', {
@@ -61,7 +60,7 @@ export default function MatePetProfile() {
 
       // 응답 확인
       console.log('즐겨찾기 상태 변경 응답:', response);
-      setIsFavorite(!isFavorite);
+      setIsFavorite(prevState => !prevState); // 이전 상태를 기반으로 상태를 업데이트
       alert(response.data);
     } catch (error) {
       // 오류 메시지 더 자세히 출력
@@ -98,7 +97,7 @@ export default function MatePetProfile() {
           </div>
           <div className={styles.petActions}>
             <button onClick={handleFavoriteClick} className={styles.favoriteButton}>
-              {isFavorite ? '즐겨찾기 삭제' : '즐겨찾기 등록'}
+              즐겨찾기 상태 변경
             </button>
           </div>
         </div>
