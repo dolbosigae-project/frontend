@@ -1,92 +1,87 @@
 .detailContainer {
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  margin-top: 20px;
-  margin-bottom: 100px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .detailTable {
-  width: 50%;
+  width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  border: 1px solid #ddd;
+  margin-bottom: 20px;
 }
 
-.detailTable th, .detailTable td {
-  border: 1px solid #ddd;
-  padding: 8px;
+.headerRow th,
+.headerRow td {
+  padding: 10px;
+  background-color: #f1f1f1;
+  font-weight: bold;
 }
 
-.detailTable th {
-  background-color: #f2f2f2;
-  text-align: center;
-  font-size: 20px;
-  width: 25%;
-}
-
+.detailTable th,
 .detailTable td {
+  padding: 10px;
+  border: 1px solid #ddd;
   text-align: left;
-  font-size: 20px;
-  padding-left: 20px;
-}
-
-.contentCell {
-  height: 500px;
-}
-
-.headerRow th {
-  text-align: center;
 }
 
 .contentRow th {
+  background-color: #f1f1f1;
   text-align: center;
 }
 
-.commentContent{
-  height: 100px;
-  width: 100%;
-}
-
-.commentContent div{
-  display: flex;
-  justify-content: space-between;
-}
-
-.commentContent div button{
-  padding-right: 10px;
-  font-size: 15px;
-  background-color: white;
-  border: 1px solid #ddd;
-}
-
-.commentContent div button:hover{
-  background-color: #f2f2f2;
-  color: white;
-}
-
-.adminDetailBtnGroup{
-  display: flex;
-  flex-flow: row;
-}
-
-.adminDetailBtnGroup button:hover{
-  opacity: 0.8;
-}
-
-.commentBtn{
-  margin-top: 20px;
-  background-color: #00823E;
-  color: white;
-  width: 110px;
+.contentCell {
+  padding: 20px;
+  background-color: #fff;
+  line-height: 1.6;
   font-size: 16px;
 }
 
-.deleteBigBtn{
+.contentCell div{
+  min-height: 400px;
+}
+
+.detailBtnGroup {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
   margin-top: 20px;
+}
+
+.commentBtn,
+.editBtn,
+.deleteBigBtn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.commentBtn {
+  background-color: #595959;
+  color: white;
+}
+
+.editBtn {
+  background-color: #00823E;
+  color: white;
+}
+
+.deleteBigBtn {
   background-color: #CF1E1E;
   color: white;
-  width: 110px;
-  font-size: 16px; 
-  margin-left: 10px;
+}
+
+.commentBtn:hover,
+.editBtn:hover,
+.deleteBigBtn:hover {
+  opacity: 0.8;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
 }

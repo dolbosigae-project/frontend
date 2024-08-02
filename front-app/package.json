@@ -14,7 +14,6 @@
     "jquery": "^3.7.1",
     "react-router-dom": "^6.24.1",
     "slick-carousel": "^1.8.1",
-    "sockjs-client": "^1.6.1",
     "svg-url-loader": "^8.0.0"
   },
   "devDependencies": {

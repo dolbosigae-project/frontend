@@ -16,8 +16,16 @@
     background-size: contain;
 }
 
-.info_Img{
+.pl_img_container{
     margin-top: 80px;
+    width: 1000px;
+    height: 540px;
+    border: 4px groove green;
+    display: flex;
+    border-radius: 10px;
+}
+
+.info_Img{
     width: 960px;
     height: 500px;
     border: none;
@@ -25,12 +33,18 @@
     background-position: right;
     background-repeat: no-repeat;
     background-size: cover;
+    box-shadow: 5px 5px 5px grey, -5px -5px 5px lightgrey;
+    display: flex;
+    margin-left: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
 }
 
 .pl_table{
     margin-top: 80px;
     width: 900px;
     border: 1px solid #BEB4B4;
+    box-shadow: 5px 5px 5px grey, -5px -5px 5px lightgrey;
 }
 
 .name_td{

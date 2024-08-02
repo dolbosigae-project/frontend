@@ -10,11 +10,11 @@ const Board = () => {
     const [error, setError] = useState('');
     const [result, setResult] = useState([]);
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(5);
+    const [limit, setLimit] = useState(10);
     const [pagination, setPagination] = useState({ totalPages: 0, currentPage: 1 });
     const [user, setUser] = useState(null);
 
-    const navigate = useNavigate(); // useNavigate 훅 가져오기
+    const navigate = useNavigate();
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -77,32 +77,28 @@ const Board = () => {
             <table className={styles.table}>
                 <thead>
                     <tr>
-                        <th></th>  
-                        <th>글 번호</th>               
-                        <th>제목</th>
+                        <th style={{ width: '40%' }}>제목</th>
                         <th>닉네임</th>
                         <th>작성일</th>
-                        <th>조회수</th>
+                        {user && user.boardMemberGradeNo === 0 && <th>삭제</th>}
                     </tr>
                 </thead>
                 <tbody>
                     {result.map((item) => (
                         <tr key={item.showNo}>
                             <td>
-                                {user && user.boardMemberGradeNo === 0 && (
-                                    <button className={styles.DeleteBtn}
-                                        onClick={() => deleteBoard(item.showNo)}>삭제</button>
-                                )}
-                            </td>
-                            <td>{item.showNo}</td>
-                            <td>
-                                <Link to={`/boarddetail/${item.showNo}`}>
+                                <Link to={`/boarddetail/${item.showNo}`} className={styles.link}>
                                     {item.showTitle}
                                 </Link>
                             </td>
                             <td>{item.pNick}</td>
                             <td>{new Date(item.showDate).toLocaleDateString()}</td>
-                            <td>{item.showCount}</td>
+                            {user && user.boardMemberGradeNo === 0 && (
+                                <td>
+                                    <button className={styles.DeleteBtn}
+                                        onClick={() => deleteBoard(item.showNo)}>삭제</button>
+                                </td>
+                            )}
                         </tr>
                     ))}
                 </tbody>
@@ -120,31 +116,34 @@ const Board = () => {
                             <input
                                 type="text"
                                 value={showText}
-                                placeholder="검색어를 입력해주세요."
+                                placeholder="찾으실 제목을 입력하세요."
                                 onChange={(e) => setShowText(e.target.value)}
                                 className={styles.searchInput}
                             />
                             <button onClick={searchBoardClick} className={styles.searchButton}>조회</button>
                         </div>
                         
+                            {error && <div className={styles.error}>{error}</div>}
+                            {result.length > 0 ? (
+                                <>
+                                    {renderTable()}
+                                    <div className={styles.paginationContainer}>
+                                        <ShowBoardNumberRing onNumberRing={onNumberRing} pagination={pagination} />
+                                    </div>
+                                </>
+                            ) : (
+                                <div>검색 결과가 없습니다.</div>
+                            )}
+
                         <div className={styles.addButtonContainer}>
                             <button 
                                 className={styles.linkButton}
-                                onClick={() => navigate('/board/write')} // navigate를 사용하여 페이지 이동
+                                onClick={() => navigate('/board/write')}
                             >
                                 + 글쓰기
                             </button>
                         </div>
                         
-                        {error && <div className={styles.error}>{error}</div>}
-                        {result.length > 0 && (
-                            <>
-                                {renderTable()}
-                                <div className={styles.paginationContainer}>
-                                    <ShowBoardNumberRing onNumberRing={onNumberRing} pagination={pagination} />
-                                </div>
-                            </>
-                        )}
                     </div>
                 </div>
             </div>

@@ -51,9 +51,6 @@ export default function MatePetProfile() {
     readData();
   }, [profileUserId, userId]);
 
-  const handleSendMsgClick = () => {
-    // 현재는 아무 동작도 하지 않음
-  };
 
   const handleFavoriteClick = async () => {
     try {
@@ -100,7 +97,6 @@ export default function MatePetProfile() {
             <div>소개: {petProfile.petInfo}</div>
           </div>
           <div className={styles.petActions}>
-            <button onClick={handleSendMsgClick} className={styles.messageButton}>쪽지 보내기</button>
             <button onClick={handleFavoriteClick} className={styles.favoriteButton}>
               {isFavorite ? '즐겨찾기 삭제' : '즐겨찾기 등록'}
             </button>
