@@ -24,7 +24,7 @@ export default function Header({ isLoggedIn, onLogout }) {
     setIsPetInfo(location.pathname === '/mate/petinfo'); // 특정 경로 설정해서 header 안보이게 하는 부분
     setSendMsg(location.pathname === '/mate/sendMsg');
     setChatIntro(location.pathname === '/mate/intro');
-    setMateFav(location.pathname === '/mate/fav') 
+    setMateFav(location.pathname === '/mate/fav'); 
 
     if (isLoggedIn) {
       const storedUser = localStorage.getItem('user');
