@@ -37,6 +37,7 @@ import DogWorldCupPage from './components/dog_worldCup_components/dog_worldCup_P
 import WinnerPage from './components/dog_worldCup_components/winnerPage_components/WinnerPage';
 import BoardWrite from './components/BoardWrite';
 import BoardDetail from './components/BoardDetail';
+import MateFav from './components/MateFav';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -108,6 +109,8 @@ function App() {
             <Route path="/addPharmacy" element={<AddPharmacy />} />
             <Route path="/mate/member" element={<MateSearch />} />
             <Route path="/mate/petinfo" element={<MatePetProfile />} />
+            <Route path="/mate/fav" element={<MateFav />} />
+            <Route path="/mate/msg" element={<MsgBo />} />
             <Route path='/board' element={<Board />} />
             {/* 개상형 월드컵 이동경로 */}
             <Route path='/dwc' element={<DogWorldCup />} />
