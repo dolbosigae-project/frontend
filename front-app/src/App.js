@@ -16,8 +16,6 @@ import AdminContact from './components/AdminContact';
 import AdminContactNormalTableDetail from './components/AdminContactNormalTableDetail';
 import AdminContactWrite from './components/AdminContactWrite';
 import Footer from './components/Footer';
-import IoChat from './components/IoChat';
-import ChatIntro from './components/ChatIntro';
 import MateSearch from './components/MateSearch';
 import MatePetProfile from './components/MatePetProfile';
 import Pharmacy from './components/Pharmacy';
@@ -82,7 +80,6 @@ function App() {
             <Route path='/coInsert' element={<CoInsert />} />
             {/* 편의시설 이동경로 */}
             <Route path='/shelters/detail/:sh_id' element={<ShelterDetail />} />
-            <Route path='/ab/detail/:ab_id' element={<ABDetail />} />
             <Route path='/animal-medical' element={<Hospital />} />
             <Route path='/hoinfo/:hoId' element={<HospitalDetail />} />
             <Route path="/pharmacies" element={<Pharmacy />} />
@@ -91,10 +88,6 @@ function App() {
             <Route path='/dwc' element={<DogWorldCup />} />
             <Route path="/addHospital" element={<AddHospital />} />
             <Route path="/addPharmacy" element={<AddPharmacy />} />
-            <Route path="/mate/chat" element={<IoChat />} />
-            <Route path="/mate/intro" element={<ChatIntro />} />
-            <Route path="/mate/member" element={<MateSearch />} />
-            <Route path="/mate/petinfo" element={<MatePetProfile />} />
             <Route path='/shelter' element={<Shelter />} />
             <Route path='/shelter/detail/:shelterId' element={<ShelterDetail />} />
             <Route path='/ab' element={<AB />} />
@@ -112,7 +105,6 @@ function App() {
             <Route path='/phinfo/:phId' element={<PharmacyDetail />} />
             <Route path="/addHospital" element={<AddHospital />} />
             <Route path="/addPharmacy" element={<AddPharmacy />} />
-            <Route path="/mate/intro" element={<ChatIntro />} />
             <Route path="/mate/member" element={<MateSearch />} />
             <Route path="/mate/petinfo" element={<MatePetProfile />} />
             <Route path='/board' element={<Board />} />
