@@ -1,5 +1,3 @@
-// MateFav.js
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from '../css/mateFav.module.css'; 
@@ -9,7 +7,7 @@ export default function MateFav() {
   const [favorites, setFavorites] = useState([]);
   const [userId, setUserId] = useState('');
 
-  useEffect(() => {     // 로그인 유저 정보
+  useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
@@ -24,41 +22,55 @@ export default function MateFav() {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
+        if (!userId) return;
+
+        console.log('Fetching favorites for userId:', userId); // userId 확인용
         const response = await axios.get('http://localhost:9999/mate/fav/list', {
-          params: {
-            loginId: userId,
-          },
+          params: { id: userId },
         });
-        setFavorites(response.data.favorites || []);
+
+        console.log('Favorites list response:', response.data); // 응답 데이터 확인용
+
+        // Favorites list를 바로 화면에 뿌리기
+        setFavorites(response.data); // Favorites list 데이터를 바로 사용
+
       } catch (error) {
         console.error('즐겨찾기 목록을 불러오지 못했습니다.', error);
       }
     };
 
-    if (userId) {
-      fetchFavorites();
-    }
+    fetchFavorites();
   }, [userId]);
 
+  const handleMateClick = (id) => {
+    const url = `/mate/petinfo?userId=${id}`;
+    const windowFeatures = 'width=500,height=650,left=100,top=100,toolbar=no';
+    window.open(url, '_blank', windowFeatures);
+  };
+
   return (
-    <div>
-      <h2>내 즐겨찾기 </h2>
+    <div className={styles.container}>
+      <div className={styles.title}>
+        <h2>내 즐겨찾기</h2>
+        <p>이미지를 클릭하시면 상세 정보를 볼 수 있습니다.</p>
+      </div>
       {favorites.length === 0 ? (
         <div>즐겨찾기한 회원이 없습니다.</div>
       ) : (
-        <div className={styles.favoriteList}>
-          {favorites.map((favorite) => (
-            <div key={favorite.petId} className={styles.favoriteCard}>
-              <img src={favorite.petImagePath || default_img} alt="Pet" />
-              <div>이름: {favorite.boardMemberNick}</div>
-              <div>나이: {favorite.petBirth}</div>
-              <div>성별: {favorite.petGender}</div>
-              <div>크기: {favorite.petSize}</div>
-              <div>몸무게: {favorite.petWeight}</div>
-              <div>소개: {favorite.petInfo}</div>
-            </div>
+        <ul className={styles.favoriteList}>
+          {favorites.map((favorite, index) => (
+            <li key={index} className={styles.favoriteItem} onClick={() => handleMateClick(favorite)}>
+              <img 
+                src={default_img} 
+                alt={`Pet of ${favorite}`} 
+                className={styles.favoriteImage}
+              />
+              <div className={styles.favoriteInfo}>
+                <span className={styles.favoriteName}>{favorite}</span>
+              </div>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );

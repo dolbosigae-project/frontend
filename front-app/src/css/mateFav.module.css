@@ -1,22 +1,48 @@
-/* favoritePets.module.css */
+.title{
+  margin: 0 auto;
+  padding: 0;
+  background-color: #F4F2EE;
+  padding: 20px;
+}
+
+.title h2{
+ margin: 0 auto;
+ color: #0F3C3C;
+}
+
+.title p{
+  color: #555;
+}
 
 .favoriteList {
-   display: flex;
-   flex-wrap: wrap;
-   gap: 16px;
- }
- 
- .favoriteCard {
-   border: 1px solid #ccc;
-   padding: 16px;
-   border-radius: 8px;
-   background-color: #f9f9f9;
-   width: 200px;
- }
- 
- .favoriteCard img {
-   width: 100%;
-   height: auto;
-   border-radius: 8px;
- }
- 
+  list-style: none;
+  padding: 0;
+}
+
+.favoriteItem {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+.favoriteImage {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.favoriteInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.favoriteName {
+  font-weight: bold;
+}
+
+.favoriteId {
+  color: #555;
+}
