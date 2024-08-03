@@ -127,7 +127,7 @@ export default function Co() {
                 </div>
                 {user && user.boardMemberGradeNo === 0 ? (
                     <div className={styles.co_insert_container}>
-                        <Link to="/coInsert" className={styles.co_insert_link}>놀이시설 등록</Link>
+                        <Link to="/coInsert" className={styles.co_insert_link}>편의시설 등록</Link>
                     </div>
                 ) : null}
                 <div>

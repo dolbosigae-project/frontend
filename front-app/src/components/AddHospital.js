@@ -3,6 +3,7 @@ import styles from '../css/addHospital.module.css';
 import logo_small from '../img/logo_small.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import SubTitleAddHospital from './SubTitles/SubTitleAddHospital';
 
 export default function AddHospital() {
   const formRef = useRef();
@@ -49,13 +50,8 @@ export default function AddHospital() {
 
   return (
     <div>
+      <SubTitleAddHospital />
       <div className={styles.allContainer}>
-        <div className={styles.sub_title_container}>
-          <div className={styles.sentence}>
-          <img src={logo_small} alt="logo_small" className={styles.logo_small} />
-            <p>병원 정보 입력</p>
-          </div>
-        </div>
         <div className={styles.form_container}>
           <form ref={formRef} onSubmit={handleSubmit}>
           <table className={styles.form_table_00}>
