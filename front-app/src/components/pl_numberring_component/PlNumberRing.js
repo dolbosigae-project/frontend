@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './css/plNumberRing.module.css';
+
 const PlNumberRing = ({ onNumberRing, pagination }) => {
     const totalPages = pagination.totalPages;
     const currentPage = pagination.currentPage;
@@ -27,15 +28,14 @@ const PlNumberRing = ({ onNumberRing, pagination }) => {
                 <button
                     key={number}
                     onClick={() => onNumberRing(number)}
-                    style={{ fontWeight: number === currentPage ? 'bold' : 'normal' }}
-                    className={styles.numberButton}
+                    className={`${styles.numberButton} ${number === currentPage ? styles.active : ''}`}
                 >
                     {number}
                 </button>
             ))}
             {currentPageGroup < Math.ceil(totalPages / pageGroupSize) && (
                 <>
-                    <button onClick={() => onNumberRing(endPage + 1)} className={styles.rightAllButton}>&gt;</button>
+                    <button onClick={() => onNumberRing(endPage + 1)} className={styles.rightButton}>&gt;</button>
                     <button onClick={() => onNumberRing(totalPages)} className={styles.rightAllButton}>&gt;&gt;</button>
                 </>
             )}

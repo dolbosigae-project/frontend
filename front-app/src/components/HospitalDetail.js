@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom'; // Link 컴포넌트 추가
 import styles from '../css/hospitalDetail.module.css';
 import KakaoMap from './KakaoMap'; // KakaoMap 컴포넌트 import
+import SubTitleHospital from './SubTitles/SubTitleHospital';
 
 const HospitalDetail = () => {
     const { hoId } = useParams(); // URL 파라미터에서 병원 ID를 가져옵니다
@@ -45,32 +46,35 @@ const HospitalDetail = () => {
     };
 
     return (
-        <div className={styles.main_container}>
-            {/* KakaoMap 컴포넌트 추가 */}
-            <KakaoMap locations={[location]} />
-            <table>
-                <tbody>
-                    <tr className={styles.tr}>
-                        <td className={styles.name_td}><p className={styles.p_Tag}>병원명</p></td>
-                        <td className={styles.data_Td}>{hospitalInfo.hoName}</td>
-                        <td className={styles.name_td}><p className={styles.p_Tag}>연락처</p></td>
-                        <td className={styles.data_Td}>{hospitalInfo.hoTel}</td>
-                    </tr>
-                    <tr className={styles.tr}>
-                        <td className={styles.name_td}><p className={styles.p_Tag}>지역</p></td>
-                        <td className={styles.data_Td}>{hospitalInfo.hoRegion}</td>
-                        <td className={styles.name_td}><p className={styles.p_Tag}>우편번호</p></td>
-                        <td className={styles.data_Td}>{hospitalInfo.hoPost}</td>
-                    </tr>
-                    <tr className={styles.Address_Tr}>
-                        <td className={styles.name_td}><p className={styles.p_Tag}>주소</p></td>
-                        <td className={styles.data_Td} colSpan="4">{hospitalInfo.hoAddress}</td>
-                    </tr>
-                </tbody>
-            </table>
-            {/* 글 목록으로 이동하는 버튼 추가 */}
-            <div className={styles.buttonContainer}>
-                <Link to={`/animal-medical`} className={styles.linkButton}>글 목록</Link>
+        <div>
+            <SubTitleHospital />
+            <div className={styles.main_container}>
+                {/* KakaoMap 컴포넌트 추가 */}
+                <KakaoMap locations={[location]} />
+                <table>
+                    <tbody>
+                        <tr className={styles.tr}>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>병원명</p></td>
+                            <td className={styles.data_Td}>{hospitalInfo.hoName}</td>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>연락처</p></td>
+                            <td className={styles.data_Td}>{hospitalInfo.hoTel}</td>
+                        </tr>
+                        <tr className={styles.tr}>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>지역</p></td>
+                            <td className={styles.data_Td}>{hospitalInfo.hoRegion}</td>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>우편번호</p></td>
+                            <td className={styles.data_Td}>{hospitalInfo.hoPost}</td>
+                        </tr>
+                        <tr className={styles.Address_Tr}>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>주소</p></td>
+                            <td className={styles.data_Td} colSpan="4">{hospitalInfo.hoAddress}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                {/* 글 목록으로 이동하는 버튼 추가 */}
+                <div className={styles.buttonContainer}>
+                    <Link to={`/animal-medical`} className={styles.linkButton}>글 목록</Link>
+                </div>
             </div>
         </div>
     );

@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
-import SubTitleMemberRegister from "./SubTitles/SubTitleMemberRegister";
-import styles from '../css/memberRegister.module.css';
+import styles from '../css/addHospital.module.css';
 import logo_small from '../img/logo_small.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -50,61 +49,63 @@ export default function AddHospital() {
 
   return (
     <div>
-      <div className={styles.sub_title_container}>
-        <div className={styles.sentence}>
-        <img src={logo_small} alt="logo_small" className={styles.logo_small} />
-          <p>병원 정보 입력</p>
+      <div className={styles.allContainer}>
+        <div className={styles.sub_title_container}>
+          <div className={styles.sentence}>
+          <img src={logo_small} alt="logo_small" className={styles.logo_small} />
+            <p>병원 정보 입력</p>
+          </div>
         </div>
-      </div>
-      <div className={styles.form_container}>
-        <form ref={formRef} onSubmit={handleSubmit}>
-        <table className={styles.form_table_00}>
-            <tbody>
-              <tr>
-                <td><label>병원 ID *</label></td>
-                <td><input type="text" name="hoId" required /></td>
-              </tr>
-              <tr>
-                <td><label>병원 지역 *</label></td>
-                <td><input type="text" name="hoRegion" required /></td>
-              </tr>
-              <tr>
-                <td><label>병원 주소 *</label></td>
-                <td><input type="text" name="hoAddress" required /></td>
-              </tr>
-              <tr>
-                <td><label>병원 이름 *</label></td>
-                <td><input type="text" name="hoName" required /></td>
-              </tr>
-              <tr>
-                <td><label>전화번호 *</label></td>
-                <td><input type="text" name="hoTel" required /></td>
-              </tr>
-              <tr>
-                <td><label>우편번호 *</label></td>
-                <td><input type="text" name="hoPost" required /></td>
-              </tr>
-              <tr>
-                <td><label>위도 </label></td>
-                <td><input type="number"  name="hoLat"  /></td>
-              </tr>
-              <tr>
-                <td><label>경도 </label></td>
-                <td><input type="number"  name="hoLng"  /></td>
-              </tr>
-            </tbody>
-          </table>
-          <div className={styles.checkbox_container_00}>
-            <input type='checkbox' id='check' required />
-            <label htmlFor='check'>정보 제공에 동의합니다.</label>
-          </div>
-          <div className={styles.form_buttons}>
-            <button type="submit">병원 추가</button>
-            <Link to="/">
-              <button type="button">취소</button>
-            </Link>
-          </div>
-        </form>
+        <div className={styles.form_container}>
+          <form ref={formRef} onSubmit={handleSubmit}>
+          <table className={styles.form_table_00}>
+              <tbody>
+                <tr>
+                  <td><label>병원 ID *</label></td>
+                  <td><input type="text" name="hoId" required /></td>
+                </tr>
+                <tr>
+                  <td><label>병원 지역 *</label></td>
+                  <td><input type="text" name="hoRegion" required /></td>
+                </tr>
+                <tr>
+                  <td><label>병원 주소 *</label></td>
+                  <td><input type="text" name="hoAddress" required /></td>
+                </tr>
+                <tr>
+                  <td><label>병원 이름 *</label></td>
+                  <td><input type="text" name="hoName" required /></td>
+                </tr>
+                <tr>
+                  <td><label>전화번호 *</label></td>
+                  <td><input type="text" name="hoTel" required /></td>
+                </tr>
+                <tr>
+                  <td><label>우편번호 *</label></td>
+                  <td><input type="text" name="hoPost" required /></td>
+                </tr>
+                <tr>
+                  <td><label>위도 </label></td>
+                  <td><input type="number"  name="hoLat"  /></td>
+                </tr>
+                <tr>
+                  <td><label>경도 </label></td>
+                  <td><input type="number"  name="hoLng"  /></td>
+                </tr>
+              </tbody>
+            </table>
+            <div className={styles.checkbox_container_00}>
+              <input type='checkbox' id='check' required />
+              <label htmlFor='check'>정보 제공에 동의합니다.</label>
+            </div>
+            <div className={styles.form_buttons}>
+              <button type="submit">병원 추가</button>
+              <Link to="/">
+                <button type="button">취소</button>
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

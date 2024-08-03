@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from '../css/pharmacyNumberRing.module.css';
 
 const PharmacyNumberRing = ({ onNumberRing, pagination }) => {
     const totalPages = pagination.totalPages;
@@ -17,26 +18,46 @@ const PharmacyNumberRing = ({ onNumberRing, pagination }) => {
     console.log("PharmacyNumberRing pages: ", pages); // 페이지 배열을 로그에 출력
 
     return (
-        <div>
+        <div className={styles.numberRing_Container}>
             {currentPageGroup > 1 && (
                 <>
-                    <button onClick={() => onNumberRing(1)}>&lt;&lt;</button>
-                    <button onClick={() => onNumberRing(startPage - 1)}>&lt;</button>
+                    <button 
+                        onClick={() => onNumberRing(1)} 
+                        className={styles.leftAllButton}
+                    >
+                        &lt;&lt;
+                    </button>
+                    <button 
+                        onClick={() => onNumberRing(startPage - 1)} 
+                        className={styles.leftButton}
+                    >
+                        &lt;
+                    </button>
                 </>
             )}
             {pages.map((number) => (
                 <button
                     key={number}
                     onClick={() => onNumberRing(number)}
-                    style={{ fontWeight: number === currentPage ? 'bold' : 'normal' }}
+                    className={`${styles.numberButton} ${number === currentPage ? styles.active : ''}`}
                 >
                     {number}
                 </button>
             ))}
             {currentPageGroup < Math.ceil(totalPages / pageGroupSize) && (
                 <>
-                    <button onClick={() => onNumberRing(endPage + 1)}>&gt;</button>
-                    <button onClick={() => onNumberRing(totalPages)}>&gt;&gt;</button>
+                    <button 
+                        onClick={() => onNumberRing(endPage + 1)} 
+                        className={styles.rightButton}
+                    >
+                        &gt;
+                    </button>
+                    <button 
+                        onClick={() => onNumberRing(totalPages)} 
+                        className={styles.rightAllButton}
+                    >
+                        &gt;&gt;
+                    </button>
                 </>
             )}
         </div>

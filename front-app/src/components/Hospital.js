@@ -83,6 +83,7 @@ const HO = () => {
                         <th>전화번호</th>
                         <th>주소</th>
                         <th>우편번호</th>
+                        <th></th>                     
                     </tr>
                 </thead>
                 <tbody>
@@ -120,7 +121,7 @@ const HO = () => {
     }));
 
     return (
-        <>
+        <div className={styles.allContainer}>
           
             <SubTitleHospital />
             <div className={styles.container}>
@@ -156,7 +157,7 @@ const HO = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

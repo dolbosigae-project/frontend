@@ -107,30 +107,32 @@ export default function Co() {
     }, [result, user]);
 
     return (
-        <div className={styles.co_main_container}>
+        <div>
             <SubTitleCO />
-            <div className={styles.co_search_and_result_container}>
-                <div className={styles.co_search_container}>
-                    <input
-                        className={styles.search_input_co}
-                        type="text"
-                        value={coText}
-                        placeholder="지역 입력"
-                        onChange={(e) => setCoText(e.target.value)}
-                    />
-                    <button className={styles.searchBtn_co} onClick={CoSearchClick}>조회</button>
+                <div className={styles.co_main_container}>
+                <div className={styles.co_search_and_result_container}>
+                    <div className={styles.co_search_container}>
+                        <input
+                            className={styles.search_input_co}
+                            type="text"
+                            value={coText}
+                            placeholder="지역 입력"
+                            onChange={(e) => setCoText(e.target.value)}
+                        />
+                        <button className={styles.searchBtn_co} onClick={CoSearchClick}>조회</button>
+                    </div>
+                    <div className={styles.co_searchResult_container}>
+                        {result.length > 0 && renderTable()}
+                    </div>
                 </div>
-                <div className={styles.co_searchResult_container}>
-                    {result.length > 0 && renderTable()}
+                {user && user.boardMemberGradeNo === 0 ? (
+                    <div className={styles.co_insert_container}>
+                        <Link to="/coInsert" className={styles.co_insert_link}>놀이시설 등록</Link>
+                    </div>
+                ) : null}
+                <div>
+                    <CoNumberRing onNumberRing={handlePageChange} pagination={pagination} />
                 </div>
-            </div>
-            {user && user.boardMemberGradeNo === 0 ? (
-                <div className={styles.co_insert_container}>
-                    <Link to="/coInsert" className={styles.co_insert_link}>놀이시설 등록</Link>
-                </div>
-            ) : null}
-            <div>
-                <CoNumberRing onNumberRing={handlePageChange} pagination={pagination} />
             </div>
         </div>
     );

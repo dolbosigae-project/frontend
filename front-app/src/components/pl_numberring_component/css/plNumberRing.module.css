@@ -1,9 +1,10 @@
-.numberRing_Container{
+.numberRing_Container {
     display: flex;
-    flex-flow: row nowrap;
     justify-content: center;
+    align-items: center;
     width: 100%;
-    margin-top: 50px;
+    margin-top: 20px;
+    gap: 5px; /* 버튼 사이 간격을 추가 */
 }
 
 .numberButton,
@@ -11,16 +12,14 @@
 .leftButton,
 .rightButton,
 .rightAllButton {
-    background-color: white;
-    border: 1px solid #BEB4B4;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
     color: #000000;
-    width: 70px;
-    height: 70px;
-    padding: 5px 10px;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-    margin: 2px; /* 버튼 사이에 약간의 여백을 추가 */
-    border-radius: 10px;
+    border-radius: 5px; /* 모서리를 부드럽게 둥글게 설정 */
 }
 
 .numberButton:hover,
@@ -28,8 +27,9 @@
 .leftButton:hover,
 .rightButton:hover,
 .rightAllButton:hover {
-    background-color: green;
+    background-color: #00823E;
     color: white;
+    border-color: #00823E;
 }
 
 .numberButton:active,
@@ -37,11 +37,12 @@
 .leftButton:active,
 .rightButton:active,
 .rightAllButton:active {
-    background-color: darkgreen;
+    background-color: #006622;
     color: white;
 }
 
 .numberButton.active {
-    background-color: green;
+    background-color: #006622;
     color: white;
+    border-color: #006622;
 }

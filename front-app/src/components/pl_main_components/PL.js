@@ -109,31 +109,33 @@ const PL = () => {
     ), [result, user]);
 
     return (
-        <div className={styles.pl_main_container}>
+        <div>
             <SubTitlePL />
-            <div className={styles.search_and_result_container}>
-                <div className={styles.search_container}>
-                    <input
-                        className={styles.search_input}
-                        type="text"
-                        value={plText}
-                        placeholder="지역 입력"
-                        onChange={(e) => setPlText(e.target.value)}
-                    />
-                    <button onClick={searchClick} className={styles.searchBtn}>조회</button>
+                <div className={styles.pl_main_container}>
+                <div className={styles.search_and_result_container}>
+                    <div className={styles.search_container}>
+                        <input
+                            className={styles.search_input}
+                            type="text"
+                            value={plText}
+                            placeholder="지역 입력"
+                            onChange={(e) => setPlText(e.target.value)}
+                        />
+                        <button onClick={searchClick} className={styles.searchBtn}>조회</button>
 
-                </div>
-                <div className={styles.searchResult_container}>
-                    {result.length > 0 && renderTable()}
-                </div>
-                {user && user.boardMemberGradeNo === 0 ? (
-                    <div className={styles.pl_insert_container}>
-                        <Link to="/plInsert" className={styles.pl_insert_link}>놀이시설 등록</Link>
                     </div>
-                ) : null}
-            </div>
-            <div>
-                <PlNumberRing onNumberRing={onNumberRing} pagination={pagination} />
+                    <div className={styles.searchResult_container}>
+                        {result.length > 0 && renderTable()}
+                    </div>
+                    {user && user.boardMemberGradeNo === 0 ? (
+                        <div className={styles.pl_insert_container}>
+                            <Link to="/plInsert" className={styles.pl_insert_link}>놀이시설 등록</Link>
+                        </div>
+                    ) : null}
+                </div>
+                <div>
+                    <PlNumberRing onNumberRing={onNumberRing} pagination={pagination} />
+                </div>
             </div>
         </div>
     );
