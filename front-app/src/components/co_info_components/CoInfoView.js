@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './css/CoInfoView.module.css';
 import SubTitleCO from '../SubTitles/SubTitleCO';
+import KakaoMap from '../KakaoMap';
 
 const CoInfoView = () => {
     const { coId } = useParams();
@@ -18,6 +19,7 @@ const CoInfoView = () => {
                     throw new Error('서버 에러');
                 }
                 const data = await response.json();
+                console.log(data);
                 setConvenInfo(data);
                 setLoading(false);
             } catch (error) {
@@ -37,46 +39,54 @@ const CoInfoView = () => {
         return <div>Error: {error.message}</div>;
     }
 
+    const location = {
+        name: convenInfo.coName,
+        lat: parseFloat(convenInfo.coLati), // 위도
+        lng: parseFloat(convenInfo.coLong)  // 경도
+    };
+
     return (
-        <div className={styles.co_main_container}>
-            <div className={styles.co_SubTitlePL_container}>
+        <div>
+            <div className={styles.SubTitlePL_container}>
                 <SubTitleCO />
             </div>
-            <img className={styles.co_info_Img} src={`/path/to/images/${convenInfo.IMAGE_NM}`} alt="Convenience Info" />
-            <table className={styles.co_table}>
-                <tbody>
-                    <tr className={styles.co_Info_tr}>
-                        <td className={styles.co_name_td}><p className={styles.co_p_Tag}>업종명</p></td>
-                        <td className={styles.co_data_td}>{convenInfo.coName}</td>
-                        <td className={styles.co_name_td}><p className={styles.co_p_Tag}>분류</p></td>
-                        <td className={styles.co_data_td}>{convenInfo.coDistinction}</td>
-                    </tr>
-                    <tr className={styles.co_Info_tr}>
-                        <td className={styles.co_name_td}><p className={styles.co_p_Tag}>전화번호</p></td>
-                        <td className={styles.co_data_td}>{convenInfo.coTel}</td>
-                        <td className={styles.co_name_td}><p className={styles.co_p_Tag}>출입여부일</p></td>
-                        <td className={styles.co_data_td}>{convenInfo.coDay}</td>
-                    </tr>
-                    <tr className={styles.co_Info_tr}>
-                        <td className={styles.co_name_td}><p className={styles.co_p_Tag}>토요일 운영 시간</p></td>
-                        <td className={styles.co_data_td}>{convenInfo.coSatHour}</td>
-                        <td className={styles.co_name_td}><p className={styles.co_p_Tag}>일요일 운영 시간</p></td>
-                        <td className={styles.co_data_td}>{convenInfo.coSunHour}</td>
-                    </tr>
-                    <tr className={styles.co_Info_tr}>
-                        <td className={styles.co_name_td}><p className={styles.co_p_Tag}>운영 시간</p></td>
-                        <td className={styles.co_data_td}>{convenInfo.coHour}</td>
-                        <td className={styles.co_name_td}><p className={styles.co_p_Tag}>사이트 바로가기</p></td>
-                        <td className={styles.co_data_td}><a href={convenInfo.coWebsite}>바로가기</a></td>
-                    </tr>
-                    <tr className={styles.co_Address_tr}>
-                        <td className={styles.co_name_td}><p className={styles.co_p_Tag}>주소</p></td>
-                        <td className={styles.co_data_td} colSpan="3">{convenInfo.coAddress}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div className={styles.co_list_link_container}>
-                <Link to="/co" className={styles.co_list_Link}>목록</Link>
+            <div className={styles.main_container}>
+                <KakaoMap locations={[location]} />
+                <table className={styles.co_table}>
+                    <tbody>
+                        <tr className={styles.tr}>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>업종명</p></td>
+                            <td className={styles.data_Td}>{convenInfo.coName}</td>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>분류</p></td>
+                            <td className={styles.data_Td}>{convenInfo.coDistinction}</td>
+                        </tr>
+                        <tr className={styles.tr}>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>전화번호</p></td>
+                            <td className={styles.data_Td}>{convenInfo.coTel}</td>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>출입여부일</p></td>
+                            <td className={styles.data_Td}>{convenInfo.coDay}</td>
+                        </tr>
+                        <tr className={styles.tr}>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>토요일 운영 시간</p></td>
+                            <td className={styles.data_Td}>{convenInfo.coSatHour}</td>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>일요일 운영 시간</p></td>
+                            <td className={styles.data_Td}>{convenInfo.coSunHour}</td>
+                        </tr>
+                        <tr className={styles.tr}>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>운영 시간</p></td>
+                            <td className={styles.data_Td}>{convenInfo.coHour}</td>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>사이트 바로가기</p></td>
+                            <td className={styles.data_Td}><a href={convenInfo.coWebsite}>바로가기</a></td>
+                        </tr>
+                        <tr className={styles.Address_Tr}>
+                            <td className={styles.name_td}><p className={styles.p_Tag}>주소</p></td>
+                            <td className={styles.data_Td} colSpan="3">{convenInfo.coAddress}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div className={styles.buttonContainer}>
+                    <Link to="/co" className={styles.linkButton}>목록</Link>
+                </div>
             </div>
         </div>
     );

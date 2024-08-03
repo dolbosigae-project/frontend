@@ -1,87 +1,101 @@
-.pl_insert_contanier{
+.subContainer{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pl_insert_container {
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
+    padding: 20px;
+    border-radius: 10px;
 }
 
-.pl_insert_image{
+.pl_insert_image {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    margin-top: 80px;
+    margin-top: 20px;
+    width: 600px;
 }
 
-.pl_insert_table_container{
+.pl_insert_table_container {
+    width: 600px;
     display: flex;
     flex-flow: column nowrap;
-    margin-top: 50px;
+    margin-top: 20px;
+    border: 1px solid #CCCCCC;
 }
 
-.pl_insert_table{
+.pl_insert_table {
     margin: auto;
-    border: none;
-    border-top: 2px solid black;
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 2px solid #CCCCCC;
 }
 
-.pl_insert_tr{
-    padding-bottom: 10px;
+.pl_insert_tr {
+    border-bottom: 1px solid #CCCCCC;
 }
 
-.pl_insert_th{
-    width: 120px;
+.pl_insert_th {
+    width: 25%;
     font-size: 16px;
-    text-align: center;
-    padding-top: 20px;
-    border-bottom: 1px solid #BEB4B4;
-    padding-bottom: 20px;
+    text-align: left;
+    padding: 15px;
+    background-color: #f2f2f2;
+    border-right: 1px solid #CCCCCC;
 }
 
-.pl_insert_td{
-    width: 100px;
-    border-bottom: 1px solid #BEB4B4;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    
+.pl_insert_td {
+    width: 75%;
+    padding: 15px;
 }
 
-.pl_insert_input{
-    width: 300px;
+.pl_insert_input {
+    width: calc(100% - 20px);
     height: 40px;
-    font-size: 12px;
+    font-size: 16px;
     padding-left: 10px;
-    border-radius: 10px;
-    border: 1px solid black;
+    border-radius: 5px;
+    border: 1px solid #CCCCCC;
+    box-sizing: border-box;
 }
 
-.pl_insert_conditions{
+.pl_insert_conditions {
     display: flex;
     justify-content: center;
+    margin-top: 20px;
+    color: #595959;
+    font-style: italic;
 }
 
-.pl_insertBtn{
-    width: 160px;
-    height: 60px;
-    background-color: green;
+.pl_insertBtn, .pl_insert_back {
+    width: 200px;
+    height: 50px;
+    background-color: #00823E;
     color: white;
-    font-size: 24px;
-    margin-top: 60px;
-    border-radius: 10px;
+    font-size: 18px;
+    margin-top: 20px;
+    border-radius: 5px;
     border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
 }
 
-.pl_insert_back{
-    width: 160px;
-    height: 60px;
-    background-color: green;
-    color: white;
-    font-size: 24px;
-    margin-top: 60px;
-    border-radius: 10px;
-    border: none;
+.pl_insert_back {
+    background-color: #595959;
+    margin-left: 20px;
 }
 
-.pl_insert_footer{
+.pl_insert_footer {
     display: flex;
-    flex-flow: row nowrap;
     justify-content: center;
+    margin-top: 20px;
+}
+
+.pl_insertBtn:hover, .pl_insert_back:hover {
+    opacity: 0.8;
 }

@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
-import SubTitleMemberRegister from "./SubTitles/SubTitleMemberRegister";
-import styles from '../css/memberRegister.module.css';
+import styles from '../css/addPharmacy.module.css';
 import logo_small from '../img/logo_small.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import SubTitleAddPharmacy from './SubTitles/SubTitleAddPharmacy';
 
 export default function AddPharmacy() {
   const formRef = useRef();
@@ -50,12 +50,7 @@ export default function AddPharmacy() {
 
   return (
     <div>
-      <div className={styles.sub_title_container}>
-        <div className={styles.sentence}>
-        <img src={logo_small} alt="logo_small" className={styles.logo_small} />
-          <p>약국 정보 입력</p>
-        </div>
-      </div>
+      <SubTitleAddPharmacy />
       <div className={styles.form_container}>
         <form ref={formRef} onSubmit={handleSubmit}>
         <table className={styles.form_table_00}>

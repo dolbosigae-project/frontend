@@ -73,42 +73,45 @@ const PH = () => {
     };
 
     const renderTable = useCallback(() => (
-        <table>
-            <thead>
-                <tr>
-                    <th></th>                 
-                    <th>약국명</th>
-                    <th>지역</th>
-                    <th>전화번호</th>
-                    <th>도로명 주소</th>
-                    <th>운영시간</th>
-                </tr>
-            </thead>
-            <tbody>
-                {result.map((pharmacy, index) => (
-                    <tr key={index}>
-                        <td>
-                            {user && user.boardMemberGradeNo === 0 && (
-                                <button
-                                    className={styles.DeleteBtn}
-                                    onClick={() => deletePharmacy(pharmacy.phId)}>삭제</button>
-                            )}
-                        </td>
-                      
-                        <td>{pharmacy.phName}</td>
-                        <td>{pharmacy.phRegion}</td>
-                        <td>{pharmacy.phTel}</td>
-                        <td>{pharmacy.phAddress}</td>
-                        <td>{pharmacy.phHour}</td>
-                        <td>
-                            <Link
-                                to={`/phinfo/${pharmacy.phId}`}
-                                className={styles.linkButton}>이동</Link>
-                        </td>
+        <div className={styles.tableContainer}>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>                 
+                        <th>약국명</th>
+                        <th>지역</th>
+                        <th>전화번호</th>
+                        <th>도로명 주소</th>
+                        <th>운영시간</th>
+                        <th></th>                 
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {result.map((pharmacy, index) => (
+                        <tr key={index}>
+                            <td>
+                                {user && user.boardMemberGradeNo === 0 && (
+                                    <button
+                                        className={styles.DeleteBtn}
+                                        onClick={() => deletePharmacy(pharmacy.phId)}>삭제</button>
+                                )}
+                            </td>
+                          
+                            <td>{pharmacy.phName}</td>
+                            <td>{pharmacy.phRegion}</td>
+                            <td>{pharmacy.phTel}</td>
+                            <td>{pharmacy.phAddress}</td>
+                            <td>{pharmacy.phHour}</td>
+                            <td>
+                                <Link
+                                    to={`/phinfo/${pharmacy.phId}`}
+                                    className={styles.linkButton}>이동</Link>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     ), [result, user]);
 
     // 약국 위치 데이터를 KakaoMap에 전달할 형태로 변환합니다.
@@ -120,7 +123,6 @@ const PH = () => {
 
     return (
         <>
-            {/* <div className={styles.banner}></div> */}
             <SubTitlePharmacy />
             <div className={styles.container}>
                 <div className={styles.mainContent}>

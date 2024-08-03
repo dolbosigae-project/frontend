@@ -61,21 +61,23 @@ export default function LoginPasswd() {
   return(
     <div>
       <SubTitleLoginPasswd />
-      <div className={styles.container}>
-        <input type="text" name="boardMemberId" ref={txtId} required placeholder="아이디 입력"/>
-        <input type="text" name="boardMemberName" ref={txtName} required placeholder="회원 이름 입력" />
-        <button type="button" onClick={checkId}>아이디 확인</button>
-        {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
-        {idCheck && (
-          <>
-            <br/>
-            <p>새로 설정할 비밀번호를 입력해주세요</p>
-            <input type="password" name="newPassword" ref={newPassword} required />
-            <p>비밀번호를 한번 더 입력해주세요</p>
-            <input type="password" name="confirmPassword" ref={confirmPassword} required /><br/>
-            <button type="button" onClick={handleChangePassword}>비밀번호 변경하기</button>
-          </>
-        )}
+      <div className={styles.bodyContainer}>
+        <div className={styles.container}>
+          <input type="text" name="boardMemberId" ref={txtId} required placeholder="아이디 입력"/>
+          <input type="text" name="boardMemberName" ref={txtName} required placeholder="회원 이름 입력" />
+          <button type="button" onClick={checkId}>아이디 확인</button>
+          {errorMessage && <p style={{color: 'red'}}>{errorMessage}</p>}
+          {idCheck && (
+            <>
+              <br/>
+              <p>새로 설정할 비밀번호를 입력해주세요</p>
+              <input type="password" name="newPassword" ref={newPassword} required />
+              <p>비밀번호를 한번 더 입력해주세요</p>
+              <input type="password" name="confirmPassword" ref={confirmPassword} required /><br/>
+              <button type="button" onClick={handleChangePassword}>비밀번호 변경하기</button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

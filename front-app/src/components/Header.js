@@ -16,10 +16,15 @@ export default function Header({ isLoggedIn, onLogout }) {
   let timeout;
   const location = useLocation();
   const [isPetInfo, setIsPetInfo] = useState(false);
+  const [sendMsg, setSendMsg] = useState(false);
+  const [chatIntro, setChatIntro] = useState(false);
+  const [mateFav, setMateFav] = useState(false);
 
   useEffect(() => {
     setIsPetInfo(location.pathname === '/mate/petinfo'); // 특정 경로 설정해서 header 안보이게 하는 부분
-
+    setSendMsg(location.pathname === '/mate/sendMsg');
+    setChatIntro(location.pathname === '/mate/intro');
+    setMateFav(location.pathname === '/mate/fav'); 
 
     if (isLoggedIn) {
       const storedUser = localStorage.getItem('user');
@@ -62,7 +67,7 @@ export default function Header({ isLoggedIn, onLogout }) {
   };
 
   // 특정 경로에서는 헤더를 렌더링하지 않음
-  if (isPetInfo) return null; // 위에서 설정했던 특정 경로에서 헤더 숨기기
+  if (isPetInfo || sendMsg || chatIntro || mateFav) return null;  // 위에서 설정했던 특정 경로에서 헤더 숨기기
 
   return (
     <div className={styles.headerContainer}>
@@ -136,10 +141,11 @@ export default function Header({ isLoggedIn, onLogout }) {
               onMouseOut={handleMouseOut}>
               <Link className={styles.navLink}>커뮤니티</Link>
               <ul className={`${styles.submenu} ${visibleSubmenu === 'community' ? styles.visible : ''}`}>
-                <li className={styles.navSublink}><Link to="/board">자랑 게시판</Link></li>
+                <li className={styles.navSublink}><Link to="/mate/msg">쪽지함</Link></li>
                 <li className={styles.navSublink}><Link to="/mate/member">산책 친구 찾기</Link></li>
                 <li className={styles.navSublink}><Link to="/dog/random/date">랜덤 댕개팅</Link></li>
                 <li className={styles.navSublink}><Link to="/dwc">개상형 월드컵</Link></li>
+                <li className={styles.navSublink}><Link to="/board">자랑 게시판</Link></li>
               </ul>
             </li>
             <li

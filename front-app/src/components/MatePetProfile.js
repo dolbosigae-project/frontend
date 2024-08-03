@@ -28,7 +28,7 @@ export default function MatePetProfile() {
 
   useEffect(() => {
     const readData = async () => {
-      if (profileUserId) {
+      if (profileUserId && userId) {
         try {
           const response = await axios.get(`http://localhost:9999/member/petprofile/${profileUserId}`);
           setPetProfile(response.data);
@@ -51,7 +51,6 @@ export default function MatePetProfile() {
     readData();
   }, [profileUserId, userId]);
 
-
   const handleFavoriteClick = async () => {
     try {
       const response = await axios.post('http://localhost:9999/mate/fav', {
@@ -61,14 +60,14 @@ export default function MatePetProfile() {
 
       // 응답 확인
       console.log('즐겨찾기 상태 변경 응답:', response);
-      setIsFavorite(!isFavorite);
+      setIsFavorite(prevState => !prevState); // 이전 상태를 기반으로 상태를 업데이트
       alert(response.data);
     } catch (error) {
       // 오류 메시지 더 자세히 출력
       if (error.response) {
         // 서버 응답이 있는 경우
         console.error('서버 응답 오류:', error.response.data);
-        alert(`즐겨찾기 상태 변경 중 오류가 발생했습니다: ${error.response.data}`);
+        alert(`연결상태를 확인해주십시오: ${error.response.data}`);
       } else if (error.request) {
         // 요청이 전송되었으나 응답이 없는 경우
         console.error('응답 없음:', error.request);
@@ -79,6 +78,10 @@ export default function MatePetProfile() {
         alert(`즐겨찾기 상태 변경 중 오류가 발생했습니다: ${error.message}`);
       }
     }
+  };
+
+  const handleSendMsg = () => {
+    navigate('/mate/sendMsg', { state: { receiverId: profileUserId } });
   };
 
   return (
@@ -98,7 +101,10 @@ export default function MatePetProfile() {
           </div>
           <div className={styles.petActions}>
             <button onClick={handleFavoriteClick} className={styles.favoriteButton}>
-              {isFavorite ? '즐겨찾기 삭제' : '즐겨찾기 등록'}
+              즐겨찾기 상태 변경
+            </button>
+            <button onClick={handleSendMsg} className={styles.messageButton}>
+              쪽지보내기
             </button>
           </div>
         </div>

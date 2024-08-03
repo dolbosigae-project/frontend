@@ -48,11 +48,12 @@ const DogWorldCup = () => {
     };
 
     return (
-        <div className={styles.dwc_main_container}>
+        <div>
             <SubTitleDogWorldCup />
             <div className={styles.dwc_explanation_container}>
                 <p className={styles.dwc_explanation}>※ 라운드를 선택해주세요!! ※</p>
             </div>
+            <div className={styles.dwc_main_container}>
             <div className={styles.dwc_img_container}>
                 {dogs.map((dog, index) => (
                     <div key={index} className={styles.dwc_img_button_container}>
@@ -71,6 +72,7 @@ const DogWorldCup = () => {
                 {hiddenText && <p className={styles.hiddenText}>{hiddenText}</p>}
             </div>
             <hr className={styles.dwc_hr} />
+            </div>
         </div>
     )
 }
