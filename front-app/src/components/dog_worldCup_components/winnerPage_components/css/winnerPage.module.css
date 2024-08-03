@@ -1,143 +1,134 @@
-.winner_container{
+.winner_container {
     display: flex;
-    flex-flow: row nowrap;
-    margin: auto;
-    border-top: 1px solid black;
-    margin-top: 20px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 20px auto;
+    padding-top: 20px;
+    border-top: 2px solid #ddd;
+    background-color: #f9f9f9;
 }
 
-.winner_main_container{
+.winner_main_container {
     margin-top: 50px;
-}
-
-.winner_dog_container{
     display: flex;
-    flex-flow: column nowrap;
-    width: 500px;
-    margin: auto;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 5px 5px 5px grey, -5px -5px 5px lightgrey;
-    margin-left: 60px;
+    flex-direction: column;
+    align-items: center;
+    max-width: 500px;
 }
 
-.dwcp_title{
+.winner_dog_container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+.dwcp_title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #00823E;
+}
+
+.winner_img {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.winner_info {
+    width: 100%;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    text-align: left;
+    margin-top: 10px;
+}
+
+.winner_pTag {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #333;
+}
+
+.winner_button {
+    margin-top: 20px;
     display: flex;
     justify-content: center;
 }
 
-.ranking_th_img{
-    padding-left: 10px;
-    
-}
-
-.winner_img{
-    width: 92%;
-    height: 300px;
-    margin: auto;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 10px;
-    box-shadow: 3px 3px 3px rgb(182, 182, 182), -3px -3px 3px rgb(228, 224, 224);
-}
-
-.winner_info{
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    width: 93%;
-    margin: auto;
-    margin-top: 10px;
-}
-
-.winner_pTag{
-    font-size: 20px;
-    padding: 0px 20px;
-}
-
-.winner_button{
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.winner_back{
-    width: 160px;
-    height: 60px;
+.winner_back {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
     background-color: #00823E;
     border: none;
     border-radius: 10px;
-    font-size: 20px;
     cursor: pointer;
-    color: white;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.winner_back:hover{
-    opacity: 0.8;
+.winner_back:hover {
+    background-color: #006b31;
+    transform: scale(1.05);
 }
 
-.ranking_community_container{
-    width: 700px;
+.ranking_community_container {
+    max-width: 700px;
     margin-top: 50px;
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px rgb(182, 182, 182), -3px -3px 3px rgb(228, 224, 224);
-    margin-left: 60px;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
     border-radius: 10px;
-}
-
-.ranking_title{
-    margin-left: 40px;
-}
-
-
-.ranking_topTen_table{
-    width: 90%;
-    border: 1px solid #ccc;
-    border-collapse: collapse;
-    margin: auto;
-}
-
-.ranking_item{
-    border: 1px solid #ccc;
-}
-
-.ranking_item > td{
     text-align: center;
-    padding-top: 5px;
-    font-size: 14px;
 }
 
-.ranking_th_number{
-    width: 50px;
-    padding-left: 5px;
+.ranking_title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #00823E;
+    margin-bottom: 20px;
 }
 
-.ranking_th_rank{
+.ranking_topTen_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 16px;
+}
+
+.ranking_topTen_table th, .ranking_topTen_table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.ranking_th_img, .ranking_img {
     width: 100px;
+    height: auto;
+    border-radius: 5px;
+    object-fit: cover;
 }
 
-.ranking_number{
-    padding-left: 5px;
-}
-
-.ranking_typeName{
-    width: 100px;
-}
-
-.ranking_typeInfo{
+.ranking_typeInfo {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 300px;
+    max-width: 250px;
 }
 
-.ranking_img{
-    width: 120px;
-    height: 70px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding-left: 10px;
+.ranking_item:hover {
+    background-color: #f4f4f4;
 }

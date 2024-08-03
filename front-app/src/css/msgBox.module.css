@@ -1,9 +1,11 @@
 .msgBoxContainer {
   width: 90%;
   margin: 0 auto;
+  margin-top: 20px;
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
+  min-height: 300px;
 }
 
 .tabContainer{
@@ -27,9 +29,9 @@
 
 .tabButton {
   padding: 10px 20px;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 5px;
-  background-color: #69c16c;
+  background-color: #00823f91;
   cursor: pointer;
   font-size: 16px;
   margin-right: 10px;
@@ -39,14 +41,14 @@
 
 
 .activeTab {
-  background-color: #318033;
+  background-color: #00823E;
 }
 
 .deleteSelectedButton {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #f44336;
+  background-color: #CF1E1E;
   color: white;
   cursor: pointer;
   font-size: 16px;
@@ -85,7 +87,7 @@
 }
 
 .msgBoxReplyButton, .msgBoxsendPagebtn {
-  background-color: #4CAF50;
+  background-color: #00823E;
   color: white;
 }
 
@@ -99,7 +101,7 @@
 }
 
 .msgBoxDeleteButton {
-  background-color: #f44336;
+  background-color: #CF1E1E;
   color: white;
 }
 
